@@ -28,7 +28,7 @@ const Login = () => {
       const from = location.state?.from?.pathname;
       navigate(from || getRoleHome(user.role), { replace: true });
     }
-  }, [token, user, navigate, location]);
+  }, [token, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,8 +43,6 @@ const Login = () => {
 
     if (result.success) {
       toast.success('Logged in successfully!');
-      const from = location.state?.from?.pathname;
-      navigate(from || getRoleHome(result.user?.role), { replace: true });
     } else {
       toast.error(result.message || 'Login failed. Please check your credentials.');
     }
@@ -60,10 +58,13 @@ const Login = () => {
             <FaProjectDiagram className="h-6 w-6" />
           </div>
           <h2 className="mt-4 text-2xl font-black text-gray-900 dark:text-white">
-            Welcome back to PFE Hub
+            Welcome back to NAJAH
           </h2>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Sign in to access your project dashboard
+          </p>
+          <p className="mt-3 text-xs text-indigo-500 dark:text-indigo-400 font-medium">
+            Your path to graduation success 🎓
           </p>
         </div>
 

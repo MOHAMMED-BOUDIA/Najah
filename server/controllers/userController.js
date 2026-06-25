@@ -65,6 +65,11 @@ exports.updateUser = async (req, res) => {
       delete updates.department;
     }
 
+    // Students cannot change their own department
+    if (req.user.role === 'student' && req.user._id.toString() === req.params.id) {
+      delete updates.department;
+    }
+
     const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true }).select('-password');
     res.json(user);
   } catch (error) {
@@ -100,6 +105,19 @@ exports.getInstructors = async (req, res) => {
   try {
     const instructors = await User.find({ role: 'instructor' }).select('-password');
     res.json(instructors);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getMyInstructor = async (req, res) => {
+  try {
+    const Group = require('../models/Group');
+    const group = await Group.findOne({ members: req.user._id }).populate('instructor', '-password');
+    if (!group || !group.instructor) {
+      return res.status(404).json({ message: 'No instructor assigned yet' });
+    }
+    res.json(group.instructor);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

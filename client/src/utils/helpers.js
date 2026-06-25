@@ -1,5 +1,5 @@
 /**
- * Utility helper functions for PFE Hub
+ * Utility helper functions for NAJAH
  */
 
 /**

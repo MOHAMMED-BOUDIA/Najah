@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: normalized };
     } catch (error) {
       console.error('Login error:', error);
+      console.log('Login error response:', error.response?.data);
       const message = error.response?.data?.message || 'Login failed. Please check your credentials.';
       return { success: false, message };
     } finally {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaUser, FaEnvelope, FaLock, FaBuilding, FaPhone, FaProjectDiagram, FaSpinner } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaProjectDiagram, FaSpinner } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
@@ -13,7 +13,6 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    department: '',
     phone: '',
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -62,7 +61,7 @@ const Register = () => {
   const strength = getPasswordStrength(formData.password);
 
   const validate = () => {
-    const { name, email, password, department, phone } = formData;
+    const { name, email, password, phone } = formData;
     if (!name.trim()) return 'Name is required';
     if (!email.trim()) return 'Email is required';
     if (!email.endsWith('@gmail.com')) return 'Email must be a valid @gmail.com address';
@@ -72,7 +71,6 @@ const Register = () => {
     if (!/[a-z]/.test(password)) return 'Password must contain at least 1 lowercase letter';
     if (!/[0-9]/.test(password)) return 'Password must contain at least 1 number';
     if (!/[!@#$%^&*]/.test(password)) return 'Password must contain at least 1 special character (!@#$%^&*)';
-    if (!department) return 'Department is required';
     if (!phone.trim()) return 'Phone number is required';
     return null;
   };
@@ -110,7 +108,10 @@ const Register = () => {
             Create your account
           </h2>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            Join PFE Hub to start managing your projects
+            Join NAJAH to start managing your projects
+          </p>
+          <p className="mt-2 text-xs text-indigo-500 dark:text-indigo-400 font-medium">
+            Your path to graduation success 🎓
           </p>
         </div>
 
@@ -241,54 +242,24 @@ const Register = () => {
             <input type="hidden" name="role" value="student" />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {/* Department */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                Department *
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                  <FaBuilding className="h-3.5 w-3.5" />
-                </span>
-                <select
-                  name="department"
-                  required
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2.5 pl-9 pr-3 text-xs outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
-                >
-                  <option value="">Select department</option>
-                  <option value="IT">IT</option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Mobile Development">Mobile Development</option>
-                  <option value="Data Science">Data Science</option>
-                  <option value="Cybersecurity">Cybersecurity</option>
-                  <option value="Network & Systems">Network & Systems</option>
-                  <option value="Software Engineering">Software Engineering</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                Phone Number *
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                  <FaPhone className="h-3.5 w-3.5" />
-                </span>
-                <input
-                  type="text"
-                  name="phone"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2.5 pl-9 pr-3 text-xs outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
-                  placeholder="+1 (555) 000-0000"
-                />
-              </div>
+          {/* Phone */}
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+              Phone Number *
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <FaPhone className="h-3.5 w-3.5" />
+              </span>
+              <input
+                type="text"
+                name="phone"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2.5 pl-9 pr-3 text-xs outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
+                placeholder="+1 (555) 000-0000"
+              />
             </div>
           </div>
 

@@ -1,19 +1,41 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher, FaUsers, FaArrowRight, FaBookOpen } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const Instructors = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [instructors, setInstructors] = useState([]);
   const [groupsMap, setGroupsMap] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (user?.role === 'student') {
+          const membershipRes = await axiosInstance.get('/groups/my-membership');
+          const approved = membershipRes.data.status === 'approved';
+          setIsApproved(approved);
+
+          if (approved) {
+            const instructorRes = await axiosInstance.get('/users/my-instructor');
+            const instructor = instructorRes.data;
+            setInstructors([instructor]);
+
+            if (instructor?._id) {
+              const groupsRes = await axiosInstance.get(`/groups/instructor/${instructor._id}`);
+              setGroupsMap({ [instructor._id]: groupsRes.data || [] });
+            }
+            return;
+          }
+        }
+
         const [usersRes, groupsRes] = await Promise.all([
           axiosInstance.get('/users/instructors'),
           axiosInstance.get('/groups'),
@@ -37,7 +59,7 @@ const Instructors = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return (
@@ -71,9 +93,19 @@ const Instructors = () => {
                 className="group relative rounded-3xl border border-gray-150 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-xl font-bold text-white shadow-md">
-                    {inst.name ? inst.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'I'}
-                  </div>
+                  {inst.avatar ? (
+                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-md">
+                      <img
+                        src={`${(import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '')}/${inst.avatar.replace(/\\/g, '/')}`}
+                        alt={inst.name}
+                        className="h-full w-full object-cover object-top"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-xl font-bold text-white shadow-md">
+                      {inst.name ? inst.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'I'}
+                    </div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
                       {inst.name}

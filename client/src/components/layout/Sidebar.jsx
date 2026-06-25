@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { 
   FaTachometerAlt, 
   FaProjectDiagram, 
@@ -13,12 +14,36 @@ import {
   FaChevronRight,
   FaBookOpen,
   FaChalkboardTeacher,
-  FaGraduationCap
+  FaGraduationCap,
+  FaCommentAlt
 } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
+import axiosInstance from '../../api/axios';
 
 const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
   const { user, logout } = useAuth();
+  const location = useLocation();
+  const [isApproved, setIsApproved] = useState(false);
+  const [assignedInstructorId, setAssignedInstructorId] = useState(null);
+
+  useEffect(() => {
+    if (user?.role !== 'student') {
+      setIsApproved(false);
+      setAssignedInstructorId(null);
+      return;
+    }
+    axiosInstance.get('/groups/my-membership').then(res => {
+      const approved = res.data.status === 'approved';
+      setIsApproved(approved);
+      if (approved && res.data.group?.instructor) {
+        const id = res.data.group.instructor._id || res.data.group.instructor;
+        setAssignedInstructorId(id);
+      }
+    }).catch(() => {
+      setIsApproved(false);
+      setAssignedInstructorId(null);
+    });
+  }, [user]);
 
   const getAvatarUrl = (avatarPath) => {
     if (!avatarPath) return '';
@@ -30,47 +55,57 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
     onClose();
   };
 
-  // Define navigation items based on roles
-  const allLinks = [
-    // STUDENT links
-    { name: 'Instructors', path: '/instructors', icon: FaChalkboardTeacher, roles: ['student'] },
-    { name: 'Projects', path: '/projects', icon: FaProjectDiagram, roles: ['student'] },
-    { name: 'Tasks', path: '/tasks', icon: FaTasks, roles: ['student'] },
-    { name: 'Teams', path: '/teams', icon: FaUsers, roles: ['student'] },
-    { name: 'Documents', path: '/documents', icon: FaFileAlt, roles: ['student'] },
-    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt, roles: ['student'] },
-    { name: 'Resources', path: '/resources', icon: FaBookOpen, roles: ['student'] },
-    { name: 'Profile', path: '/profile', icon: FaUser, roles: ['student'] },
-
-    // INSTRUCTOR links
-    { name: 'Dashboard', path: '/instructor/dashboard', icon: FaTachometerAlt, roles: ['instructor'] },
-    { name: 'My Groups', path: '/my-groups', icon: FaUsers, roles: ['instructor'] },
-    { name: 'Projects', path: '/projects', icon: FaProjectDiagram, roles: ['instructor'] },
-    { name: 'Tasks', path: '/tasks', icon: FaTasks, roles: ['instructor'] },
-    { name: 'Teams', path: '/teams', icon: FaUsers, roles: ['instructor'] },
-    { name: 'Documents', path: '/documents', icon: FaFileAlt, roles: ['instructor'] },
-    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt, roles: ['instructor'] },
-    { name: 'Resources', path: '/resources', icon: FaBookOpen, roles: ['instructor'] },
-    { name: 'Profile', path: '/profile', icon: FaUser, roles: ['instructor'] },
-
-    // ADMIN links
-    { name: 'Dashboard', path: '/admin/dashboard', icon: FaTachometerAlt, roles: ['admin'] },
-    { name: 'Instructors', path: '/admin/instructors', icon: FaChalkboardTeacher, roles: ['admin'] },
-    { name: 'Students', path: '/admin/students', icon: FaGraduationCap, roles: ['admin'] },
-    { name: 'Profile', path: '/profile', icon: FaUser, roles: ['admin'] },
+  const studentLinks = [
+    { name: 'Instructors', path: '/instructors', icon: FaChalkboardTeacher },
+    { name: 'Profile', path: '/profile', icon: FaUser },
   ];
 
-  // Filter by user role, then deduplicate by label keeping first occurrence
-  const menuItems = allLinks
-    .filter(link => link.roles.includes(user?.role))
-    .filter((link, i, arr) => arr.findIndex(l => l.name === link.name) === i);
+  const approvedStudentLinks = [
+    { name: 'My Instructor', path: assignedInstructorId ? `/instructors/${assignedInstructorId}/groups` : '/instructors', icon: FaChalkboardTeacher },
+    { name: 'Group Chat', path: '/chat', icon: FaCommentAlt },
+    { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
+    { name: 'Tasks', path: '/tasks', icon: FaTasks },
+    { name: 'Teams', path: '/teams', icon: FaUsers },
+    { name: 'Documents', path: '/documents', icon: FaFileAlt },
+    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt },
+    { name: 'Resources', path: '/resources', icon: FaBookOpen },
+    { name: 'Profile', path: '/profile', icon: FaUser },
+  ];
+
+  const instructorLinks = [
+    { name: 'Dashboard', path: '/instructor/dashboard', icon: FaTachometerAlt },
+    { name: 'My Groups', path: '/my-groups', icon: FaUsers },
+    { name: 'Group Chat', path: '/chat', icon: FaCommentAlt },
+    { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
+    { name: 'Tasks', path: '/tasks', icon: FaTasks },
+    { name: 'Teams', path: '/teams', icon: FaUsers },
+    { name: 'Documents', path: '/documents', icon: FaFileAlt },
+    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt },
+    { name: 'Resources', path: '/resources', icon: FaBookOpen },
+    { name: 'Profile', path: '/profile', icon: FaUser },
+  ];
+
+  const adminLinks = [
+    { name: 'Dashboard', path: '/admin/dashboard', icon: FaTachometerAlt },
+    { name: 'Instructors', path: '/admin/instructors', icon: FaChalkboardTeacher },
+    { name: 'Students', path: '/admin/students', icon: FaGraduationCap },
+    { name: 'Profile', path: '/profile', icon: FaUser },
+  ];
+
+  let menuItems = [];
+  if (user?.role === 'student') {
+    menuItems = isApproved ? approvedStudentLinks : studentLinks;
+  } else if (user?.role === 'instructor') {
+    menuItems = instructorLinks;
+  } else if (user?.role === 'admin') {
+    menuItems = adminLinks;
+  }
 
   const activeLinkClass = 'flex items-center gap-3 rounded-xl bg-amber-400 px-4 py-3 text-sm font-semibold text-sky-600 transition-all dark:bg-amber-500/20 dark:text-sky-400';
   const normalLinkClass = 'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200';
 
   return (
     <>
-      {/* Mobile Sidebar Overlay Backdrop */}
       {isOpen && (
         <div 
           onClick={onClose} 
@@ -78,7 +113,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
         />
       )}
 
-      {/* Sidebar Container */}
       <aside 
         className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-gray-200 bg-white transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 md:sticky md:translate-x-0 ${
           collapsed ? 'w-16' : 'w-64'
@@ -86,7 +120,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Header */}
         <div className={`flex h-16 items-center border-b border-gray-100 dark:border-gray-800 ${collapsed ? 'justify-center px-0' : 'justify-between px-6'}`}>
           <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'}`}>
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
@@ -94,7 +127,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
             </div>
             {!collapsed && (
               <span className="text-lg font-bold text-gray-900 dark:text-white">
-                PFE Hub
+                NAJAH
               </span>
             )}
           </div>
@@ -110,7 +143,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           )}
         </div>
 
-        {/* User Card (Static in Sidebar) */}
         <div className={`border-b border-gray-100 dark:border-gray-800 ${collapsed ? 'p-2' : 'p-4'}`}>
           <div className={`flex items-center rounded-2xl bg-gray-50 dark:bg-gray-800/40 ${collapsed ? 'justify-center p-2' : 'gap-3 p-3'}`}>
             <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
@@ -143,7 +175,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           </div>
         </div>
 
-        {/* Nav Links */}
         <nav className={`flex-1 space-y-1 overflow-visible ${collapsed ? 'p-2' : 'p-4'}`}>
           {menuItems.map((item) => (
             <NavLink
@@ -164,7 +195,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           ))}
         </nav>
 
-        {/* Footer / Logout */}
         <div className={`border-t border-gray-200 dark:border-gray-700 ${collapsed ? 'p-2' : 'p-4'}`}>
           <button
             onClick={handleLogout}
@@ -179,7 +209,6 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           </button>
         </div>
 
-        {/* Collapse toggle button (desktop only) */}
         <button
           onClick={onToggleCollapse}
           type="button"

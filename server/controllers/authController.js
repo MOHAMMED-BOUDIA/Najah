@@ -53,7 +53,7 @@ exports.register = async (req, res) => {
       email,
       password: hashedPassword,
       role: 'student',
-      department,
+      department: department || '',
       isVerified: false,
       verificationToken,
     });
@@ -102,17 +102,25 @@ exports.verifyEmail = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    email = email?.toLowerCase().trim();
+    console.log('[authController] Login attempt:', { email, passwordLength: password?.length || 0 });
 
     const user = await User.findOne({ email });
+    console.log('[authController] User found:', user ? `${user.email} (${user.role})` : 'NO USER FOUND');
+
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('[authController] Password match:', isMatch);
+
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+
+    console.log('[authController] isVerified check:', { role: user.role, isVerified: user.isVerified });
 
     if (user.role === 'student' && !user.isVerified) {
       return res.status(400).json({ message: 'Please verify your email first' });
@@ -128,7 +136,8 @@ exports.login = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        isVerified: user.isVerified
       }
     });
   } catch (error) {

@@ -1,5 +1,8 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+import axiosInstance from '../../api/axios';
 import Loader from '../common/Loader';
 
 const getDefaultRoute = (role) => {
@@ -10,9 +13,49 @@ const getDefaultRoute = (role) => {
   }
 };
 
+const restrictedPaths = ['/projects', '/tasks', '/teams', '/documents', '/meetings', '/resources'];
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, token, loading } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [membershipStatus, setMembershipStatus] = useState(null);
+  const [checkingMembership, setCheckingMembership] = useState(false);
+  const hasRedirected = useRef(false);
+
+  useEffect(() => {
+    if (user?.role === 'student') {
+      setCheckingMembership(true);
+      axiosInstance.get('/groups/my-membership').then(res => {
+        setMembershipStatus(res.data.status);
+      }).catch(() => {
+        setMembershipStatus('none');
+      }).finally(() => {
+        setCheckingMembership(false);
+        hasRedirected.current = false;
+      });
+    } else {
+      setMembershipStatus(null);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (loading || checkingMembership || !user) return;
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
+      const target = getDefaultRoute(user.role);
+      if (location.pathname !== target) {
+        navigate(target, { replace: true });
+      }
+      return;
+    }
+    if (allowedRoles && user.role === 'student' && restrictedPaths.some(p => location.pathname.startsWith(p))) {
+      if (membershipStatus !== 'approved' && !hasRedirected.current) {
+        hasRedirected.current = true;
+        toast.error('You must join and be approved into a group first');
+        navigate('/instructors', { replace: true });
+      }
+    }
+  }, [user, allowedRoles, membershipStatus, checkingMembership, loading, location.pathname, navigate]);
 
   if (loading) {
     return (
@@ -24,10 +67,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (!token || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to={getDefaultRoute(user.role)} replace />;
   }
 
   return children;

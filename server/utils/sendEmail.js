@@ -10,10 +10,10 @@ const sendVerificationEmail = async (to, token) => {
     const response = await resend.emails.send({
       from: process.env.EMAIL_FROM,
       to,
-      subject: 'Confirm your PFE Hub account',
+      subject: 'Confirm your NAJAH account',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
-          <h2 style="color: #4f46e5;">Welcome to PFE Hub!</h2>
+          <h2 style="color: #4f46e5;">Welcome to NAJAH!</h2>
           <p>Please confirm your account by clicking the button below:</p>
           <a href="${verifyLink}"
              style="display: inline-block; padding: 12px 24px; background: #4f46e5; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
@@ -37,7 +37,7 @@ const sendPasswordResetEmail = async (to, token) => {
     const response = await resend.emails.send({
       from: process.env.EMAIL_FROM,
       to,
-      subject: 'Reset your PFE Hub password',
+      subject: 'Reset your NAJAH password',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
           <h2 style="color: #4f46e5;">Password Reset Request</h2>

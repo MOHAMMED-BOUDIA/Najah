@@ -191,7 +191,11 @@ const Profile = () => {
       toast.error('All profile fields are required.');
       return;
     }
-    if (user.role !== 'admin' && (!formData.department.trim() || !formData.phone.trim())) {
+    if (user.role === 'instructor' && (!formData.department.trim() || !formData.phone.trim())) {
+      toast.error('All profile fields are required.');
+      return;
+    }
+    if (user.role === 'student' && !formData.phone.trim()) {
       toast.error('All profile fields are required.');
       return;
     }
@@ -378,8 +382,8 @@ const Profile = () => {
             {user.role !== 'admin' && (
               <div className="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400">
                 <span>Department</span>
-                <span className="max-w-[140px] truncate text-gray-800 dark:text-gray-200" title={user.department || 'N/A'}>
-                  {user.department || 'N/A'}
+                <span className={`max-w-[140px] truncate ${user.department ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 italic'}`} title={user.department || 'Not assigned yet'}>
+                  {user.department || (user.role === 'student' ? 'Not assigned yet' : 'N/A')}
                 </span>
               </div>
             )}
@@ -444,12 +448,12 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {user.role !== 'admin' && (
+                {user.role === 'instructor' && (
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {/* Department */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        Department {user.role === 'instructor' ? '' : '*'}
+                        Department
                       </label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -457,11 +461,9 @@ const Profile = () => {
                         </span>
                         <select
                           name="department"
-                          required={user.role !== 'instructor'}
-                          disabled={user.role === 'instructor'}
+                          disabled
                           value={formData.department}
-                          onChange={handleChange}
-                          className={`block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800 ${user.role === 'instructor' ? 'cursor-not-allowed opacity-60' : ''}`}
+                          className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs opacity-60 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                         >
                           <option value="">Select department</option>
                           <option value="IT">IT</option>
@@ -473,9 +475,7 @@ const Profile = () => {
                           <option value="Software Engineering">Software Engineering</option>
                         </select>
                       </div>
-                      {user.role === 'instructor' && (
-                        <p className="mt-1 text-[10px] text-gray-400 italic">Only admin can change your department</p>
-                      )}
+                      <p className="mt-1 text-[10px] text-gray-400 italic">Only admin can change your department</p>
                     </div>
 
                     {/* Phone */}
@@ -497,6 +497,29 @@ const Profile = () => {
                         />
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {user.role === 'student' && (
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                        Phone Number *
+                      </label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                          <FaPhone className="h-3.5 w-3.5" />
+                        </span>
+                        <input
+                          type="text"
+                          name="phone"
+                          required
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className={inputClass}
+                        />
+                    </div>
+                  </div>
                   </div>
                 )}
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaPlus, FaEdit, FaTrash, FaUsers, FaSave, FaTimes, FaUserCheck, FaCamera } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaUsers, FaSave, FaTimes, FaUserCheck, FaCamera, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import { useConfirm } from '../context/ModalContext';
@@ -102,6 +102,8 @@ const MyGroups = () => {
     }
   };
 
+  const [processing, setProcessing] = useState(null);
+
   const handleDelete = async (group) => {
     if (!await confirm({ title: 'Delete Group', message: `Delete "${group.name}"? This cannot be undone.`, confirmLabel: 'Delete', destructive: true })) return;
     try {
@@ -110,6 +112,32 @@ const MyGroups = () => {
       toast.success('Group deleted');
     } catch (err) {
       toast.error('Failed to delete group');
+    }
+  };
+
+  const handleApprove = async (groupId, userId) => {
+    setProcessing(`approve-${groupId}-${userId}`);
+    try {
+      const res = await axiosInstance.post(`/groups/${groupId}/approve/${userId}`);
+      setGroups(prev => prev.map(g => g._id === groupId ? res.data : g));
+      toast.success('Student approved!');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to approve');
+    } finally {
+      setProcessing(null);
+    }
+  };
+
+  const handleReject = async (groupId, userId) => {
+    setProcessing(`reject-${groupId}-${userId}`);
+    try {
+      const res = await axiosInstance.post(`/groups/${groupId}/reject/${userId}`);
+      setGroups(prev => prev.map(g => g._id === groupId ? res.data : g));
+      toast.success('Request rejected');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to reject');
+    } finally {
+      setProcessing(null);
     }
   };
 
@@ -260,6 +288,11 @@ const MyGroups = () => {
                     }`}>
                       {group.status === 'open' ? 'Open' : 'Closed'}
                     </span>
+                    {group.pendingRequests?.length > 0 && (
+                      <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950/30 dark:text-amber-400">
+                        {group.pendingRequests.length} pending
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-1">
@@ -299,6 +332,39 @@ const MyGroups = () => {
                           <FaUserCheck className="h-3 w-3 text-emerald-500" />
                           {member.name || 'Student'}
                         </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {group.pendingRequests?.length > 0 && (
+                  <div className="mt-4 space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
+                    <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider dark:text-amber-400">
+                      Pending Requests ({group.pendingRequests.length})
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.pendingRequests.map((student) => (
+                        <div key={student._id} className="flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 dark:bg-amber-950/20">
+                          <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                            {student.name || 'Student'}
+                          </span>
+                          <button
+                            onClick={() => handleApprove(group._id, student._id)}
+                            disabled={processing === `approve-${group._id}-${student._id}`}
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 disabled:opacity-50 dark:bg-emerald-950/30 dark:text-emerald-400"
+                            title="Approve"
+                          >
+                            <FaCheckCircle className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleReject(group._id, student._id)}
+                            disabled={processing === `reject-${group._id}-${student._id}`}
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 text-red-500 hover:bg-red-200 disabled:opacity-50 dark:bg-red-950/30 dark:text-red-400"
+                            title="Reject"
+                          >
+                            <FaTimesCircle className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>

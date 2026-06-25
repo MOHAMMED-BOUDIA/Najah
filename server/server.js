@@ -25,6 +25,7 @@ app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/resources', require('./routes/resourceRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
 app.use('/api/groups', require('./routes/groupRoutes'));
+app.use('/api/messages', require('./routes/messageRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

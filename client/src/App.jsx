@@ -27,6 +27,7 @@ import Meetings from './pages/Meetings';
 import Resources from './pages/Resources';
 import Challenges from './pages/Challenges';
 import Profile from './pages/Profile';
+import Chat from './pages/Chat';
 import AdminPanel from './pages/AdminPanel';
 import Instructors from './pages/Instructors';
 import InstructorGroups from './pages/InstructorGroups';
@@ -103,6 +104,7 @@ function App() {
             <Route path="documents" element={<ProtectedRoute allowedRoles={['student','instructor']}><Documents /></ProtectedRoute>} />
             <Route path="meetings" element={<ProtectedRoute allowedRoles={['student','instructor']}><Meetings /></ProtectedRoute>} />
             <Route path="resources" element={<ProtectedRoute allowedRoles={['student','instructor']}><Resources /></ProtectedRoute>} />
+            <Route path="chat" element={<ProtectedRoute allowedRoles={['student','instructor']}><Chat /></ProtectedRoute>} />
             <Route path="challenges" element={<Challenges />} />
             <Route path="profile" element={<Profile />} />
 
