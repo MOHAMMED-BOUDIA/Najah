@@ -3,18 +3,25 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const projectRoutes = require('./routes/projectRoutes');
-const teamRoutes = require('./routes/teamRoutes');
-const taskRoutes = require('./routes/taskRoutes');
-const documentRoutes = require('./routes/documentRoutes');
-const meetingRoutes = require('./routes/meetingRoutes');
-const groupRoutes = require('./routes/groupRoutes');
-const resourceRoutes = require('./routes/resourceRoutes');
-const challengeRoutes = require('./routes/challengeRoutes');
-const notificationRoutes = require('./routes/notificationRoutes');
-const messageRoutes = require('./routes/messageRoutes');
+let loadError = null;
+
+const load = (path) => {
+  try { return require(path); }
+  catch (e) { loadError = e; return null; }
+};
+
+const authRoutes = load('./routes/authRoutes');
+const userRoutes = load('./routes/userRoutes');
+const projectRoutes = load('./routes/projectRoutes');
+const teamRoutes = load('./routes/teamRoutes');
+const taskRoutes = load('./routes/taskRoutes');
+const documentRoutes = load('./routes/documentRoutes');
+const meetingRoutes = load('./routes/meetingRoutes');
+const groupRoutes = load('./routes/groupRoutes');
+const resourceRoutes = load('./routes/resourceRoutes');
+const challengeRoutes = load('./routes/challengeRoutes');
+const notificationRoutes = load('./routes/notificationRoutes');
+const messageRoutes = load('./routes/messageRoutes');
 
 dotenv.config();
 
@@ -22,6 +29,13 @@ const app = express();
 
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
+
+app.use((req, res, next) => {
+  if (loadError) {
+    return res.status(500).json({ message: 'Module load error', error: loadError.message, stack: loadError.stack });
+  }
+  next();
+});
 
 app.use(async (req, res, next) => {
   try {
@@ -33,6 +47,9 @@ app.use(async (req, res, next) => {
 });
 
 app.get('/', (req, res) => {
+  if (loadError) {
+    return res.status(500).json({ message: 'Module load error', error: loadError.message });
+  }
   res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
