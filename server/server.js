@@ -2,14 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+
 dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
 app.use(async (req, res, next) => {
@@ -17,7 +15,6 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (err) {
-    console.error('DB error:', err);
     return res.status(500).json({ message: 'Database connection failed', error: err.message });
   }
 });
@@ -26,18 +23,28 @@ app.get('/', (req, res) => {
   res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/teams', require('./routes/teamRoutes'));
-app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api/documents', require('./routes/documentRoutes'));
-app.use('/api/meetings', require('./routes/meetingRoutes'));
-app.use('/api/groups', require('./routes/groupRoutes'));
-app.use('/api/resources', require('./routes/resourceRoutes'));
-app.use('/api/challenges', require('./routes/challengeRoutes'));
-app.use('/api/notifications', require('./routes/notificationRoutes'));
-app.use('/api/messages', require('./routes/messageRoutes'));
+const lazyRouter = (modulePath) => {
+  let router;
+  return (req, res, next) => {
+    if (!router) {
+      router = require(modulePath);
+    }
+    return router(req, res, next);
+  };
+};
+
+app.use('/api/auth', lazyRouter('./routes/authRoutes'));
+app.use('/api/users', lazyRouter('./routes/userRoutes'));
+app.use('/api/projects', lazyRouter('./routes/projectRoutes'));
+app.use('/api/teams', lazyRouter('./routes/teamRoutes'));
+app.use('/api/tasks', lazyRouter('./routes/taskRoutes'));
+app.use('/api/documents', lazyRouter('./routes/documentRoutes'));
+app.use('/api/meetings', lazyRouter('./routes/meetingRoutes'));
+app.use('/api/groups', lazyRouter('./routes/groupRoutes'));
+app.use('/api/resources', lazyRouter('./routes/resourceRoutes'));
+app.use('/api/challenges', lazyRouter('./routes/challengeRoutes'));
+app.use('/api/notifications', lazyRouter('./routes/notificationRoutes'));
+app.use('/api/messages', lazyRouter('./routes/messageRoutes'));
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);
