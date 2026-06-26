@@ -1,4 +1,4 @@
-const Team = require('../models/Team');
+const Team = require('../models/team');
 
 exports.createTeam = async (req, res) => {
   try {

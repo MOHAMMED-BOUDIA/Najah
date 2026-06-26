@@ -1,5 +1,5 @@
 const Group = require('../models/Group');
-const User = require('../models/User');
+const User = require('../models/user');
 
 exports.getAllGroups = async (req, res) => {
   try {

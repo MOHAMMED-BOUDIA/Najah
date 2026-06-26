@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const User = require('./models/User');
+const User = require('./models/user');
 const Group = require('./models/Group');
 const Project = require('./models/project');
 const Team = require('./models/team');
