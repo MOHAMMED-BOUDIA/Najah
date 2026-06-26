@@ -23,31 +23,18 @@ app.get('/', (req, res) => {
   res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
-const lazyRouter = (modulePath) => {
-  let router;
-  return (req, res, next) => {
-    if (!router) {
-      router = require(modulePath);
-    }
-    return router(req, res, next);
-  };
-};
-
-const path = require('path');
-const routesDir = __dirname;
-
-app.use('/api/auth', lazyRouter(path.join(routesDir, 'routes/authRoutes')));
-app.use('/api/users', lazyRouter(path.join(routesDir, 'routes/userRoutes')));
-app.use('/api/projects', lazyRouter(path.join(routesDir, 'routes/projectRoutes')));
-app.use('/api/teams', lazyRouter(path.join(routesDir, 'routes/teamRoutes')));
-app.use('/api/tasks', lazyRouter(path.join(routesDir, 'routes/taskRoutes')));
-app.use('/api/documents', lazyRouter(path.join(routesDir, 'routes/documentRoutes')));
-app.use('/api/meetings', lazyRouter(path.join(routesDir, 'routes/meetingRoutes')));
-app.use('/api/groups', lazyRouter(path.join(routesDir, 'routes/groupRoutes')));
-app.use('/api/resources', lazyRouter(path.join(routesDir, 'routes/resourceRoutes')));
-app.use('/api/challenges', lazyRouter(path.join(routesDir, 'routes/challengeRoutes')));
-app.use('/api/notifications', lazyRouter(path.join(routesDir, 'routes/notificationRoutes')));
-app.use('/api/messages', lazyRouter(path.join(routesDir, 'routes/messageRoutes')));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/teams', require('./routes/teamRoutes'));
+app.use('/api/tasks', require('./routes/taskRoutes'));
+app.use('/api/documents', require('./routes/documentRoutes'));
+app.use('/api/meetings', require('./routes/meetingRoutes'));
+app.use('/api/groups', require('./routes/groupRoutes'));
+app.use('/api/resources', require('./routes/resourceRoutes'));
+app.use('/api/challenges', require('./routes/challengeRoutes'));
+app.use('/api/notifications', require('./routes/notificationRoutes'));
+app.use('/api/messages', require('./routes/messageRoutes'));
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);
