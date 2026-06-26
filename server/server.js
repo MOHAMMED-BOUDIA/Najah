@@ -7,13 +7,24 @@ const connectDB = require('./config/db');
 const path = require('path');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://your-frontend.vercel.app', 'http://localhost:3000'],
+  credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ message: 'DB connection failed' });
+  }
+});
 
 // Root status page
 app.get('/', (req, res) => {
@@ -70,5 +81,9 @@ app.use('/api/challenges', require('./routes/challengeRoutes'));
 app.use('/api/groups', require('./routes/groupRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;

@@ -4,7 +4,7 @@ exports.uploadDocument = async (req, res) => {
   try {
     const doc = new Document({
       name: req.body.name,
-      file: req.file.path,
+      file: req.file ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}` : '',
       type: req.body.type,
       project: req.body.project,
       uploadedBy: req.user._id,
