@@ -1,77 +1,29 @@
-const dns = require("dns");
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const path = require('path');
-
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-  origin: function (origin, callback) {
-    const allowed = [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      process.env.CLIENT_URL
-    ].filter(Boolean);
-    if (!origin || allowed.includes(origin)) return callback(null, true);
-    callback(null, true);
-  },
+  origin: '*',
   credentials: true
 }));
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 
 app.use(async (req, res, next) => {
   try {
     await connectDB();
     next();
   } catch (err) {
-    console.error('DB middleware error:', err);
-    res.status(500).json({ message: 'Database connection failed', error: err.message });
+    console.error('DB error:', err);
+    return res.status(500).json({ message: 'Database connection failed', error: err.message });
   }
 });
 
 app.get('/', (req, res) => {
-  res.send(`
-    <html>
-      <head>
-        <title>NAJAH API</title>
-        <style>
-          body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-          }
-          .card {
-            background: rgba(255,255,255,0.1);
-            padding: 40px 60px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-          }
-          h1 { font-size: 3rem; margin: 0; }
-          p { font-size: 1.2rem; margin-top: 10px; opacity: 0.9; }
-          .status { color: #10b981; font-weight: bold; }
-        </style>
-      </head>
-      <body>
-        <div class="card">
-          <h1>NAJAH Server</h1>
-          <p class="status">● Server is running</p>
-          <p>API available at <code>/api</code></p>
-        </div>
-      </body>
-    </html>
-  `);
+  res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
@@ -81,15 +33,20 @@ app.use('/api/teams', require('./routes/teamRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 app.use('/api/documents', require('./routes/documentRoutes'));
 app.use('/api/meetings', require('./routes/meetingRoutes'));
-app.use('/api/notifications', require('./routes/notificationRoutes'));
+app.use('/api/groups', require('./routes/groupRoutes'));
 app.use('/api/resources', require('./routes/resourceRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
-app.use('/api/groups', require('./routes/groupRoutes'));
+app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
+
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({ message: 'Server error', error: err.message });
+});
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, () => console.log(`Server on ${PORT}`));
 }
 
 module.exports = app;

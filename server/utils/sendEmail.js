@@ -1,13 +1,20 @@
 const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend = null;
+
+const getResend = () => {
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+};
 
 const sendVerificationEmail = async (to, token) => {
   const verifyLink = `${process.env.CLIENT_URL}/verify/${token}`;
   console.log(`[sendEmail] Sending verification email to ${to}...`);
 
   try {
-    const response = await resend.emails.send({
+    const response = await getResend().emails.send({
       from: process.env.EMAIL_FROM,
       to,
       subject: 'Confirm your NAJAH account',
@@ -34,7 +41,7 @@ const sendPasswordResetEmail = async (to, token) => {
   console.log(`[sendEmail] Sending password reset email to ${to}...`);
 
   try {
-    const response = await resend.emails.send({
+    const response = await getResend().emails.send({
       from: process.env.EMAIL_FROM,
       to,
       subject: 'Reset your NAJAH password',
