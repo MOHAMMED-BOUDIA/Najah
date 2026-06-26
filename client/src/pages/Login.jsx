@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { FaEnvelope, FaLock, FaProjectDiagram, FaSpinner } from 'react-icons/fa';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 
@@ -50,10 +50,18 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 p-4 transition-colors duration-200">
+      <Link
+        to="/"
+        className="fixed top-5 left-5 flex items-center gap-2 text-white/70 hover:text-white transition text-sm z-10"
+      >
+        <FiArrowLeft className="w-4 h-4" />
+        Back to Home
+      </Link>
+
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-indigo-100/10">
         
         {/* Brand Logo */}
-        <div className="flex flex-col items-center justify-center text-center">
+        <Link to="/" className="flex flex-col items-center justify-center text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 shadow-sm">
             <FaProjectDiagram className="h-6 w-6" />
           </div>
@@ -66,7 +74,7 @@ const Login = () => {
           <p className="mt-3 text-xs text-indigo-500 dark:text-indigo-400 font-medium">
             Your path to graduation success 🎓
           </p>
-        </div>
+        </Link>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">

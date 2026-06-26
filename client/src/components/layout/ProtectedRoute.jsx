@@ -9,7 +9,7 @@ const getDefaultRoute = (role) => {
   switch (role) {
     case 'admin': return '/admin/dashboard';
     case 'instructor': return '/dashboard';
-    default: return '/';
+    default: return '/instructors';
   }
 };
 

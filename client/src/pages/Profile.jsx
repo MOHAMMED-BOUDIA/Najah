@@ -130,6 +130,12 @@ const Profile = () => {
     }
   }, [user]);
 
+  // ─── Fetch departments ─────────────────────────────────────────────────
+  const [departments, setDepartments] = useState([]);
+  useEffect(() => {
+    axiosInstance.get('/departments').then(res => setDepartments(res.data || [])).catch(() => {});
+  }, []);
+
   // ─── Fetch real stats by role ──────────────────────────────────────────
   useEffect(() => {
     const fetchStats = async () => {
@@ -467,13 +473,9 @@ const Profile = () => {
                           className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs opacity-60 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                         >
                           <option value="">Select department</option>
-                          <option value="IT">IT</option>
-                          <option value="Web Development">Web Development</option>
-                          <option value="Mobile Development">Mobile Development</option>
-                          <option value="Data Science">Data Science</option>
-                          <option value="Cybersecurity">Cybersecurity</option>
-                          <option value="Network & Systems">Network & Systems</option>
-                          <option value="Software Engineering">Software Engineering</option>
+                          {departments.map(d => (
+                            <option key={d._id} value={d.name}>{d.name}</option>
+                          ))}
                         </select>
                       </div>
                       <p className="mt-1 text-[10px] text-gray-400 italic">Only admin can change your department</p>

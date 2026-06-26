@@ -10,9 +10,20 @@ const app = express();
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
+let seeded = false;
+
 app.use(async (req, res, next) => {
   try {
     await connectDB();
+    if (!seeded && process.env.NODE_ENV === 'production') {
+      seeded = true;
+      const Department = require('./models/Department');
+      const count = await Department.countDocuments();
+      if (count === 0) {
+        const defaults = ['IT', 'Web Development', 'Mobile Development', 'Data Science', 'Cybersecurity', 'Network & Systems', 'Software Engineering'];
+        await Department.insertMany(defaults.map(name => ({ name })));
+      }
+    }
     next();
   } catch (err) {
     return res.status(500).json({ message: 'Database connection failed', error: err.message });
@@ -33,6 +44,7 @@ app.use('/api/meetings', require('./routes/meetingRoutes'));
 app.use('/api/groups', require('./routes/groupRoutes'));
 app.use('/api/resources', require('./routes/resourceRoutes'));
 app.use('/api/challenges', require('./routes/challengeRoutes'));
+app.use('/api/departments', require('./routes/departmentRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 

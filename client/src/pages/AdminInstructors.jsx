@@ -11,6 +11,7 @@ const AdminInstructors = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [departments, setDepartments] = useState([]);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', department: '', phone: '' });
   const [saving, setSaving] = useState(false);
 
@@ -25,8 +26,11 @@ const AdminInstructors = () => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchInstructors(); }, []);
+
+  useEffect(() => {
+    axiosInstance.get('/departments').then(res => setDepartments(res.data || [])).catch(() => {});
+  }, []);
   const openCreate = () => {
     setEditing(null);
     setFormData({ name: '', email: '', password: '', department: '', phone: '' });
@@ -128,13 +132,9 @@ const AdminInstructors = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Department</label>
               <select value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
                 <option value="">Select department</option>
-                <option value="IT">IT</option>
-                <option value="Web Development">Web Development</option>
-                <option value="Mobile Development">Mobile Development</option>
-                <option value="Data Science">Data Science</option>
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="Network & Systems">Network & Systems</option>
-                <option value="Software Engineering">Software Engineering</option>
+                {departments.map(d => (
+                  <option key={d._id} value={d.name}>{d.name}</option>
+                ))}
               </select>
             </div>
             <div>

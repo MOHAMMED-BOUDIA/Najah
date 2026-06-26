@@ -15,7 +15,8 @@ import {
   FaBookOpen,
   FaChalkboardTeacher,
   FaGraduationCap,
-  FaCommentAlt
+  FaCommentAlt,
+  FaLayerGroup
 } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 import axiosInstance from '../../api/axios';
@@ -84,6 +85,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
     { name: 'Dashboard', path: '/admin/dashboard', icon: FaTachometerAlt },
     { name: 'Instructors', path: '/admin/instructors', icon: FaChalkboardTeacher },
     { name: 'Students', path: '/admin/students', icon: FaGraduationCap },
+    { name: 'Departments', path: '/admin/departments', icon: FaLayerGroup },
     { name: 'Profile', path: '/profile', icon: FaUser },
   ];
 
