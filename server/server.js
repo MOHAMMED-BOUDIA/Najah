@@ -23,26 +23,6 @@ app.get('/', (req, res) => {
   res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
-app.get('/api/seed-admin-najah-2024', async (req, res) => {
-  try {
-    const User = require('./models/user');
-    const bcrypt = require('bcryptjs');
-    await User.deleteOne({ email: 'admin@najah.com' });
-    const hashedPassword = await bcrypt.hash('Admin@1234', 10);
-    const admin = await User.create({
-      name: 'Super Admin',
-      email: 'admin@najah.com',
-      password: hashedPassword,
-      role: 'admin',
-      isVerified: true,
-      department: 'Administration'
-    });
-    res.json({ success: true, message: 'Admin created', credentials: { email: 'admin@najah.com', password: 'Admin@1234' } });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
