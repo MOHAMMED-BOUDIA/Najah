@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaEdit, FaTrash, FaPlus, FaSave, FaTimes, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
@@ -13,6 +14,7 @@ const AdminInstructors = () => {
   const [editing, setEditing] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', department: '', phone: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const fetchInstructors = async () => {
@@ -125,7 +127,12 @@ const AdminInstructors = () => {
             {!editing && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password *</label>
-                <input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200" />
+                <div className="relative">
+                  <input type={showPassword ? 'text' : 'password'} value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 pr-12 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200" />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-indigo-500">
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
             )}
             <div>
