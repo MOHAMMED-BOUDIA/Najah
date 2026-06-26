@@ -3,6 +3,19 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const teamRoutes = require('./routes/teamRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const documentRoutes = require('./routes/documentRoutes');
+const meetingRoutes = require('./routes/meetingRoutes');
+const groupRoutes = require('./routes/groupRoutes');
+const resourceRoutes = require('./routes/resourceRoutes');
+const challengeRoutes = require('./routes/challengeRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+
 dotenv.config();
 
 const app = express();
@@ -23,28 +36,18 @@ app.get('/', (req, res) => {
   res.json({ status: 'NAJAH API is running', version: '1.0' });
 });
 
-const lazyRouter = (modulePath) => {
-  let router;
-  return (req, res, next) => {
-    if (!router) {
-      router = require(modulePath);
-    }
-    return router(req, res, next);
-  };
-};
-
-app.use('/api/auth', lazyRouter('./routes/authRoutes'));
-app.use('/api/users', lazyRouter('./routes/userRoutes'));
-app.use('/api/projects', lazyRouter('./routes/projectRoutes'));
-app.use('/api/teams', lazyRouter('./routes/teamRoutes'));
-app.use('/api/tasks', lazyRouter('./routes/taskRoutes'));
-app.use('/api/documents', lazyRouter('./routes/documentRoutes'));
-app.use('/api/meetings', lazyRouter('./routes/meetingRoutes'));
-app.use('/api/groups', lazyRouter('./routes/groupRoutes'));
-app.use('/api/resources', lazyRouter('./routes/resourceRoutes'));
-app.use('/api/challenges', lazyRouter('./routes/challengeRoutes'));
-app.use('/api/notifications', lazyRouter('./routes/notificationRoutes'));
-app.use('/api/messages', lazyRouter('./routes/messageRoutes'));
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/documents', documentRoutes);
+app.use('/api/meetings', meetingRoutes);
+app.use('/api/groups', groupRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/challenges', challengeRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/messages', messageRoutes);
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);
