@@ -182,7 +182,7 @@ const ProjectDetails = () => {
                 {project.technologies.map(tech => (
                   <span
                     key={tech}
-                    className="rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400"
+                    className="rounded-lg bg-[#0084D1]/10 px-2.5 py-1 text-xs font-semibold text-[#0084D1]"
                   >
                     {tech}
                   </span>
@@ -195,7 +195,7 @@ const ProjectDetails = () => {
           <div className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-5 dark:border-gray-800 sm:grid-cols-2">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50 text-gray-400 dark:bg-gray-800">
-                <FaCalendarAlt className="h-5 w-5 text-indigo-500" />
+                <FaCalendarAlt className="h-5 w-5 text-[#0084D1]" />
               </div>
               <div>
                 <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">PROJECT TIMELINE</p>
@@ -208,7 +208,7 @@ const ProjectDetails = () => {
             {project.supervisor && (
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-50 text-gray-400 dark:bg-gray-800">
-                  <FaChalkboardTeacher className="h-5 w-5 text-indigo-500" />
+                  <FaChalkboardTeacher className="h-5 w-5 text-[#0084D1]" />
                 </div>
                 <div>
                   <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">SUPERVISOR</p>
@@ -230,11 +230,11 @@ const ProjectDetails = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold text-gray-500 dark:text-gray-400">Completion</span>
-                <span className="font-bold text-indigo-600 dark:text-indigo-400">{project.progress}%</span>
+                <span className="font-bold text-[#0084D1]">{project.progress}%</span>
               </div>
               <div className="h-3 w-full rounded-full bg-gray-100 dark:bg-gray-800">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+                  className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1] transition-all duration-500"
                   style={{ width: `${project.progress}%` }}
                 />
               </div>
@@ -250,7 +250,7 @@ const ProjectDetails = () => {
                   value={statusVal}
                   onChange={(e) => handleUpdateStatus(e.target.value)}
                   disabled={updating}
-                  className="block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 disabled:bg-gray-50 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                  className="block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] disabled:bg-gray-50 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
                 >
                   <option value="pending">Pending</option>
                   <option value="approved">Approved</option>
@@ -274,12 +274,12 @@ const ProjectDetails = () => {
                 max="100"
                 value={progressVal}
                 onChange={(e) => setProgressVal(parseInt(e.target.value, 10))}
-                className="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-indigo-600 dark:bg-gray-800"
+                className="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-[#0084D1] dark:bg-gray-800"
               />
               <button
                 type="submit"
                 disabled={updating || progressVal === project.progress}
-                className="w-full rounded-xl bg-indigo-50 py-2.5 text-sm font-bold text-indigo-600 hover:bg-indigo-100 disabled:opacity-50 transition dark:bg-indigo-950/40 dark:text-indigo-400"
+                className="w-full rounded-xl bg-[#0084D1]/10 py-2.5 text-sm font-bold text-[#0084D1] hover:bg-[#0084D1]/20 disabled:opacity-50 transition"
               >
                 Save Progress
               </button>
@@ -294,7 +294,7 @@ const ProjectDetails = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaUsers className="h-5 w-5 text-indigo-500" />
+              <FaUsers className="h-5 w-5 text-[#0084D1]" />
               Assigned Team
             </h3>
             {project.team && (
@@ -310,7 +310,7 @@ const ProjectDetails = () => {
             <div className="divide-y divide-gray-100 dark:divide-gray-800">
               {project.team.members && project.team.members.map((member) => (
                 <div key={member._id || member.id} className="flex items-center gap-3 py-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600 font-bold text-xs dark:bg-purple-950/40 dark:text-purple-400">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
                     {member.name ? member.name.charAt(0).toUpperCase() : 'M'}
                   </div>
                   <div>
@@ -331,12 +331,12 @@ const ProjectDetails = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaTasks className="h-5 w-5 text-indigo-500" />
+              <FaTasks className="h-5 w-5 text-[#0084D1]" />
               Tasks Summary
             </h3>
             <Link
               to="/tasks"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+              className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD]"
             >
               Open Kanban Board
             </Link>
@@ -347,9 +347,9 @@ const ProjectDetails = () => {
               <span className="text-xs font-bold text-gray-500">To Do</span>
               <p className="text-2xl font-black text-gray-800 dark:text-white">{taskCounts.todo}</p>
             </div>
-            <div className="rounded-2xl bg-indigo-50/50 p-4 dark:bg-indigo-950/20 text-center space-y-1">
-              <span className="text-xs font-bold text-indigo-500">In Progress</span>
-              <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400">{taskCounts['in-progress']}</p>
+            <div className="rounded-2xl bg-[#0084D1]/10 p-4 text-center space-y-1">
+              <span className="text-xs font-bold text-[#0084D1]">In Progress</span>
+              <p className="text-2xl font-black text-[#0084D1]">{taskCounts['in-progress']}</p>
             </div>
             <div className="rounded-2xl bg-amber-50/50 p-4 dark:bg-amber-950/20 text-center space-y-1">
               <span className="text-xs font-bold text-amber-500">In Review</span>
@@ -369,12 +369,12 @@ const ProjectDetails = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaFileAlt className="h-5 w-5 text-indigo-500" />
+              <FaFileAlt className="h-5 w-5 text-[#0084D1]" />
               Documents List
             </h3>
             <Link
               to="/documents"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD] inline-flex items-center gap-1"
             >
               <FaPlus className="h-3 w-3" /> Upload
             </Link>
@@ -389,7 +389,7 @@ const ProjectDetails = () => {
               {documents.map((doc) => (
                 <div key={doc._id} className="flex items-center justify-between py-3">
                   <div className="flex items-start gap-2.5 overflow-hidden pr-4">
-                    <FaFileAlt className="h-5 w-5 mt-0.5 text-indigo-500 flex-shrink-0" />
+                    <FaFileAlt className="h-5 w-5 mt-0.5 text-[#0084D1] flex-shrink-0" />
                     <div className="overflow-hidden">
                       <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
                         {doc.name}
@@ -405,7 +405,7 @@ const ProjectDetails = () => {
                         href={`http://localhost:5000/uploads/${doc.file}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="rounded-lg p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+                        className="rounded-lg p-2 text-[#0084D1] hover:bg-[#0084D1]/10"
                         title="Download file"
                       >
                         <FaDownload className="h-3.5 w-3.5" />
@@ -429,12 +429,12 @@ const ProjectDetails = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaCalendarCheck className="h-5 w-5 text-indigo-500" />
+              <FaCalendarCheck className="h-5 w-5 text-[#0084D1]" />
               Scheduled Meetings
             </h3>
             <Link
               to="/meetings"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 inline-flex items-center gap-1"
+              className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD] inline-flex items-center gap-1"
             >
               <FaPlus className="h-3 w-3" /> Schedule
             </Link>
@@ -449,7 +449,7 @@ const ProjectDetails = () => {
               {meetings.map((meet) => (
                 <div key={meet._id} className="flex items-center justify-between py-3">
                   <div className="flex items-start gap-2.5">
-                    <FaCalendarAlt className="h-5 w-5 mt-0.5 text-indigo-500 flex-shrink-0" />
+                    <FaCalendarAlt className="h-5 w-5 mt-0.5 text-[#0084D1] flex-shrink-0" />
                     <div>
                       <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                         {meet.title}

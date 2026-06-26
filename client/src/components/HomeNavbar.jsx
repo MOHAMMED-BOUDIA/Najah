@@ -63,10 +63,10 @@ export default function HomeNavbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white font-bold text-sm group-hover:scale-105 transition-transform">
               N
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               NAJAH
             </span>
           </Link>
@@ -77,14 +77,14 @@ export default function HomeNavbar() {
               <button
                 key={link.label}
                 onClick={() => handleScroll(link.id)}
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] transition-colors"
               >
                 {link.label}
               </button>
             ))}
             <Link
               to="/contact"
-              className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] transition-colors"
             >
               Contact
             </Link>
@@ -97,7 +97,7 @@ export default function HomeNavbar() {
               className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
-              {darkMode ? <FaSun className="h-4 w-4 text-amber-500" /> : <FaMoon className="h-4 w-4 text-indigo-600" />}
+              {darkMode ? <FaSun className="h-4 w-4 text-amber-500" /> : <FaMoon className="h-4 w-4 text-[#0084D1]" />}
             </button>
             <Link
               to="/login"
@@ -107,7 +107,7 @@ export default function HomeNavbar() {
             </Link>
             <Link
               to="/register"
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all"
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] shadow-lg shadow-[#FFB900]/25 hover:shadow-[#FFB900]/40 transition-all"
             >
               Get Started
             </Link>
@@ -115,7 +115,7 @@ export default function HomeNavbar() {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors"
+            className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-[#0084D1] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -138,7 +138,7 @@ export default function HomeNavbar() {
                 <button
                   key={link.label}
                   onClick={() => handleScroll(link.id)}
-                  className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
+                  className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
                 >
                   {link.label}
                 </button>
@@ -146,7 +146,7 @@ export default function HomeNavbar() {
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
+                className="block px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
               >
                 Contact
               </Link>
@@ -154,7 +154,7 @@ export default function HomeNavbar() {
                 onClick={() => { setDarkMode(!darkMode); setMobileOpen(false); }}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
               >
-                {darkMode ? <><FaSun className="text-amber-500" /> Light Mode</> : <><FaMoon className="text-indigo-600" /> Dark Mode</>}
+                {darkMode ? <><FaSun className="text-amber-500" /> Light Mode</> : <><FaMoon className="text-[#0084D1]" /> Dark Mode</>}
               </button>
               <hr className="border-gray-200 dark:border-gray-700" />
               <Link
@@ -167,7 +167,7 @@ export default function HomeNavbar() {
               <Link
                 to="/register"
                 onClick={() => setMobileOpen(false)}
-                className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all"
+                className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] transition-all"
               >
                 Get Started
               </Link>

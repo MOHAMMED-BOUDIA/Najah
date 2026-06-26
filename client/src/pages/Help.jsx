@@ -101,14 +101,14 @@ export default function Help() {
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 pb-16 overflow-y-auto bg-black/50 backdrop-blur-sm" onClick={() => setSelectedArticle(null)}>
           <div className="relative w-full max-w-3xl mx-4 bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
-              <button onClick={() => setSelectedArticle(null)} className="flex items-center gap-2 text-sm text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+              <button onClick={() => setSelectedArticle(null)} className="flex items-center gap-2 text-sm text-gray-400 hover:text-[#0084D1] transition-colors">
                 <FiX className="w-4 h-4" />
                 Close
               </button>
               <span className="text-xs text-gray-400">Last updated June 2026</span>
             </div>
             <div className="px-6 py-8">
-              <span className="inline-flex px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-medium mb-4">
+              <span className="inline-flex px-3 py-1 rounded-full bg-[#0084D1]/10 text-[#0084D1] text-xs font-medium mb-4">
                 {selectedArticle.category}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold mb-4">{selectedArticle.title}</h2>
@@ -124,7 +124,7 @@ export default function Help() {
                 <h3 className="font-semibold mb-3">Related Articles</h3>
                 <div className="space-y-2">
                   {articles.filter((a) => a.category === selectedArticle.category && a.id !== selectedArticle.id).slice(0, 3).map((rel) => (
-                    <button key={rel.id} onClick={() => setSelectedArticle(rel)} className="block text-sm text-indigo-600 dark:text-indigo-400 hover:underline text-left">
+                    <button key={rel.id} onClick={() => setSelectedArticle(rel)} className="block text-sm text-[#0084D1] hover:underline text-left">
                       {rel.title}
                     </button>
                   ))}
@@ -140,7 +140,7 @@ export default function Help() {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
               Help{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 Center
               </span>
             </h1>
@@ -156,7 +156,7 @@ export default function Help() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search for answers..."
-                className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
               />
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function Help() {
               onClick={() => setCategory('All')}
               className={`p-5 rounded-2xl border text-left transition-all ${
                 category === 'All'
-                  ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 shadow-md'
+                  ? 'border-[#0084D1] bg-[#0084D1]/10 shadow-md'
                   : 'border-gray-200 dark:border-gray-800 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
@@ -180,11 +180,11 @@ export default function Help() {
                 onClick={() => setCategory(cat.key)}
                 className={`p-5 rounded-2xl border text-left transition-all ${
                   category === cat.key
-                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 shadow-md'
+                    ? 'border-[#0084D1] bg-[#0084D1]/10 shadow-md'
                     : 'border-gray-200 dark:border-gray-800 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-700'
                 }`}
               >
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white mb-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white mb-3">
                   <cat.icon className="w-4 h-4" />
                 </div>
                 <h3 className="font-semibold text-sm">{cat.key}</h3>
@@ -206,7 +206,7 @@ export default function Help() {
             {filtered.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-gray-400">No articles found matching your search.</p>
-                <button onClick={() => { setSearch(''); setCategory('All'); }} className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline mt-2">
+                <button onClick={() => { setSearch(''); setCategory('All'); }} className="text-sm text-[#0084D1] hover:underline mt-2">
                   Clear filters
                 </button>
               </div>
@@ -219,26 +219,26 @@ export default function Help() {
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium text-indigo-600 dark:text-indigo-400">{article.category}</span>
+                      <span className="text-xs font-medium text-[#0084D1]">{article.category}</span>
                       <span className="text-xs text-gray-400 flex items-center gap-1"><FiClock className="w-3 h-3" />{article.readTime}</span>
                     </div>
                     <h3 className="font-semibold text-sm">{article.title}</h3>
                     <p className="text-xs text-gray-400 mt-0.5">{article.description}</p>
                   </div>
-                  <FiArrowRight className="w-4 h-4 text-gray-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex-shrink-0 mt-1" />
+                  <FiArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#0084D1] transition-colors flex-shrink-0 mt-1" />
                 </button>
               ))
             )}
           </div>
 
           {/* Contact Support */}
-          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 border border-indigo-200/50 dark:border-indigo-800/50 text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-gradient-to-br from-[#0084D1]/10 to-[#FFB900]/10 border border-[#0084D1]/30 text-center">
             <h2 className="text-2xl font-bold mb-2">Still need help?</h2>
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
               Our support team is here to help you with any issue.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/25">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white font-semibold text-sm hover:from-[#FFB900] hover:to-[#0277BD] transition-all shadow-lg shadow-[#0084D1]/25">
                 Contact Support
                 <FiArrowRight className="w-4 h-4" />
               </Link>

@@ -3,12 +3,12 @@ import { motion, useInView } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 
 const instructors = [
-  { name: 'Dr. Ahmed Benali', specialty: 'Full-Stack Web Development', formations: 12, avatar: 'AB', color: 'from-indigo-500 to-purple-600' },
-  { name: 'Sara Amrani', specialty: 'Data Science & AI', formations: 8, avatar: 'SA', color: 'from-purple-500 to-pink-600' },
-  { name: 'Youssef Karim', specialty: 'Mobile Development', formations: 10, avatar: 'YK', color: 'from-cyan-500 to-blue-600' },
-  { name: 'Nadia Tazi', specialty: 'UI/UX Design', formations: 6, avatar: 'NT', color: 'from-emerald-500 to-teal-600' },
-  { name: 'Omar Razi', specialty: 'Cloud & DevOps', formations: 7, avatar: 'OR', color: 'from-amber-500 to-orange-600' },
-  { name: 'Lina Kadiri', specialty: 'Cybersecurity', formations: 5, avatar: 'LK', color: 'from-rose-500 to-pink-600' },
+  { name: 'Dr. Ahmed Benali', specialty: 'Full-Stack Web Development', formations: 12, avatar: 'AB', color: 'from-[#FFB900] to-[#0084D1]' },
+  { name: 'Sara Amrani', specialty: 'Data Science & AI', formations: 8, avatar: 'SA', color: 'from-[#0084D1] to-[#FFB900]' },
+  { name: 'Youssef Karim', specialty: 'Mobile Development', formations: 10, avatar: 'YK', color: 'from-[#FFB900] to-[#e6a000]' },
+  { name: 'Nadia Tazi', specialty: 'UI/UX Design', formations: 6, avatar: 'NT', color: 'from-[#0084D1] to-[#0277BD]' },
+  { name: 'Omar Razi', specialty: 'Cloud & DevOps', formations: 7, avatar: 'OR', color: 'from-[#FFB900] to-[#CC9400]' },
+  { name: 'Lina Kadiri', specialty: 'Cybersecurity', formations: 5, avatar: 'LK', color: 'from-[#0084D1] to-[#01579B]' },
 ];
 
 const InstructorCard = memo(function InstructorCard({ name, specialty, formations, avatar, color, i }) {
@@ -28,13 +28,13 @@ const InstructorCard = memo(function InstructorCard({ name, specialty, formation
           {avatar}
         </div>
         <div>
-          <h3 className="font-semibold text-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{name}</h3>
+          <h3 className="font-semibold text-sm group-hover:text-[#0084D1] transition-colors">{name}</h3>
           <p className="text-xs text-gray-400">{specialty}</p>
         </div>
       </div>
       <div className="flex items-center justify-between text-xs text-gray-400">
         <span>{formations} formations</span>
-        <span className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="flex items-center gap-1 text-[#0084D1] opacity-0 group-hover:opacity-100 transition-opacity">
           View profile <FiArrowRight className="w-3 h-3" />
         </span>
       </div>
@@ -58,7 +58,7 @@ function InstructorsSection() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             Meet Our{' '}
-            <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               Expert Instructors
             </span>
           </h2>

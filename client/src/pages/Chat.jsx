@@ -121,7 +121,7 @@ const Chat = () => {
               key={g._id}
               onClick={() => setActiveGroup(g)}
               className={`w-full border-b border-gray-50 px-4 py-3 text-left transition-colors last:border-0 dark:border-gray-800/50 ${
-                activeGroup?._id === g._id ? 'bg-indigo-50 dark:bg-indigo-950/20' : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
+                 activeGroup?._id === g._id ? 'bg-[#0084D1]/10' : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
               }`}
             >
               <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{g.name}</p>
@@ -168,7 +168,7 @@ const Chat = () => {
                         {senderAvatar ? (
                           <img src={getAvatarUrl(senderAvatar)} alt={senderName} className="h-full w-full object-cover object-top" />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-[9px] font-bold text-white">
+                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-[9px] font-bold text-white">
                             {senderName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
                           </div>
                         )}
@@ -176,11 +176,11 @@ const Chat = () => {
                       <div>
                         <div className={`rounded-2xl px-4 py-2 text-sm ${
                           isOwn
-                            ? 'bg-indigo-600 text-white rounded-tr-sm'
+                            ? 'bg-[#0084D1] text-white rounded-tr-sm'
                             : 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-200 rounded-tl-sm'
                         }`}>
                           {!isOwn && (
-                            <p className="mb-0.5 text-[10px] font-semibold text-indigo-500 dark:text-indigo-400">{senderName}</p>
+                            <p className="mb-0.5 text-[10px] font-semibold text-[#0084D1]">{senderName}</p>
                           )}
                           <p>{msg.content}</p>
                         </div>
@@ -203,12 +203,12 @@ const Chat = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Type a message..."
-              className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800"
+              className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-[#0084D1] focus:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800"
             />
             <button
               type="submit"
               disabled={!input.trim() || sending}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 transition-all"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0084D1] text-white hover:bg-[#0277BD] disabled:opacity-50 transition-all"
             >
               {sending ? <FaSpinner className="h-4 w-4 animate-spin" /> : <FaPaperPlane className="h-4 w-4" />}
             </button>

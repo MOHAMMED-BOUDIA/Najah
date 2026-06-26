@@ -42,7 +42,7 @@ function StatsCounter() {
 
   return (
     <section ref={ref} className="relative py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/5 via-purple-600/5 to-pink-600/5 dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FFB900]/5 via-[#0084D1]/5 to-[#FFB900]/5" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
           {stats.map((s, i) => (
@@ -50,7 +50,7 @@ function StatsCounter() {
               key={s.label}
               style={{ opacity: isInView ? 1 : 0, transform: isInView ? 'translateY(0)' : 'translateY(20px)', transitionDelay: `${i * 0.1}s`, transitionDuration: '0.35s', transitionProperty: 'opacity, transform', transitionTimingFunction: 'ease-out' }}
             >
-              <p className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-2">
+              <p className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent mb-2">
                 <AnimatedNumber target={s.value} suffix={s.suffix} />
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{s.label}</p>

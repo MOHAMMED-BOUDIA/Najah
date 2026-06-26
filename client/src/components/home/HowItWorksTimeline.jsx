@@ -22,11 +22,11 @@ const StepItem = memo(function StepItem({ step, i, active }) {
       className="relative flex items-start gap-6 md:gap-10"
     >
       <div className="relative z-10 flex-shrink-0">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white shadow-lg">
           <StepIcon className="w-5 h-5" />
         </div>
-        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-950 border-2 border-indigo-500 flex items-center justify-center">
-          <span className="text-[10px] font-bold text-indigo-600">{i + 1}</span>
+        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-950 border-2 border-[#0084D1] flex items-center justify-center">
+          <span className="text-[10px] font-bold text-[#0084D1]">{i + 1}</span>
         </div>
       </div>
 
@@ -53,7 +53,7 @@ function HowItWorksTimeline() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             Start learning in{' '}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               3 simple steps
             </span>
           </h2>
@@ -68,7 +68,7 @@ function HowItWorksTimeline() {
               initial={{ height: 0 }}
               animate={isInView ? { height: '100%' } : {}}
               transition={{ duration: 1, ease: 'easeInOut' }}
-              className="w-full bg-gradient-to-b from-indigo-500 to-purple-600"
+              className="w-full bg-gradient-to-b from-[#FFB900] to-[#0084D1]"
             />
           </div>
 

@@ -20,7 +20,7 @@ export default function Contact() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
               Get in{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 Touch
               </span>
             </h1>
@@ -38,7 +38,7 @@ export default function Contact() {
                   <input
                     type="text"
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
                     placeholder="Your name"
                   />
                 </div>
@@ -47,7 +47,7 @@ export default function Contact() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -56,13 +56,13 @@ export default function Contact() {
                   <textarea
                     required
                     rows={5}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition resize-none"
                     placeholder="Your message..."
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/25"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white font-semibold hover:from-[#FFB900] hover:to-[#0277BD] transition-all shadow-lg shadow-[#0084D1]/25"
                 >
                   {sent ? 'Message Sent!' : 'Send Message'}
                   <FiSend className="w-4 h-4" />
@@ -73,7 +73,7 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-6">
               <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <div className="w-12 h-12 rounded-xl bg-[#0084D1]/10 flex items-center justify-center text-[#0084D1]">
                   <FiMail className="w-5 h-5" />
                 </div>
                 <div>
@@ -83,7 +83,7 @@ export default function Contact() {
               </div>
 
               <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                <div className="w-12 h-12 rounded-xl bg-[#0084D1]/10 flex items-center justify-center text-[#0084D1]">
                   <FiPhone className="w-5 h-5" />
                 </div>
                 <div>

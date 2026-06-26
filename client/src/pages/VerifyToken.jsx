@@ -20,11 +20,11 @@ const VerifyToken = () => {
   }, [token]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 p-4 transition-colors duration-200">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-indigo-100/10 text-center">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0084D1] via-[#0277BD] to-[#0066A0] p-4 transition-colors duration-200">
+      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-[#0084D1]/10 text-center">
         {status === 'loading' && (
           <div className="flex flex-col items-center gap-4">
-            <FaSpinner className="h-10 w-10 animate-spin text-indigo-600 dark:text-indigo-400" />
+            <FaSpinner className="h-10 w-10 animate-spin text-[#0084D1]" />
             <p className="text-sm text-gray-500 dark:text-gray-400">Verifying your account...</p>
           </div>
         )}
@@ -45,7 +45,7 @@ const VerifyToken = () => {
             <div className="mt-8 border-t border-gray-150 pt-6 dark:border-gray-800">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0084D1]/20 hover:bg-[#0277BD] transition"
               >
                 <FaProjectDiagram className="h-4 w-4" />
                 Go to Login
@@ -70,7 +70,7 @@ const VerifyToken = () => {
             <div className="mt-8 border-t border-gray-150 pt-6 dark:border-gray-800">
               <Link
                 to="/register"
-                className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0084D1]/20 hover:bg-[#0277BD] transition"
               >
                 <FaProjectDiagram className="h-4 w-4" />
                 Go to Register

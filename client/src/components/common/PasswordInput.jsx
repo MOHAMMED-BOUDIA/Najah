@@ -21,7 +21,7 @@ const PasswordInput = ({ label, name, value, onChange, placeholder, required = f
           onChange={onChange}
           required={required}
           placeholder={placeholder}
-          className="block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-12 text-xs outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800"
+          className="block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-12 text-xs outline-none transition-all duration-200 focus:border-[#0084D1] focus:bg-white focus:ring-2 focus:ring-[#0084D1]/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800"
         />
         <button
           type="button"

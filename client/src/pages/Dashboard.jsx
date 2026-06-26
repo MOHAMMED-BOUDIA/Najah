@@ -122,7 +122,7 @@ const Dashboard = () => {
     }
   };
 
-  const COLORS = { 'Pending': '#f59e0b', 'Approved': '#0284c7', 'In Progress': '#8b5cf6', 'Completed': '#10b981', 'Rejected': '#ef4444' };
+  const COLORS = { 'Pending': '#f59e0b', 'Approved': '#0284c7', 'In Progress': '#0084D1', 'Completed': '#10b981', 'Rejected': '#ef4444' };
 
   if (loading) {
     return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
@@ -164,9 +164,9 @@ const Dashboard = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaUsers className="h-5 w-5 text-indigo-500" /> My Groups
+              <FaUsers className="h-5 w-5 text-[#0084D1]" /> My Groups
             </h3>
-            <Link to="/instructors" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+            <Link to="/instructors" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">
               Browse All Groups <FaArrowRight className="inline h-3 w-3" />
             </Link>
           </div>
@@ -192,7 +192,7 @@ const Dashboard = () => {
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <FaLayerGroup className="h-5 w-5 text-amber-500" /> My Groups ({myGroups.length})
             </h3>
-            <Link to="/my-groups" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+            <Link to="/my-groups" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">
               Manage Groups <FaArrowRight className="inline h-3 w-3" />
             </Link>
           </div>
@@ -227,7 +227,7 @@ const Dashboard = () => {
                     {req.student.avatar ? (
                       <img src={`${(import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '')}/${req.student.avatar.replace(/\\/g, '/')}`} alt={req.student.name} className="h-full w-full object-cover object-top" />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-xs font-bold text-white">
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-xs font-bold text-white">
                         {req.student.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'S'}
                       </div>
                     )}
@@ -272,7 +272,7 @@ const Dashboard = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie data={statusChartData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} paddingAngle={4} dataKey="value">
-                    {statusChartData.map((entry) => (<Cell key={entry.name} fill={COLORS[entry.name] || '#6366f1'} />))}
+                    {statusChartData.map((entry) => (<Cell key={entry.name} fill={COLORS[entry.name] || '#0084D1'} />))}
                   </Pie>
                   <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                   <Legend verticalAlign="bottom" height={36} iconType="circle" />
@@ -293,8 +293,8 @@ const Dashboard = () => {
                   <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                   <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
                   <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                  <Bar dataKey="progress" fill="#8b5cf6" radius={[6, 6, 0, 0]}>
-                    {progressChartData.map((entry, idx) => (<Cell key={idx} fill={idx % 2 === 0 ? '#6366f1' : '#a855f7'} />))}
+                  <Bar dataKey="progress" fill="#0084D1" radius={[6, 6, 0, 0]}>
+                    {progressChartData.map((entry, idx) => (<Cell key={idx} fill={idx % 2 === 0 ? '#0084D1' : '#0277BD'} />))}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -308,7 +308,7 @@ const Dashboard = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">Recently Added Projects</h2>
-            <Link to="/projects" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">View all projects</Link>
+            <Link to="/projects" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">View all projects</Link>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {recentProjects.map((project) => (<ProjectCard key={project._id} project={project} />))}

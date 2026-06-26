@@ -92,7 +92,7 @@ const AdminPanel = () => {
   const getRoleBadgeClass = (role) => {
     switch (role) {
       case 'admin':
-        return 'bg-purple-50 text-purple-700 border-purple-100 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-900/40';
+        return 'bg-[#0084D1]/10 text-[#0084D1] border-[#0084D1]/20';
       case 'instructor':
         return 'bg-sky-50 text-sky-700 border-sky-100 dark:bg-sky-950/20 dark:text-sky-400 dark:border-sky-900/40';
       case 'student':
@@ -137,7 +137,7 @@ const AdminPanel = () => {
           type="button"
           className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-bold transition-all outline-none ${
             activeTab === 'users'
-              ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+              ? 'border-[#0084D1] text-[#0084D1]'
               : 'border-transparent text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
           }`}
         >
@@ -150,7 +150,7 @@ const AdminPanel = () => {
           type="button"
           className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-bold transition-all outline-none ${
             activeTab === 'projects'
-              ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+              ? 'border-[#0084D1] text-[#0084D1]'
               : 'border-transparent text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
           }`}
         >
@@ -180,7 +180,7 @@ const AdminPanel = () => {
                 {usersList.map((usr) => (
                   <tr key={usr._id || usr.id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
                     <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 font-bold text-xs dark:bg-indigo-950/40 dark:text-indigo-400">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
                         {usr.name ? usr.name.charAt(0).toUpperCase() : 'U'}
                       </div>
                       {usr.name}
@@ -248,7 +248,7 @@ const AdminPanel = () => {
                           value={proj.status}
                           onChange={(e) => handleStatusChange(proj._id, e.target.value)}
                           disabled={statusUpdating}
-                          className="rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
+                          className="rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
                         >
                           <option value="pending">Pending</option>
                           <option value="approved">Approved</option>
@@ -262,7 +262,7 @@ const AdminPanel = () => {
                       <div className="flex items-center gap-2 w-[120px]">
                         <div className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-800">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                            className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1]"
                             style={{ width: `${proj.progress || 0}%` }}
                           />
                         </div>

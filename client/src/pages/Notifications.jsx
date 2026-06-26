@@ -91,8 +91,8 @@ const Notifications = () => {
       case 'info':
       default:
         return {
-          card: base + borderStyle + (read ? '' : 'border-l-indigo-500 border-indigo-100/50 dark:border-indigo-950/20'),
-          icon: <FaInfoCircle className="h-5 w-5 text-indigo-500" />,
+          card: base + borderStyle + (read ? '' : 'border-l-[#0084D1] border-[#0084D1]/20'),
+          icon: <FaInfoCircle className="h-5 w-5 text-[#0084D1]" />,
         };
     }
   };
@@ -126,7 +126,7 @@ const Notifications = () => {
               onClick={handleMarkAllRead}
               disabled={actionLoading}
               type="button"
-              className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-600 hover:bg-indigo-100 transition dark:bg-indigo-950/40 dark:text-indigo-400 dark:hover:bg-indigo-950/60 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0084D1]/10 px-4 py-2.5 text-sm font-semibold text-[#0084D1] hover:bg-[#0084D1]/10 transition sm:w-auto"
             >
               <FaCheck className="h-3.5 w-3.5" />
               Mark all as read
@@ -166,7 +166,7 @@ const Notifications = () => {
                   {!notif.read && (
                     <button
                       onClick={() => handleMarkAsRead(notif._id)}
-                      className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800"
+                      className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800"
                       title="Mark as read"
                     >
                       <FaCheck className="h-3.5 w-3.5" />

@@ -52,12 +52,12 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 p-4 transition-colors duration-200">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-indigo-100/10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0084D1] via-[#0277BD] to-[#0066A0] p-4 transition-colors duration-200">
+      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-[#0084D1]/10">
         
         {/* Brand Logo */}
         <div className="flex flex-col items-center justify-center text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 shadow-sm">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0084D1]/10 text-[#0084D1] shadow-sm">
             <FaProjectDiagram className="h-6 w-6" />
           </div>
           <h2 className="mt-4 text-2xl font-black text-gray-900 dark:text-white">
@@ -83,13 +83,13 @@ const ResetPassword = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-12 text-sm outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
+                className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-12 text-sm outline-none transition focus:border-[#0084D1] focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-indigo-500 transition-colors"
+                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-[#0277BD] transition-colors"
                 tabIndex={-1}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
@@ -120,13 +120,13 @@ const ResetPassword = () => {
                 required
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-12 text-sm outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
+                className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-12 text-sm outline-none transition focus:border-[#0084D1] focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-indigo-500 transition-colors"
+                className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-[#0277BD] transition-colors"
                 tabIndex={-1}
                 aria-label={showConfirm ? 'Hide password' : 'Show password'}
               >
@@ -141,7 +141,7 @@ const ResetPassword = () => {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 disabled:bg-indigo-400 focus:outline-none transition dark:bg-indigo-600 dark:hover:bg-indigo-500"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#0084D1] py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#0084D1]/20 hover:bg-[#0277BD] disabled:bg-[#0084D1]/50 focus:outline-none transition"
           >
             {loading && <FaSpinner className="animate-spin" />}
             Reset Password
@@ -151,7 +151,7 @@ const ResetPassword = () => {
         <div className="mt-8 border-t border-gray-150 pt-5 text-center dark:border-gray-800">
           <Link
             to="/login"
-            className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+            className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]"
           >
             Back to login
           </Link>

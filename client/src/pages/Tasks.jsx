@@ -208,13 +208,13 @@ const Tasks = () => {
         {/* Project selector dropdown */}
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
-            <FaFolderOpen className="text-indigo-600 dark:text-indigo-400 h-4 w-4" />
+            <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
             Project:
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
-            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Choose a Project</option>
             {projects.map((proj) => (
@@ -228,7 +228,7 @@ const Tasks = () => {
             <button
               onClick={() => setIsCreateOpen(true)}
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
               title="Create Task"
             >
               <FaPlus className="h-4 w-4" />

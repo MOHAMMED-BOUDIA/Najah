@@ -120,7 +120,7 @@ const Navbar = ({ onMenuToggle }) => {
         </button>
 
         <div className="hidden items-center gap-2 md:flex">
-          <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+          <span className="text-sm font-bold text-[#FFB900]">
             NAJAH
           </span>
           <span className="text-sm text-gray-400 dark:text-gray-600">|</span>
@@ -147,7 +147,7 @@ const Navbar = ({ onMenuToggle }) => {
           className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
           title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
-          {darkMode ? <FaSun className="h-5 w-5 text-amber-500" /> : <FaMoon className="h-5 w-5 text-indigo-600" />}
+          {darkMode ? <FaSun className="h-5 w-5 text-amber-500" /> : <FaMoon className="h-5 w-5 text-[#0084D1]" />}
         </button>
 
         {/* Bell Notification — only for instructor */}
@@ -191,7 +191,7 @@ const Navbar = ({ onMenuToggle }) => {
                             {req.student.avatar ? (
                               <img src={getAvatarUrl(req.student.avatar)} alt={req.student.name} className="h-full w-full object-cover object-top" />
                             ) : (
-                              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-xs font-bold text-white">
+                              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-xs font-bold text-white">
                                 {req.student.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'S'}
                               </div>
                             )}

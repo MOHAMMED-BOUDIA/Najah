@@ -162,13 +162,13 @@ const Meetings = () => {
         {/* Project Selector */}
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
-            <FaFolderOpen className="text-indigo-600 dark:text-indigo-400 h-4 w-4" />
+            <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
             Project:
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
-            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Choose a Project</option>
             {projects.map((proj) => (
@@ -182,7 +182,7 @@ const Meetings = () => {
             <button
               onClick={() => setIsOpen(true)}
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
               title="Schedule Meeting"
             >
               <FaPlus className="h-4 w-4" />
@@ -239,15 +239,15 @@ const Meetings = () => {
                 {/* Details */}
                 <div className="mt-4 space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="h-4 w-4 text-indigo-500 flex-shrink-0" />
+                    <FaCalendarAlt className="h-4 w-4 text-[#0084D1] flex-shrink-0" />
                     <span>{formatDate(meeting.date)}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaClock className="h-4 w-4 text-indigo-500 flex-shrink-0" />
+                    <FaClock className="h-4 w-4 text-[#0084D1] flex-shrink-0" />
                     <span>{meeting.time}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FaMapMarkerAlt className="h-4 w-4 text-indigo-500 flex-shrink-0" />
+                    <FaMapMarkerAlt className="h-4 w-4 text-[#0084D1] flex-shrink-0" />
                     <span className="truncate">{meeting.location}</span>
                   </div>
                 </div>
@@ -307,7 +307,7 @@ const Meetings = () => {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="e.g. Mid-term Review Presentation"
             />
           </div>
@@ -323,7 +323,7 @@ const Meetings = () => {
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               />
             </div>
 
@@ -337,7 +337,7 @@ const Meetings = () => {
                 required
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               />
             </div>
           </div>
@@ -352,7 +352,7 @@ const Meetings = () => {
               required
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="e.g. Lab 4B or Zoom Link"
             />
           </div>
@@ -366,7 +366,7 @@ const Meetings = () => {
               rows="3"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="Provide topics to discuss, prerequisites, or zoom links..."
             />
           </div>
@@ -383,7 +383,7 @@ const Meetings = () => {
             <button
               type="submit"
               disabled={formLoading}
-              className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-400"
+              className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
               {editingMeeting ? 'Save Changes' : 'Schedule'}
             </button>

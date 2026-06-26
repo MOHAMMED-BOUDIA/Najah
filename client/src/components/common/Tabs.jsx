@@ -11,7 +11,7 @@ const Tabs = ({ tabs, activeTab, onChange }) => {
               type="button"
               className={`group relative flex shrink-0 items-center gap-2 px-4 py-3 text-sm font-semibold transition-all duration-200 outline-none ${
                 isActive
-                  ? 'text-indigo-600 dark:text-indigo-400'
+                  ? 'text-[#0084D1]'
                   : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
               }`}
             >
@@ -21,7 +21,7 @@ const Tabs = ({ tabs, activeTab, onChange }) => {
               <span
                 className={`absolute inset-x-0 -bottom-px h-0.5 rounded-full transition-all duration-300 ${
                   isActive
-                    ? 'bg-indigo-600 dark:bg-indigo-400'
+                    ? 'bg-[#0084D1]'
                     : 'bg-transparent group-hover:bg-gray-300 dark:group-hover:bg-gray-700'
                 }`}
               />

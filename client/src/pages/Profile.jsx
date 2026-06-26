@@ -271,12 +271,12 @@ const Profile = () => {
 
   // ─── Input class helper ─────────────────────────────────────────────────
   const inputClass =
-    'block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800';
+    'block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs outline-none transition-all duration-200 focus:border-[#0084D1] focus:bg-white focus:ring-2 focus:ring-[#0084D1]/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800';
 
   // ─── Mini stat cards data ───────────────────────────────────────────────
   const miniStats = [
-    { label: 'Projects', value: stats.projects, icon: FaProjectDiagram, color: 'text-indigo-500' },
-    { label: 'Tasks', value: stats.tasks, icon: FaTasks, color: 'text-purple-500' },
+    { label: 'Projects', value: stats.projects, icon: FaProjectDiagram, color: 'text-[#0084D1]' },
+    { label: 'Tasks', value: stats.tasks, icon: FaTasks, color: 'text-[#0084D1]' },
     { label: 'Teams', value: stats.teams, icon: FaUsers, color: 'text-cyan-500' },
   ];
 
@@ -286,7 +286,7 @@ const Profile = () => {
       <nav className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
         <Link
           to="/"
-          className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          className="hover:text-[#0084D1] transition-colors"
         >
           Home
         </Link>
@@ -313,7 +313,7 @@ const Profile = () => {
         <div className="self-start rounded-2xl border border-gray-150 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900 space-y-5 text-center">
           {/* Avatar */}
           <div className="flex flex-col items-center gap-3">
-            <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-indigo-400">
+            <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-[#0084D1]">
               {user.avatar ? (
                 <img
                   src={getAvatarUrl(user.avatar)}
@@ -321,7 +321,7 @@ const Profile = () => {
                   className="w-full h-full object-cover object-top"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-3xl font-bold text-white">
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-3xl font-bold text-white">
                   {initials}
                 </div>
               )}
@@ -382,7 +382,7 @@ const Profile = () => {
           <div className="space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
             <div className="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400">
               <span>Account Role</span>
-              <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-400">
+              <span className="rounded-full bg-[#0084D1]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0084D1]">
                 {user.role}
               </span>
             </div>
@@ -530,7 +530,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 rounded-lg bg-indigo-500 px-5 py-3 text-xs font-semibold text-white shadow-md shadow-indigo-500/20 transition-all duration-200 hover:bg-indigo-600 hover:scale-[1.02] disabled:opacity-60 disabled:pointer-events-none"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#0084D1] px-5 py-3 text-xs font-semibold text-white shadow-md shadow-[#0084D1]/20 transition-all duration-200 hover:bg-[#0084D1] hover:scale-[1.02] disabled:opacity-60 disabled:pointer-events-none"
                   >
                     {submitting ? (
                       <FaSpinner className="h-3.5 w-3.5 animate-spin" />
@@ -607,7 +607,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={securitySubmitting}
-                    className="inline-flex items-center gap-2 rounded-lg bg-indigo-500 px-5 py-3 text-xs font-semibold text-white shadow-md shadow-indigo-500/20 transition-all duration-200 hover:bg-indigo-600 hover:scale-[1.02] disabled:opacity-60 disabled:pointer-events-none"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#0084D1] px-5 py-3 text-xs font-semibold text-white shadow-md shadow-[#0084D1]/20 transition-all duration-200 hover:bg-[#0277BD] hover:scale-[1.02] disabled:opacity-60 disabled:pointer-events-none"
                   >
                     {securitySubmitting ? (
                       <FaSpinner className="h-3.5 w-3.5 animate-spin" />

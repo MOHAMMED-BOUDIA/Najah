@@ -1,6 +1,21 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-primary: #FFB900;
+  --color-primary-50: #FFF8E1;
+  --color-primary-100: #FFECB3;
+  --color-primary-500: #FFB900;
+  --color-primary-600: #E5A700;
+  --color-primary-700: #CC9400;
+  --color-secondary: #0084D1;
+  --color-secondary-50: #E1F5FE;
+  --color-secondary-100: #B3E5FC;
+  --color-secondary-500: #0084D1;
+  --color-secondary-600: #0277BD;
+  --color-secondary-700: #01579B;
+}
+
 ::-webkit-scrollbar { display: none; }
 html { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -31,8 +46,8 @@ html { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.2); }
-  50% { box-shadow: 0 0 40px rgba(99,102,241,0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(0,132,209,0.2); }
+  50% { box-shadow: 0 0 40px rgba(255,185,0,0.4); }
 }
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;

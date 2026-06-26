@@ -81,7 +81,7 @@ const AdminDepartments = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">Manage Departments ({departments.length})</h2>
-        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">
+        <button onClick={openCreate} className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0277BD]">
           <FaPlus className="h-4 w-4" /> Add Department
         </button>
       </div>
@@ -99,12 +99,12 @@ const AdminDepartments = () => {
               value={formData.name}
               onChange={e => setFormData({...formData, name: e.target.value})}
               placeholder="e.g. Artificial Intelligence"
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
           <div className="mt-5 flex justify-end gap-3">
             <button onClick={() => setShowForm(false)} className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400">Cancel</button>
-            <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50">
+            <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD] disabled:opacity-50">
               <FaSave className="h-4 w-4" /> {saving ? 'Saving...' : editing ? 'Update' : 'Create'}
             </button>
           </div>
@@ -125,7 +125,7 @@ const AdminDepartments = () => {
             {departments.map((dept) => (
               <tr key={dept._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
                 <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 font-bold text-xs dark:bg-indigo-950/40 dark:text-indigo-400">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
                     <FaLayerGroup className="h-4 w-4" />
                   </div>
                   {dept.name}
@@ -134,7 +134,7 @@ const AdminDepartments = () => {
                 <td className="py-4 px-6 text-gray-500 dark:text-gray-400">{new Date(dept.createdAt).toLocaleDateString()}</td>
                 <td className="py-4 px-6 text-right">
                   <div className="flex justify-end gap-1">
-                    <button onClick={() => openEdit(dept)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800" title="Edit">
+                    <button onClick={() => openEdit(dept)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title="Edit">
                       <FaEdit className="h-4 w-4" />
                     </button>
                     <button onClick={() => handleDelete(dept)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20" title="Delete">

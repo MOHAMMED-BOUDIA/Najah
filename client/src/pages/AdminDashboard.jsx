@@ -124,7 +124,7 @@ const AdminDashboard = () => {
         <StatsCard title="Total Users" value={stats.totalUsers} icon={FaUsers} color="indigo" />
         <StatsCard title="Students" value={stats.totalStudents} icon={FaGraduationCap} color="emerald" />
         <StatsCard title="Instructors" value={stats.totalInstructors} icon={FaChalkboardTeacher} color="amber" />
-        <StatsCard title="Total Groups" value={stats.totalGroups} icon={FaLayerGroup} color="purple" />
+        <StatsCard title="Total Groups" value={stats.totalGroups} icon={FaLayerGroup} color="indigo" />
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip contentStyle={{ borderRadius: '12px', border: 'none' }} />
-                  <Line type="monotone" dataKey="count" stroke="#6366f1" strokeWidth={2} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="count" stroke="#0084D1" strokeWidth={2} dot={{ r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             )}
@@ -188,7 +188,7 @@ const AdminDashboard = () => {
                 <YAxis tick={{ fontSize: 11 }} />
                 <Tooltip contentStyle={{ borderRadius: '12px', border: 'none' }} />
                 <Bar dataKey="count" radius={[6, 6, 0, 0]}>
-                  {['#10b981', '#ef4444', '#6366f1', '#f59e0b', '#8b5cf6'].map((color, i) => (
+                  {['#10b981', '#ef4444', '#0084D1', '#f59e0b', '#0084D1'].map((color, i) => (
                     <Cell key={i} fill={color} />
                   ))}
                 </Bar>
@@ -209,12 +209,12 @@ const AdminDashboard = () => {
               {topInstructors.map((inst, i) => (
                 <div key={i} className="flex items-center justify-between rounded-xl bg-gray-50 px-4 py-3 dark:bg-gray-800">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-sm font-bold text-[#0084D1]">
                       {i + 1}
                     </span>
                     <span className="font-medium text-gray-700 dark:text-gray-300">{inst.name}</span>
                   </div>
-                  <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{inst.groups} groups</span>
+                    <span className="text-sm font-bold text-[#0084D1]">{inst.groups} groups</span>
                 </div>
               ))}
             </div>

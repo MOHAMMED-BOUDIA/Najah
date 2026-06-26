@@ -10,12 +10,12 @@ const checkItems = [
 ];
 
 const colors = {
-  formations: 'from-indigo-500 to-purple-600',
-  instructors: 'from-purple-500 to-pink-600',
-  group: 'from-pink-500 to-rose-600',
-  meetings: 'from-cyan-500 to-blue-600',
-  chat: 'from-amber-500 to-orange-600',
-  progress: 'from-emerald-500 to-teal-600',
+  formations: 'from-[#FFB900] to-[#0084D1]',
+  instructors: 'from-[#0084D1] to-[#FFB900]',
+  group: 'from-[#FFB900] to-[#e6a000]',
+  meetings: 'from-[#0084D1] to-[#0277BD]',
+  chat: 'from-[#FFB900] to-[#CC9400]',
+  progress: 'from-[#0084D1] to-[#01579B]',
 };
 
 function MiniStat({ value, label }) {
@@ -43,7 +43,7 @@ const BentoCard = memo(function BentoCard({ icon: Icon, title, desc, color, size
       initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: i * 0.06, duration: 0.35, ease: 'easeOut' }}
-      className={`group relative overflow-hidden rounded-3xl border border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-900/70 p-6 sm:p-7 flex flex-col transition-shadow duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 ${spanClass}`}
+      className={`group relative overflow-hidden rounded-3xl border border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-900/70 p-6 sm:p-7 flex flex-col transition-shadow duration-300 hover:shadow-2xl hover:shadow-[#0084D1]/10 ${spanClass}`}
       style={{ willChange: 'transform' }}
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
@@ -76,7 +76,7 @@ function FeaturesBento() {
           className="text-center max-w-2xl mx-auto mb-14"
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               Everything you need
             </span>{' '}
             to learn and grow
@@ -98,8 +98,8 @@ function FeaturesBento() {
             <div className="mt-3 space-y-2 flex-1">
               {checkItems.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                  <span className="w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
-                    <HiCheck className="w-2.5 h-2.5 text-indigo-600 dark:text-indigo-400" />
+                  <span className="w-4 h-4 rounded-full bg-[#0084D1]/10 flex items-center justify-center flex-shrink-0">
+                    <HiCheck className="w-2.5 h-2.5 text-[#0084D1]" />
                   </span>
                   {item}
                 </div>
@@ -122,7 +122,7 @@ function FeaturesBento() {
                   initial={{ width: 0 }}
                   animate={sectionInView ? { width: '78%' } : {}}
                   transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
-                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-600"
+                  className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1]"
                 />
               </div>
             </div>

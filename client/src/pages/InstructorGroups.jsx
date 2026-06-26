@@ -122,7 +122,7 @@ const InstructorGroups = () => {
                 <button
                   onClick={() => handleRequestJoin(group._id)}
                   disabled={joining === group._id}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-indigo-700 disabled:opacity-50"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0277BD] disabled:opacity-50"
                 >
                   <FaUserPlus className="h-4 w-4" />
                   {joining === group._id ? 'Sending...' : 'Request to Join'}

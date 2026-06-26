@@ -196,7 +196,7 @@ const Challenges = () => {
           <button
             onClick={openAdd}
             type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition dark:bg-indigo-600 dark:hover:bg-indigo-500 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] transition sm:w-auto"
           >
             <FaPlus className="h-3.5 w-3.5" />
             Add Challenge
@@ -213,7 +213,7 @@ const Challenges = () => {
             type="button"
             className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${
               activeCategory === cat
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-[#0084D1] text-white shadow-sm'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
             }`}
           >
@@ -265,7 +265,7 @@ const Challenges = () => {
                     {challenge.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-lg bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400"
+                        className="rounded-lg bg-[#0084D1]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#0084D1]"
                       >
                         {tech}
                       </span>
@@ -275,7 +275,7 @@ const Challenges = () => {
 
                 {/* Author */}
                 <div className="mt-3 flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0084D1]/10 text-[10px] font-bold text-[#0084D1]">
                     {challenge.author?.charAt(0).toUpperCase() || '?'}
                   </div>
                   <span className="font-medium text-gray-600 dark:text-gray-400">
@@ -304,7 +304,7 @@ const Challenges = () => {
                     href={challenge.projectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-950/40 dark:text-indigo-400 dark:hover:bg-indigo-950/60"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#0084D1]/10 px-3 py-2 text-sm font-semibold text-[#0084D1] transition hover:bg-[#0084D1]/20"
                   >
                     <FaExternalLinkAlt className="h-3 w-3" />
                     View Project
@@ -316,7 +316,7 @@ const Challenges = () => {
                       <button
                         onClick={() => openEdit(challenge)}
                         type="button"
-                        className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800 dark:hover:text-indigo-400"
+                        className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-[#0084D1]"
                         title="Edit"
                       >
                         <FaEdit className="h-4 w-4" />
@@ -358,7 +358,7 @@ const Challenges = () => {
                 value={form.title}
                 onChange={handleChange}
                 placeholder="Project title"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
             <div>
@@ -369,7 +369,7 @@ const Challenges = () => {
                 name="category"
                 value={form.category}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
               >
                 <option value="">Select category</option>
                 {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
@@ -388,7 +388,7 @@ const Challenges = () => {
               onChange={handleChange}
               placeholder="Brief description of the project..."
               rows={3}
-              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
@@ -402,7 +402,7 @@ const Challenges = () => {
                 value={form.author}
                 onChange={handleChange}
                 placeholder="Author name"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
             <div>
@@ -415,7 +415,7 @@ const Challenges = () => {
                 value={form.projectUrl}
                 onChange={handleChange}
                 placeholder="https://github.com/..."
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
           </div>
@@ -430,7 +430,7 @@ const Challenges = () => {
                 value={form.technologies}
                 onChange={handleChange}
                 placeholder="React, Node.js, MongoDB"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
             <div>
@@ -443,7 +443,7 @@ const Challenges = () => {
                 value={form.image}
                 onChange={handleChange}
                 placeholder="https://example.com/image.png"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
           </div>
@@ -458,7 +458,7 @@ const Challenges = () => {
               onChange={handleChange}
               placeholder="e.g. 1"
               min="1"
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div className="flex items-center justify-end gap-3 pt-2">
@@ -472,7 +472,7 @@ const Challenges = () => {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-60 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0277BD] disabled:opacity-60"
             >
               {saving ? (
                 <Loader size="sm" />

@@ -42,7 +42,7 @@ export default function Pricing() {
           <div className="text-center max-w-3xl mx-auto mb-6">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
               Simple,{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 Transparent
               </span>{' '}
               Pricing
@@ -63,12 +63,12 @@ export default function Pricing() {
                 key={plan.name}
                 className={`relative p-8 rounded-3xl border transition-shadow hover:shadow-xl ${
                   plan.highlight
-                    ? 'border-indigo-500/50 dark:border-indigo-500/50 bg-gradient-to-b from-indigo-50 to-white dark:from-indigo-950/30 dark:to-gray-950 shadow-lg shadow-indigo-500/10'
+                    ? 'border-[#0084D1]/50 bg-gradient-to-b from-[#0084D1]/10 to-white shadow-lg shadow-[#0084D1]/10'
                     : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900'
                 }`}
               >
                 {plan.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-semibold">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white text-xs font-semibold">
                     Most Popular
                   </div>
                 )}
@@ -85,7 +85,7 @@ export default function Pricing() {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
-                      <HiCheck className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
+                      <HiCheck className="w-4 h-4 text-[#0084D1] mt-0.5 flex-shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -95,7 +95,7 @@ export default function Pricing() {
                   to={plan.to}
                   className={`block text-center py-3 rounded-xl font-semibold text-sm transition-all ${
                     plan.highlight
-                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-purple-500'
+                      ? 'bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white shadow-lg shadow-[#0084D1]/25 hover:from-[#FFB900] hover:to-[#0277BD]'
                       : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
                   }`}
                 >

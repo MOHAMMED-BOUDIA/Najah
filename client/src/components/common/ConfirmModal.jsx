@@ -48,7 +48,7 @@ const ConfirmModal = ({ isOpen, onConfirm, onCancel, title, message, confirmLabe
             className={`rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-md transition ${
               destructive
                 ? 'bg-red-600 shadow-red-600/20 hover:bg-red-500'
-                : 'bg-indigo-600 shadow-indigo-600/20 hover:bg-indigo-500'
+                : 'bg-[#0084D1] shadow-[#0084D1]/20 hover:bg-[#0084D1]'
             }`}
           >
             {confirmLabel}

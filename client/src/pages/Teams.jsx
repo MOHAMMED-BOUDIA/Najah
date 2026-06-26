@@ -195,7 +195,7 @@ const Teams = () => {
             <button
               onClick={() => setIsCreateOpen(true)}
               type="button"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 dark:bg-indigo-600 dark:hover:bg-indigo-500 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] sm:w-auto"
             >
               <FaPlus className="h-4 w-4" />
               Create Team
@@ -226,7 +226,7 @@ const Teams = () => {
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                     {team.name}
                   </h3>
-                  <span className="rounded-xl bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+                  <span className="rounded-xl bg-[#0084D1]/10 px-2.5 py-0.5 text-xs font-semibold text-[#0084D1]">
                     {team.members ? team.members.length : 0} members
                   </span>
                 </div>
@@ -237,7 +237,7 @@ const Teams = () => {
                   {team.project ? (
                     <Link
                       to={`/projects/${team.project._id || team.project}`}
-                      className="mt-0.5 inline-block text-sm font-bold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 line-clamp-1"
+                      className="mt-0.5 inline-block text-sm font-bold text-[#0084D1] hover:text-[#0277BD] line-clamp-1"
                     >
                       {team.project.title || 'View Linked Project'}
                     </Link>
@@ -278,7 +278,7 @@ const Teams = () => {
                       setIsManageOpen(true);
                     }}
                     type="button"
-                    className="text-xs font-bold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+                    className="text-xs font-bold text-[#0084D1] hover:text-[#0277BD]"
                   >
                     Manage Members
                   </button>
@@ -313,7 +313,7 @@ const Teams = () => {
               required
               value={newTeamName}
               onChange={(e) => setNewTeamName(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="e.g. Apollo Developers"
             />
           </div>
@@ -327,7 +327,7 @@ const Teams = () => {
               <select
                 value={selectedLeader}
                 onChange={(e) => setSelectedLeader(e.target.value)}
-                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
                 <option value="">Select Leader</option>
                 {students.map((student) => (
@@ -346,7 +346,7 @@ const Teams = () => {
               <select
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
-                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
                 <option value="">Select Project</option>
                 {projects.map((proj) => (
@@ -373,7 +373,7 @@ const Teams = () => {
                     type="checkbox"
                     checked={selectedMembers.includes(student._id)}
                     onChange={() => handleMemberToggle(student._id)}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-gray-300 text-[#0084D1] focus:ring-[#0084D1]"
                   />
                   <span>
                     {student.name} ({student.email} • {student.department})
@@ -395,7 +395,7 @@ const Teams = () => {
             <button
               type="submit"
               disabled={formLoading}
-              className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-400"
+              className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
               Create Team
             </button>
@@ -417,7 +417,7 @@ const Teams = () => {
                 required
                 value={studentToAdd}
                 onChange={(e) => setStudentToAdd(e.target.value)}
-                className="block flex-1 rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="block flex-1 rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
                 <option value="">Select Student to Add</option>
                 {students
@@ -430,7 +430,7 @@ const Teams = () => {
               </select>
               <button
                 type="submit"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD]"
               >
                 <FaUserPlus /> Add
               </button>

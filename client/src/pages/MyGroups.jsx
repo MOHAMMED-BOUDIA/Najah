@@ -159,7 +159,7 @@ const MyGroups = () => {
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD] transition-all"
         >
           <FaPlus className="h-4 w-4" />
           New Group
@@ -184,14 +184,14 @@ const MyGroups = () => {
                 type="text"
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 placeholder="e.g. PFE Group A"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Group Image</label>
               <div className="flex items-center gap-4">
-                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 hover:border-indigo-400 hover:text-indigo-500 dark:border-gray-600 dark:text-gray-400 dark:hover:border-indigo-500 transition-colors">
+                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 hover:border-[#0084D1] hover:text-[#0084D1] dark:border-gray-600 dark:text-gray-400 transition-colors">
                   <FaCamera className="h-4 w-4" />
                   <span>{imageFile ? imageFile.name : 'Choose image'}</span>
                   <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -215,7 +215,7 @@ const MyGroups = () => {
               <textarea
                 value={formData.description}
                 onChange={e => setFormData({...formData, description: e.target.value})}
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 rows={3}
                 placeholder="Group description..."
               />
@@ -226,7 +226,7 @@ const MyGroups = () => {
                 type="text"
                 value={formData.specialty}
                 onChange={e => setFormData({...formData, specialty: e.target.value})}
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 placeholder="e.g. AI, Web Development"
               />
             </div>
@@ -236,7 +236,7 @@ const MyGroups = () => {
                 type="number"
                 value={formData.maxMembers}
                 onChange={e => setFormData({...formData, maxMembers: parseInt(e.target.value) || 10})}
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 min={1}
                 max={50}
               />
@@ -246,7 +246,7 @@ const MyGroups = () => {
             <button onClick={() => { setShowForm(false); setEditing(null); setImageFile(null); setImagePreview(null); }} className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">
               Cancel
             </button>
-            <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50">
+            <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD] disabled:opacity-50">
               <FaSave className="h-4 w-4" />
               {saving ? 'Saving...' : editing ? 'Update Group' : 'Create Group'}
             </button>
@@ -295,7 +295,7 @@ const MyGroups = () => {
                   </div>
                 </div>
                 <div className="flex gap-1">
-                  <button onClick={() => openEdit(group)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800 dark:hover:text-indigo-400">
+                  <button onClick={() => openEdit(group)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800">
                     <FaEdit className="h-4 w-4" />
                   </button>
                   <button onClick={() => handleDelete(group)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20 dark:hover:text-red-400">
@@ -309,7 +309,7 @@ const MyGroups = () => {
               )}
 
               {group.specialty && (
-                <span className="mt-3 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400">
+                <span className="mt-3 inline-block rounded-full bg-[#0084D1]/10 px-3 py-1 text-xs font-medium text-[#0084D1]">
                   {group.specialty}
                 </span>
               )}

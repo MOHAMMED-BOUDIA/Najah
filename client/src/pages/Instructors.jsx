@@ -99,7 +99,7 @@ const Instructors = () => {
                       />
                     </div>
                   ) : (
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-xl font-bold text-white shadow-md">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-xl font-bold text-white shadow-md">
                       {inst.name ? inst.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'I'}
                     </div>
                   )}
@@ -115,14 +115,14 @@ const Instructors = () => {
 
                 <div className="mt-4 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1.5">
-                    <FaBookOpen className="h-4 w-4 text-indigo-400" />
+                    <FaBookOpen className="h-4 w-4 text-[#0084D1]" />
                     <span>{instGroups.length} {instGroups.length === 1 ? 'group' : 'groups'}</span>
                   </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {[...new Set(instGroups.map(g => g.specialty).filter(Boolean))].slice(0, 3).map((spec, i) => (
-                    <span key={i} className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400">
+                    <span key={i} className="rounded-full bg-[#0084D1]/10 px-3 py-1 text-xs font-medium text-[#0084D1]">
                       {spec}
                     </span>
                   ))}
@@ -131,7 +131,7 @@ const Instructors = () => {
                 <div className="mt-5">
                   <Link
                     to={`/instructors/${inst._id}/groups`}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-indigo-700"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0277BD]"
                   >
                     <FaUsers className="h-4 w-4" />
                     View Groups

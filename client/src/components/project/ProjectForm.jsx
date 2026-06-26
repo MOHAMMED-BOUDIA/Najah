@@ -109,7 +109,7 @@ const ProjectForm = ({
           className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
             errors.title
               ? 'border-red-500 focus:border-red-500'
-              : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+              : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
           }`}
           placeholder="e.g. Decentralized Voting System"
         />
@@ -129,7 +129,7 @@ const ProjectForm = ({
           className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
             errors.description
               ? 'border-red-500 focus:border-red-500'
-              : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+              : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
           }`}
           placeholder="Detailed breakdown of the project goals, scope, and target outcomes..."
         />
@@ -149,7 +149,7 @@ const ProjectForm = ({
           className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
             errors.technologies
               ? 'border-red-500 focus:border-red-500'
-              : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+              : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
           }`}
           placeholder="e.g. React, Node.js, MongoDB, Tailwind"
         />
@@ -168,7 +168,7 @@ const ProjectForm = ({
             name="supervisor"
             value={formData.supervisor}
             onChange={handleChange}
-            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Select Instructor</option>
             {supervisors.map((supervisor) => (
@@ -188,7 +188,7 @@ const ProjectForm = ({
             name="team"
             value={formData.team}
             onChange={handleChange}
-            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Select Team</option>
             {teams.map((team) => (
@@ -214,7 +214,7 @@ const ProjectForm = ({
             className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
               errors.startDate
                 ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+                : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
             }`}
           />
           {errors.startDate && <p className="mt-1 text-xs text-red-500">{errors.startDate}</p>}
@@ -233,7 +233,7 @@ const ProjectForm = ({
             className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
               errors.endDate
                 ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+                : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
             }`}
           />
           {errors.endDate && <p className="mt-1 text-xs text-red-500">{errors.endDate}</p>}
@@ -252,7 +252,7 @@ const ProjectForm = ({
               value={formData.status}
               onChange={handleChange}
               disabled={userRole === 'student'}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 disabled:bg-gray-50 disabled:text-gray-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white dark:disabled:bg-gray-800/40"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] disabled:bg-gray-50 disabled:text-gray-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white dark:disabled:bg-gray-800/40"
             >
               <option value="pending">Pending</option>
               <option value="approved">Approved</option>
@@ -274,7 +274,7 @@ const ProjectForm = ({
               max="100"
               value={formData.progress}
               onChange={handleChange}
-              className="mt-4 h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-indigo-600 dark:bg-gray-800"
+              className="mt-4 h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-[#0084D1] dark:bg-gray-800"
             />
           </div>
         </div>
@@ -293,7 +293,7 @@ const ProjectForm = ({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-400 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-500"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0084D1] disabled:bg-[#0084D1] focus:outline-none"
         >
           {loading && <FaSpinner className="animate-spin" />}
           {isEdit ? 'Save Changes' : 'Create Project'}

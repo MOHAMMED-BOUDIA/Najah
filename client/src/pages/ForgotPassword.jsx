@@ -29,12 +29,12 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 p-4 transition-colors duration-200">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-indigo-100/10">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0084D1] via-[#0277BD] to-[#0066A0] p-4 transition-colors duration-200">
+      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl dark:bg-gray-900 border border-[#0084D1]/10">
         
         {/* Brand Logo */}
         <div className="flex flex-col items-center justify-center text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 shadow-sm">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0084D1]/10 text-[#0084D1] shadow-sm">
             <FaProjectDiagram className="h-6 w-6" />
           </div>
           <h2 className="mt-4 text-2xl font-black text-gray-900 dark:text-white">
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
             </div>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]"
             >
               <FaArrowLeft className="h-4 w-4" />
               Back to login
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
+                  className="block w-full rounded-2xl border border-gray-200 bg-gray-50/50 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-[#0084D1] focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white dark:focus:bg-gray-800"
                   placeholder="you@gmail.com"
                 />
               </div>
@@ -84,7 +84,7 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 disabled:bg-indigo-400 focus:outline-none transition dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#0084D1] py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#0084D1]/20 hover:bg-[#0277BD] disabled:bg-[#0084D1]/50 focus:outline-none transition"
             >
               {loading && <FaSpinner className="animate-spin" />}
               Send Reset Link
@@ -98,7 +98,7 @@ const ForgotPassword = () => {
             Remember your password?{' '}
             <Link
               to="/login"
-              className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+              className="font-semibold text-[#0084D1] hover:text-[#0277BD]"
             >
               Sign in
             </Link>

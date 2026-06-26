@@ -119,7 +119,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
       >
         <div className={`flex h-16 items-center border-b border-gray-100 dark:border-gray-800 ${collapsed ? 'justify-center px-0' : 'justify-between px-6'}`}>
           <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'}`}>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FFB900] text-white shadow-md shadow-[#FFB900]/30">
               <FaProjectDiagram className="h-5 w-5" />
             </div>
             {!collapsed && (

@@ -146,7 +146,7 @@ const Projects = () => {
           <button
             onClick={() => setIsCreateOpen(true)}
             type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 dark:bg-indigo-600 dark:hover:bg-indigo-500 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] sm:w-auto"
           >
             <FaPlus className="h-4 w-4" />
             Propose Project
@@ -165,7 +165,7 @@ const Projects = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2 pl-10 pr-4 text-sm outline-none focus:border-indigo-500 focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white"
+            className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2 pl-10 pr-4 text-sm outline-none focus:border-[#0084D1] focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white"
             placeholder="Search projects by title or description..."
           />
           {searchQuery && (
@@ -186,7 +186,7 @@ const Projects = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full rounded-xl border border-gray-250 bg-white py-2 pl-9 pr-4 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="block w-full rounded-xl border border-gray-250 bg-white py-2 pl-9 pr-4 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
@@ -225,7 +225,7 @@ const Projects = () => {
                   <>
                     <button
                       onClick={() => handleEditClick(project)}
-                      className="rounded-lg bg-white p-2 text-gray-600 shadow-sm border border-gray-100 hover:bg-indigo-50 hover:text-indigo-600 transition dark:bg-gray-800 dark:text-gray-300 dark:border-gray-750 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-400"
+                      className="rounded-lg bg-white p-2 text-gray-600 shadow-sm border border-gray-100 hover:bg-[#0084D1]/10 hover:text-[#0084D1] transition dark:bg-gray-800 dark:text-gray-300 dark:border-gray-750"
                     >
                       Edit
                     </button>

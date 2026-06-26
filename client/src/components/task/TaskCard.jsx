@@ -27,7 +27,7 @@ const TaskCard = ({ task, index, onEdit, onDelete, onStatusChange }) => {
           {...provided.dragHandleProps}
           className={`flex flex-col justify-between rounded-xl border bg-white p-4 shadow-sm transition-all dark:bg-gray-900 ${
             snapshot.isDragging
-              ? 'border-indigo-500 shadow-lg shadow-indigo-500/20 rotate-2'
+              ? 'border-[#0084D1] shadow-lg shadow-[#0084D1]/20 rotate-2'
               : 'border-gray-150 shadow-sm hover:shadow-md dark:border-gray-800'
           }`}
           style={provided.draggableProps.style}
@@ -75,7 +75,7 @@ const TaskCard = ({ task, index, onEdit, onDelete, onStatusChange }) => {
         {/* Assignee & Due Date */}
         <div className="flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400">
           <div className="flex items-center gap-1 font-medium">
-            <FaUser className="h-3 w-3 text-indigo-500" />
+            <FaUser className="h-3 w-3 text-[#0084D1]" />
             <span className="truncate max-w-[100px]">
               {assignedTo?.name || (typeof assignedTo === 'object' ? assignedTo?.name : 'Unassigned')}
             </span>
@@ -91,7 +91,7 @@ const TaskCard = ({ task, index, onEdit, onDelete, onStatusChange }) => {
           <select
             value={status}
             onChange={(e) => onStatusChange(_id, e.target.value)}
-            className="block w-full rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs font-semibold text-gray-700 outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
+            className="block w-full rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs font-semibold text-gray-700 outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
           >
             {statusOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>

@@ -163,13 +163,13 @@ const Documents = () => {
         {/* Project Selector */}
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
-            <FaFolderOpen className="text-indigo-600 dark:text-indigo-400 h-4 w-4" />
+            <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
             Project:
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
-            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Choose a Project</option>
             {projects.map((proj) => (
@@ -183,7 +183,7 @@ const Documents = () => {
             <button
               onClick={() => setIsOpen(true)}
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm hover:bg-indigo-500 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
               title="Upload Document"
             >
               <FaPlus className="h-4 w-4" />
@@ -228,11 +228,11 @@ const Documents = () => {
                 {documents.map((doc) => (
                   <tr key={doc._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
                     <td className="py-4 px-6 font-semibold text-gray-950 dark:text-white flex items-center gap-3">
-                      <FaFileAlt className="h-5 w-5 text-indigo-500 flex-shrink-0" />
+                      <FaFileAlt className="h-5 w-5 text-[#0084D1] flex-shrink-0" />
                       <span className="truncate max-w-[200px]">{doc.name}</span>
                     </td>
                     <td className="py-4 px-6">
-                      <span className="inline-block rounded-lg bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 capitalize">
+                      <span className="inline-block rounded-lg bg-[#0084D1]/10 px-2.5 py-0.5 text-xs font-bold text-[#0084D1] capitalize">
                         {doc.type}
                       </span>
                     </td>
@@ -248,7 +248,7 @@ const Documents = () => {
                           href={`http://localhost:5000/uploads/${doc.file}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-[#0084D1] hover:bg-[#0084D1]/10"
                           title="Download document"
                         >
                           <FaDownload className="h-4 w-4" />
@@ -281,7 +281,7 @@ const Documents = () => {
             </label>
             <div className="flex items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 p-6 dark:border-gray-850 bg-gray-50/50 hover:bg-white transition-colors duration-200">
               <label className="flex flex-col items-center justify-center cursor-pointer text-center w-full">
-                <FaFileUpload className="h-8 w-8 text-indigo-500 mb-2" />
+                <FaFileUpload className="h-8 w-8 text-[#0084D1] mb-2" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
                   {fileName || 'Choose a file...'}
                 </span>
@@ -308,7 +308,7 @@ const Documents = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="e.g. Interim Progress Report"
             />
           </div>
@@ -322,7 +322,7 @@ const Documents = () => {
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+                className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
                 <option value="rapport">Rapport (Report)</option>
                 <option value="presentation">Presentation</option>
@@ -341,7 +341,7 @@ const Documents = () => {
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+              className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               placeholder="e.g. Draft version 1.0 for supervisor review"
             />
           </div>
@@ -358,7 +358,7 @@ const Documents = () => {
             <button
               type="submit"
               disabled={formLoading}
-              className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-400"
+              className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
               Upload
             </button>

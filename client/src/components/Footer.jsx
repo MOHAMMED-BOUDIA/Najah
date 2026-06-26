@@ -45,7 +45,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white font-bold text-sm">
                 N
               </div>
               <span className="text-lg font-bold text-white">NAJAH</span>
@@ -60,7 +60,7 @@ export default function Footer() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-indigo-600 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer transition-all"
+                  className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-[#FFB900] flex items-center justify-center text-gray-400 hover:text-white cursor-pointer transition-all"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -89,14 +89,14 @@ export default function Footer() {
                             window.location.href = `/#${link.to.replace('#', '')}`;
                           }
                         }}
-                        className="text-sm text-gray-400 hover:text-indigo-400 transition-colors cursor-pointer"
+                        className="text-sm text-gray-400 hover:text-[#FFB900] transition-colors cursor-pointer"
                       >
                         {link.label}
                       </a>
                     ) : (
                       <Link
                         to={link.to}
-                        className="text-sm text-gray-400 hover:text-indigo-400 transition-colors"
+                        className="text-sm text-gray-400 hover:text-[#FFB900] transition-colors"
                       >
                         {link.label}
                       </Link>

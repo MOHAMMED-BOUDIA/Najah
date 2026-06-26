@@ -26,12 +26,12 @@ function Stars() {
 
 function TestimonialCard({ quote, name, role, avatar, i }) {
   const borders = [
-    'border-indigo-200/50 dark:border-indigo-700/50',
-    'border-purple-200/50 dark:border-purple-700/50',
-    'border-pink-200/50 dark:border-pink-700/50',
-    'border-cyan-200/50 dark:border-cyan-700/50',
-    'border-amber-200/50 dark:border-amber-700/50',
-    'border-emerald-200/50 dark:border-emerald-700/50',
+    'border-[#FFB900]/30',
+    'border-[#0084D1]/30',
+    'border-[#FFB900]/30',
+    'border-[#0084D1]/30',
+    'border-[#FFB900]/30',
+    'border-[#0084D1]/30',
   ];
 
   return (
@@ -41,7 +41,7 @@ function TestimonialCard({ quote, name, role, avatar, i }) {
       <Stars />
       <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-5">&ldquo;{quote}&rdquo;</p>
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xs font-bold text-white">
+        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-xs font-bold text-white">
           {avatar}
         </div>
         <div>
@@ -79,11 +79,11 @@ function MarqueeRow({ items, reverse }) {
 
 export default function TestimonialsMarquee() {
   return (
-    <section className="py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-indigo-600/5 via-purple-600/5 to-pink-600/5 dark:from-indigo-950/30 dark:via-purple-950/30 dark:to-pink-950/30">
+    <section className="py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-[#FFB900]/5 via-[#0084D1]/5 to-[#FFB900]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               What our students say
             </span>
           </h2>

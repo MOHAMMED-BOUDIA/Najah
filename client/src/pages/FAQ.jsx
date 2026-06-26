@@ -66,7 +66,7 @@ export default function FAQ() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
               Frequently Asked{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 Questions
               </span>
             </h1>
@@ -78,7 +78,7 @@ export default function FAQ() {
           <div className="max-w-3xl mx-auto space-y-12">
             {categories.map((cat) => (
               <div key={cat.name}>
-                <h2 className="text-lg font-bold text-indigo-600 dark:text-indigo-400 mb-2">{cat.name}</h2>
+                <h2 className="text-lg font-bold text-[#0084D1] mb-2">{cat.name}</h2>
                 <div className="border-t border-gray-200 dark:border-gray-800">
                   {cat.items.map((item) => (
                     <Accordion key={item.q} q={item.q} a={item.a} />

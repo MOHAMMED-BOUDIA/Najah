@@ -7,12 +7,12 @@ const StatsCard = ({
 }) => {
   const colorMap = {
     indigo: {
-      bg: 'bg-indigo-50 dark:bg-indigo-950/30',
-      text: 'text-indigo-600 dark:text-indigo-400',
+      bg: 'bg-[#0084D1]/10',
+      text: 'text-[#0084D1]',
     },
     purple: {
-      bg: 'bg-purple-50 dark:bg-purple-950/30',
-      text: 'text-purple-600 dark:text-purple-400',
+      bg: 'bg-[#0084D1]/10',
+      text: 'text-[#0084D1]',
     },
     emerald: {
       bg: 'bg-emerald-50 dark:bg-emerald-950/30',

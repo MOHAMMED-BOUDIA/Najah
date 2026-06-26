@@ -12,14 +12,14 @@ const TaskColumn = ({
 }) => {
   const columnColorMap = {
     'todo': 'border-t-4 border-t-gray-400 bg-gray-50/50 dark:bg-gray-900/30',
-    'in-progress': 'border-t-4 border-t-indigo-500 bg-indigo-50/10 dark:bg-indigo-950/5',
+    'in-progress': 'border-t-4 border-t-[#0084D1] bg-[#0084D1]/5',
     'review': 'border-t-4 border-t-amber-500 bg-amber-50/10 dark:bg-amber-950/5',
     'done': 'border-t-4 border-t-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/5',
   };
 
   const badgeColorMap = {
     'todo': 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-    'in-progress': 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-400',
+    'in-progress': 'bg-[#0084D1]/10 text-[#0084D1]',
     'review': 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400',
     'done': 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400',
   };
@@ -47,7 +47,7 @@ const TaskColumn = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
             className={`flex flex-1 flex-col gap-3 min-h-[400px] rounded-xl p-2 transition-colors ${
-              snapshot.isDraggingOver ? 'bg-indigo-50/50 dark:bg-indigo-950/20' : ''
+              snapshot.isDraggingOver ? 'bg-[#0084D1]/5' : ''
             }`}
           >
             {tasks.length === 0 && !snapshot.isDraggingOver ? (

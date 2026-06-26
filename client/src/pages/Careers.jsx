@@ -30,7 +30,7 @@ export default function Careers() {
           <div className="text-center max-w-3xl mx-auto mb-6">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
               Join the{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 NAJAH Team
               </span>
             </h1>
@@ -39,8 +39,8 @@ export default function Careers() {
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200/50 dark:border-indigo-800/50 text-sm font-medium text-indigo-600 dark:text-indigo-400 mx-auto block w-fit mb-16">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0084D1]/10 border border-[#0084D1]/30 text-sm font-medium text-[#0084D1] mx-auto block w-fit mb-16">
+            <span className="w-2 h-2 rounded-full bg-[#0084D1] animate-pulse" />
             We are hiring! 6 open positions
           </div>
 
@@ -56,7 +56,7 @@ export default function Careers() {
               <div className="grid grid-cols-2 gap-3">
                 {perks.map((p) => (
                   <div key={p} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#0084D1]" />
                     {p}
                   </div>
                 ))}
@@ -68,7 +68,7 @@ export default function Careers() {
                 alt="Modern office team"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/20" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0084D1]/20 to-[#0084D1]/20" />
             </div>
           </div>
 
@@ -78,11 +78,11 @@ export default function Careers() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {positions.map((pos) => (
                 <div key={pos.title} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all group cursor-pointer">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white mb-4">
                     <FiBriefcase className="w-5 h-5" />
                   </div>
-                  <h3 className="font-bold mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{pos.title}</h3>
-                  <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mb-3">{pos.dept}</p>
+                  <h3 className="font-bold mb-1 group-hover:text-[#0084D1] transition-colors">{pos.title}</h3>
+                  <p className="text-xs text-[#0084D1] font-medium mb-3">{pos.dept}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{pos.desc}</p>
                   <div className="flex items-center gap-4 text-xs text-gray-400">
                     <span className="flex items-center gap-1"><FiMapPin className="w-3 h-3" />{pos.location}</span>

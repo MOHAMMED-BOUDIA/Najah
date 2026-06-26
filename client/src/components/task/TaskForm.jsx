@@ -83,7 +83,7 @@ const TaskForm = ({
           className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
             errors.title
               ? 'border-red-500 focus:border-red-500'
-              : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+              : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
           }`}
           placeholder="e.g. Set up MongoDB Schemas"
         />
@@ -103,7 +103,7 @@ const TaskForm = ({
           className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
             errors.description
               ? 'border-red-500 focus:border-red-500'
-              : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+              : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
           }`}
           placeholder="Outline the steps required to complete this task..."
         />
@@ -120,7 +120,7 @@ const TaskForm = ({
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -137,7 +137,7 @@ const TaskForm = ({
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="todo">To Do</option>
             <option value="in-progress">In Progress</option>
@@ -161,7 +161,7 @@ const TaskForm = ({
             className={`mt-1.5 block w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition dark:bg-gray-800 dark:text-white ${
               errors.dueDate
                 ? 'border-red-500 focus:border-red-500'
-                : 'border-gray-250 focus:border-indigo-500 dark:border-gray-750'
+                : 'border-gray-250 focus:border-[#0084D1] dark:border-gray-750'
             }`}
           />
           {errors.dueDate && <p className="mt-1 text-xs text-red-500">{errors.dueDate}</p>}
@@ -176,7 +176,7 @@ const TaskForm = ({
             name="assignedTo"
             value={formData.assignedTo}
             onChange={handleChange}
-            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-indigo-500 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
+            className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Unassigned</option>
             {teamMembers.map((member) => (
@@ -201,7 +201,7 @@ const TaskForm = ({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 disabled:bg-indigo-400 focus:outline-none dark:bg-indigo-600 dark:hover:bg-indigo-500"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0084D1] disabled:bg-[#0084D1] focus:outline-none"
         >
           {loading && <FaSpinner className="animate-spin" />}
           {isEdit ? 'Save Task' : 'Create Task'}

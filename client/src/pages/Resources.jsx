@@ -125,7 +125,7 @@ const Resources = () => {
           <button
             onClick={openAdd}
             type="button"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition dark:bg-indigo-600 dark:hover:bg-indigo-500 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] transition sm:w-auto"
           >
             <FaPlus className="h-3.5 w-3.5" />
             Add Resource
@@ -150,7 +150,7 @@ const Resources = () => {
               className="group relative flex flex-col rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-200 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
             >
               {/* Category badge */}
-              <span className="mb-3 inline-flex self-start rounded-full bg-indigo-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400">
+              <span className="mb-3 inline-flex self-start rounded-full bg-[#0084D1]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#0084D1]">
                 {resource.category}
               </span>
 
@@ -180,7 +180,7 @@ const Resources = () => {
                   href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-950/40 dark:text-indigo-400 dark:hover:bg-indigo-950/60"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#0084D1]/10 px-3 py-2 text-sm font-semibold text-[#0084D1] transition hover:bg-[#0084D1]/20"
                 >
                   <FaExternalLinkAlt className="h-3 w-3" />
                   Open Link
@@ -190,7 +190,7 @@ const Resources = () => {
                     <button
                       onClick={() => openEdit(resource)}
                       type="button"
-                      className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800 dark:hover:text-indigo-400"
+                      className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-[#0084D1]"
                       title="Edit"
                     >
                       <FaEdit className="h-4 w-4" />
@@ -230,7 +230,7 @@ const Resources = () => {
               value={form.title}
               onChange={handleChange}
               placeholder="e.g. React Documentation"
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div>
@@ -243,7 +243,7 @@ const Resources = () => {
               onChange={handleChange}
               placeholder="Brief description of the resource..."
               rows={3}
-              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+              className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div>
@@ -258,7 +258,7 @@ const Resources = () => {
                 value={form.url}
                 onChange={handleChange}
                 placeholder="https://example.com"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
           </div>
@@ -272,7 +272,7 @@ const Resources = () => {
               value={form.category}
               onChange={handleChange}
               placeholder="e.g. Documentation, Course, Tutorial, Tool"
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-500"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div className="flex items-center justify-end gap-3 pt-2">
@@ -286,7 +286,7 @@ const Resources = () => {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-60 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0277BD] disabled:opacity-60"
             >
               {saving ? (
                 <Loader size="sm" />

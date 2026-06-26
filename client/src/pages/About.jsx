@@ -2,8 +2,8 @@ import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 
 const team = [
-  { name: 'Dr. Ahmed Benali', role: 'Founder & CEO', avatar: 'AB', initials: 'AB', color: 'from-indigo-500 to-purple-600' },
-  { name: 'Sara Amrani', role: 'Head of Education', avatar: 'SA', initials: 'SA', color: 'from-purple-500 to-pink-600' },
+  { name: 'Dr. Ahmed Benali', role: 'Founder & CEO', avatar: 'AB', initials: 'AB', color: 'from-[#FFB900] to-[#0084D1]' },
+  { name: 'Sara Amrani', role: 'Head of Education', avatar: 'SA', initials: 'SA', color: 'from-[#FFB900] to-[#0084D1]' },
   { name: 'Youssef Karim', role: 'CTO', avatar: 'YK', initials: 'YK', color: 'from-cyan-500 to-blue-600' },
   { name: 'Nadia Tazi', role: 'Community Lead', avatar: 'NT', initials: 'NT', color: 'from-emerald-500 to-teal-600' },
 ];
@@ -17,7 +17,7 @@ export default function About() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
               About{' '}
-              <span className="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 NAJAH
               </span>
             </h1>
@@ -41,7 +41,7 @@ export default function About() {
               </p>
             </div>
             <div className="relative flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-transparent rounded-3xl blur-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FFB900]/20 via-[#0084D1]/10 to-transparent rounded-3xl blur-3xl" />
               <div className="relative w-full aspect-[4/3] rounded-3xl bg-white border border-gray-200 dark:border-gray-700 flex items-center justify-center p-8 shadow-sm">
                 <img
                   src="/img/najah.png"

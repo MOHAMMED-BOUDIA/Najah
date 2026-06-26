@@ -8,7 +8,7 @@ const Loader = ({ size = 'md' }) => {
   return (
     <div className="flex items-center justify-center">
       <div
-        className={`animate-spin rounded-full border-indigo-200 border-t-indigo-600 dark:border-indigo-950 dark:border-t-indigo-400 ${
+        className={`animate-spin rounded-full border-[#0084D1]/20 border-t-[#0084D1] ${
           sizeClasses[size] || sizeClasses.md
         }`}
       />

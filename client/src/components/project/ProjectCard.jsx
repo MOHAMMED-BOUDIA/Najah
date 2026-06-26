@@ -36,7 +36,7 @@ const ProjectCard = ({ project }) => {
 
         {/* Title & Description */}
         <Link to={`/projects/${_id}`} className="group mt-4 block">
-          <h3 className="text-lg font-bold text-gray-900 group-hover:text-indigo-600 dark:text-white dark:group-hover:text-indigo-400 transition-colors duration-200">
+          <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#0084D1] dark:text-white transition-colors duration-200">
             {title}
           </h3>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-3">
@@ -64,11 +64,11 @@ const ProjectCard = ({ project }) => {
         <div className="space-y-1">
           <div className="flex items-center justify-between text-xs">
             <span className="font-semibold text-gray-500 dark:text-gray-400">Progress</span>
-            <span className="font-bold text-indigo-600 dark:text-indigo-400">{progressPercent}%</span>
+            <span className="font-bold text-[#0084D1]">{progressPercent}%</span>
           </div>
           <div className="h-2 w-full rounded-full bg-gray-100 dark:bg-gray-800">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500"
+              className="h-full rounded-full bg-gradient-to-r from-[#0084D1] to-[#FFB900] transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -78,7 +78,7 @@ const ProjectCard = ({ project }) => {
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 dark:text-gray-400">
           {supervisor && (
             <div className="flex items-center gap-1.5 font-medium">
-              <FaChalkboardTeacher className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400" />
+              <FaChalkboardTeacher className="h-3.5 w-3.5 text-[#0084D1]" />
               <span className="truncate max-w-[120px]">{supervisor.name}</span>
             </div>
           )}

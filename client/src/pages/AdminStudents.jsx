@@ -82,7 +82,7 @@ const AdminStudents = () => {
                 </td>
                 <td className="py-4 px-6 text-right">
                   <div className="flex justify-end gap-1">
-                    <button onClick={() => handleToggleStatus(student)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-indigo-600 dark:hover:bg-gray-800" title="Toggle Status">
+                    <button onClick={() => handleToggleStatus(student)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title="Toggle Status">
                       {student.isVerified ? <FaToggleOn className="h-4 w-4 text-emerald-500" /> : <FaToggleOff className="h-4 w-4" />}
                     </button>
                     <button onClick={() => handleDelete(student)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20" title="Delete">

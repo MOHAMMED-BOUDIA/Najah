@@ -5,7 +5,7 @@ const iconMap = {
   success: { icon: FaCheckCircle, color: 'text-emerald-500' },
   error: { icon: FaTimesCircle, color: 'text-red-500' },
   warning: { icon: FaExclamationTriangle, color: 'text-amber-500' },
-  info: { icon: FaInfoCircle, color: 'text-indigo-500' },
+  info: { icon: FaInfoCircle, color: 'text-[#0084D1]' },
 };
 
 const AlertModal = ({ isOpen, onClose, type = 'info', title, message }) => {
@@ -47,7 +47,7 @@ const AlertModal = ({ isOpen, onClose, type = 'info', title, message }) => {
           <button
             onClick={onClose}
             type="button"
-            className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-500 transition"
+            className="rounded-xl bg-[#0084D1] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0084D1]/20 hover:bg-[#0084D1] transition"
           >
             OK
           </button>
