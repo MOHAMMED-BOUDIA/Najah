@@ -8,7 +8,15 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+app.options('*', cors());
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -34,6 +42,25 @@ app.use(async (req, res, next) => {
 
 app.get('/', (req, res) => {
   res.json({ status: 'NAJAH API is running', version: '1.0' });
+});
+
+app.get('/api/create-admin-once', async (req, res) => {
+  try {
+    const User = require('./models/user');
+    const bcrypt = require('bcryptjs');
+    await User.deleteOne({ email: 'admin@najah.com' });
+    const hashed = await bcrypt.hash('Admin@1234', 10);
+    const admin = await User.create({
+      name: 'Super Admin',
+      email: 'admin@najah.com',
+      password: hashed,
+      role: 'admin',
+      isVerified: true,
+    });
+    res.json({ created: true, email: admin.email, role: admin.role });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
