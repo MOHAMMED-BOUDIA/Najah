@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FaEnvelope, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import { FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import AuthLayout from '../components/auth/AuthLayout';
 
 const VerifyEmail = () => {

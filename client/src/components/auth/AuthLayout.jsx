@@ -32,10 +32,9 @@ const NajahLogo = ({ className = '', white = false }) => (
 
 const AuthLayout = ({ children, title, subtitle }) => {
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
+  const visible = true;
 
   useEffect(() => {
-    setVisible(true);
     const interval = setInterval(() => {
       setQuoteIndex((prev) => (prev + 1) % quotes.length);
     }, 5000);

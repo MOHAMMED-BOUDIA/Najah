@@ -227,7 +227,7 @@ function HeroSection() {
                 className="flex items-center gap-4 pt-2"
               >
                 <div className="flex -space-x-2">
-                  {avatars.map((url, i) => (
+                  {avatars.map((url) => (
                     <img
                       key={url}
                       src={url}

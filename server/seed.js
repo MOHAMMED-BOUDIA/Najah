@@ -4,16 +4,16 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const User = require('./models/user');
+const User = require('./models/User');
 const Group = require('./models/Group');
-const Project = require('./models/project');
-const Team = require('./models/team');
-const Task = require('./models/task');
-const Meeting = require('./models/meeting');
-const Document = require('./models/document');
+const Project = require('./models/Project');
+const Team = require('./models/Team');
+const Task = require('./models/Task');
+const Meeting = require('./models/Meeting');
+const Document = require('./models/Document');
 const Resource = require('./models/Resource');
 const Challenge = require('./models/Challenge');
-const Notification = require('./models/notification');
+const Notification = require('./models/Notification');
 
 const seed = async () => {
   try {

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaBars, FaMoon, FaSun, FaUser, FaSignOutAlt, FaBell, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaBars, FaMoon, FaSun, FaSignOutAlt, FaBell, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import axiosInstance from '../../api/axios';

@@ -25,7 +25,7 @@ const AdminDepartments = () => {
     }
   };
 
-  useEffect(() => { fetchDepartments(); }, []);
+  useEffect(() => { fetchDepartments(); }, []); // eslint-disable-line react-hooks/set-state-in-effect
 
   const openCreate = () => {
     setEditing(null);

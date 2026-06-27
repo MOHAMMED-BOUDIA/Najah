@@ -8,7 +8,7 @@ const steps = [
   { icon: HiPlay, title: 'Start Your Formation', desc: 'Once approved, access courses, tasks, meetings, and learn at your own pace.' },
 ];
 
-const StepItem = memo(function StepItem({ step, i, active }) {
+const StepItem = memo(function StepItem({ step, i }) {
   const ref = useRef(null);
   const cardInView = useInView(ref, { once: true, margin: '-40px' });
   const StepIcon = step.icon;

@@ -1,5 +1,5 @@
 const Department = require('../models/Department');
-const User = require('../models/user');
+const User = require('../models/User');
 
 exports.getDepartments = async (req, res) => {
   try {

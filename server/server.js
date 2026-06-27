@@ -69,7 +69,7 @@ app.get('/api/setup-admin/:secretKey', async (req, res) => {
   }
 
   try {
-    const User = require('./models/user');
+    const User = require('./models/User');
     const bcrypt = require('bcryptjs');
 
     const existing = await User.findOne({ role: 'admin' });

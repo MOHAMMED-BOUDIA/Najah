@@ -28,7 +28,7 @@ const AdminInstructors = () => {
     }
   };
 
-  useEffect(() => { fetchInstructors(); }, []);
+  useEffect(() => { fetchInstructors(); }, []); // eslint-disable-line react-hooks/set-state-in-effect
 
   useEffect(() => {
     axiosInstance.get('/departments').then(res => setDepartments(res.data || [])).catch(() => {});

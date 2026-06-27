@@ -20,23 +20,21 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [membershipStatus, setMembershipStatus] = useState(null);
-  const [checkingMembership, setCheckingMembership] = useState(true);
+  const [checkingMembership, setCheckingMembership] = useState(isStudent);
   const hasRedirected = useRef(false);
+  const isStudent = user?.role === 'student';
 
   useEffect(() => {
-    if (user?.role === 'student') {
-      axiosInstance.get('/groups/my-membership').then(res => {
-        setMembershipStatus(res.data.status);
-      }).catch(() => {
-        setMembershipStatus('none');
-      }).finally(() => {
-        setCheckingMembership(false);
-        hasRedirected.current = false;
-      });
-    } else {
+    if (!isStudent) return;
+    axiosInstance.get('/groups/my-membership').then(res => {
+      setMembershipStatus(res.data.status);
+    }).catch(() => {
+      setMembershipStatus('none');
+    }).finally(() => {
       setCheckingMembership(false);
-    }
-  }, [user]);
+      hasRedirected.current = false;
+    });
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (loading || checkingMembership || !user) return;
