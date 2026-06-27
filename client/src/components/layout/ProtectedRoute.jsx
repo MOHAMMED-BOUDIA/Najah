@@ -33,6 +33,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         setCheckingMembership(false);
         hasRedirected.current = false;
       });
+    } else {
+      setCheckingMembership(false);
     }
   }, [user]);
 

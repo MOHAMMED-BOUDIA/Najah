@@ -69,7 +69,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
   ];
 
   const instructorLinks = [
-    { name: 'Dashboard', path: '/instructor/dashboard', icon: FaTachometerAlt },
+    { name: 'Dashboard', path: '/dashboard', icon: FaTachometerAlt },
     { name: 'My Groups', path: '/my-groups', icon: FaUsers },
     { name: 'Group Chat', path: '/chat', icon: FaCommentAlt },
     { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
