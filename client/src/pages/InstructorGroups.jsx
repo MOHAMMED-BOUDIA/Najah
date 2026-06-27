@@ -17,7 +17,9 @@ const InstructorGroups = () => {
 
   const imgSrc = (p) => {
     if (!p) return '';
-    return `${(import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '')}${p.startsWith('/') ? '' : '/'}${p.replace(/\\/g, '/')}`;
+    if (p.startsWith('http') || p.startsWith('data:')) return p;
+    const origin = (import.meta.env.VITE_API_URL || 'https://back-njah.vercel.app/api').replace('/api', '');
+    return `${origin}${p.startsWith('/') ? '' : '/'}${p.replace(/\\/g, '/')}`;
   };
 
   useEffect(() => {
@@ -142,6 +144,7 @@ const InstructorGroups = () => {
                       src={imgSrc(group.image)}
                       alt={group.name}
                       className="h-full w-full object-cover"
+                      onError={(e) => { e.target.style.display = 'none'; }}
                     />
                   </div>
                 ) : (

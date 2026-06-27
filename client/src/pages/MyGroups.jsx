@@ -273,7 +273,12 @@ const MyGroups = () => {
                 <div className="flex items-center gap-3">
                   {group.image ? (
                     <div className="h-14 w-14 overflow-hidden rounded-xl flex-shrink-0">
-                      <img src={import.meta.env.VITE_API_URL.replace('/api', '') + group.image} alt={group.name} className="h-full w-full object-cover" />
+                      <img src={(() => {
+                        if (group.image.startsWith('http') || group.image.startsWith('data:')) return group.image;
+                        const origin = (import.meta.env.VITE_API_URL || 'https://back-njah.vercel.app/api').replace('/api', '');
+                        return `${origin}${group.image.startsWith('/') ? '' : '/'}${group.image.replace(/\\/g, '/')}`;
+                      })()} alt={group.name} className="h-full w-full object-cover"
+                        onError={(e) => { e.target.style.display = 'none'; }} />
                     </div>
                   ) : (
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-sm flex-shrink-0">

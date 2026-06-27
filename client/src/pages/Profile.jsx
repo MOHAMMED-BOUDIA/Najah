@@ -7,9 +7,6 @@ import {
   FaPhone,
   FaSpinner,
   FaCamera,
-  FaProjectDiagram,
-  FaTasks,
-  FaUsers,
 } from 'react-icons/fa';
 import {
   FiChevronRight,
@@ -68,7 +65,7 @@ const Profile = () => {
   const [securitySubmitting, setSecuritySubmitting] = useState(false);
 
   // ─── Stats placeholders ─────────────────────────────────────────────────
-  const [stats, setStats] = useState({ projects: 0, tasks: 0, teams: 0 });
+  const [, setStats] = useState({ projects: 0, tasks: 0, teams: 0 });
 
   // ─── Active tab ─────────────────────────────────────────────────────────
   const [activeTab, setActiveTab] = useState('profile');
@@ -273,13 +270,6 @@ const Profile = () => {
   const inputClass =
     'block w-full rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs outline-none transition-all duration-200 focus:border-[#0084D1] focus:bg-white focus:ring-2 focus:ring-[#0084D1]/40 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800';
 
-  // ─── Mini stat cards data ───────────────────────────────────────────────
-  const miniStats = [
-    { label: 'Projects', value: stats.projects, icon: FaProjectDiagram, color: 'text-[#0084D1]' },
-    { label: 'Tasks', value: stats.tasks, icon: FaTasks, color: 'text-[#0084D1]' },
-    { label: 'Teams', value: stats.teams, icon: FaUsers, color: 'text-cyan-500' },
-  ];
-
   return (
     <div className="mx-auto max-w-5xl space-y-6">
       {/* ─── Breadcrumb ──────────────────────────────────────────────────── */}
@@ -365,25 +355,7 @@ const Profile = () => {
             </p>
           </div>
 
-          {/* Mini Stats Row — hidden for admin */}
-          {user.role !== 'admin' && (
-            <div className="grid grid-cols-3 gap-2">
-              {miniStats.map((s) => (
-                <div
-                  key={s.label}
-                  className="flex flex-col items-center gap-1 rounded-xl bg-gray-50 py-3 dark:bg-gray-800/60"
-                >
-                  <s.icon className={`h-4 w-4 ${s.color}`} />
-                  <span className="text-base font-bold text-gray-900 dark:text-white">
-                    {s.value}
-                  </span>
-                  <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
+        
 
           {/* Role & Department */}
           <div className="space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
