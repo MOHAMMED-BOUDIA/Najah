@@ -1,5 +1,6 @@
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
+import { useTranslation } from 'react-i18next';
 
 const sections = [
   {
@@ -37,6 +38,7 @@ const sections = [
 ];
 
 export default function Terms() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <HomeNavbar />
@@ -44,12 +46,12 @@ export default function Terms() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
-              Terms of{' '}
+              {t('static.terms.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                Service
+                {t('static.terms.titleAccent')}
               </span>
             </h1>
-            <p className="text-sm text-gray-400">Last updated: June 2026</p>
+            <p className="text-sm text-gray-400">{t('static.terms.lastUpdated')}</p>
           </div>
 
           <div className="space-y-10">

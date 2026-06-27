@@ -3,11 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { FaUsers, FaUserPlus, FaCheck, FaArrowLeft, FaHourglassHalf, FaBan } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const InstructorGroups = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
   const [instructor, setInstructor] = useState(null);
@@ -76,18 +78,18 @@ const InstructorGroups = () => {
         </Link>
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            {instructor?.name || 'Instructor'}'s Groups
+            {instructor?.name || 'Instructor'}{t('groups.instructorGroupsSuffix')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            {instructor?.department || ''} — {groups.length} {groups.length === 1 ? 'group' : 'groups'} available
+            {instructor?.department || ''} — {groups.length} {groups.length === 1 ? t('instructors.group') : t('instructors.groups')} available
           </p>
         </div>
       </div>
 
       {groups.length === 0 ? (
         <EmptyState
-          title="No groups available"
-          description="This instructor hasn't created any groups yet."
+          title={t('groups.noGroupsAvailable')}
+          description={t('groups.noGroupsAvailableDesc')}
         />
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -102,21 +104,21 @@ const InstructorGroups = () => {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400 cursor-default">
                   <FaCheck className="h-4 w-4" />
-                  Joined ✓
+                  {t('groups.joined')} ✓
                 </span>
               );
             } else if (pending) {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-600 dark:bg-amber-950/20 dark:text-amber-400 cursor-default">
                   <FaHourglassHalf className="h-4 w-4" />
-                  Pending Approval
+                  {t('groups.pendingApproval')}
                 </span>
               );
             } else if (isFull) {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-400 dark:bg-gray-800 cursor-default">
                   <FaBan className="h-4 w-4" />
-                  Full
+                  {t('groups.full')}
                 </span>
               );
             } else {
@@ -127,7 +129,7 @@ const InstructorGroups = () => {
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0277BD] disabled:opacity-50"
                 >
                   <FaUserPlus className="h-4 w-4" />
-                  {joining === group._id ? 'Sending...' : 'Request to Join'}
+                  {joining === group._id ? t('groups.sending') : t('groups.requestToJoin')}
                 </button>
               );
             }

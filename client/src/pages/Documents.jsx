@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaFileAlt, FaFolderOpen, FaPlus, FaTrash, FaDownload, FaFileUpload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Modal from '../components/common/Modal';
 import Loader from '../components/common/Loader';
@@ -8,6 +9,7 @@ import EmptyState from '../components/common/EmptyState';
 import { useConfirm } from '../context/ModalContext';
 
 const Documents = () => {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState('');
@@ -118,7 +120,7 @@ const Documents = () => {
   };
 
   const handleDeleteDoc = async (docId) => {
-    const ok = await confirm({ title: 'Delete Document', message: 'Are you sure you want to delete this document?', confirmLabel: 'Delete', destructive: true });
+    const ok = await confirm({ title: t('documents.deleteDocument'), message: 'Are you sure you want to delete this document?', confirmLabel: t('documents.deleteDocument'), destructive: true });
     if (!ok) return;
 
     try {
@@ -153,10 +155,10 @@ const Documents = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Document Center
+            {t('documents.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Upload and access project deliverables, reports, and code submissions.
+            {t('documents.subtitle')}
           </p>
         </div>
         
@@ -164,14 +166,14 @@ const Documents = () => {
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
             <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
-            Project:
+            {t('documents.projectLabel')}
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
             className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
-            <option value="">Choose a Project</option>
+            <option value="">{t('documents.chooseProject')}</option>
             {projects.map((proj) => (
               <option key={proj._id} value={proj._id}>
                 {proj.title}
@@ -184,7 +186,7 @@ const Documents = () => {
               onClick={() => setIsOpen(true)}
               type="button"
               className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
-              title="Upload Document"
+              title={t('documents.uploadDocument')}
             >
               <FaPlus className="h-4 w-4" />
             </button>
@@ -196,8 +198,8 @@ const Documents = () => {
       {!selectedProjectId ? (
         <EmptyState
           icon={FaFileAlt}
-          title="Select a project first"
-          description="Please choose a Final Year Project to browse and manage uploaded documents."
+          title={t('documents.selectProjectFirst')}
+          description={t('documents.selectProjectDesc')}
         />
       ) : docsLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
@@ -206,9 +208,9 @@ const Documents = () => {
       ) : documents.length === 0 ? (
         <EmptyState
           icon={FaFileAlt}
-          title="No documents uploaded"
-          description="Be the first to upload a project proposal, interim report, or presentation slide."
-          actionText="Upload Document"
+          title={t('documents.noDocuments')}
+          description={t('documents.noDocumentsDesc')}
+          actionText={t('documents.uploadDocument')}
           onActionClick={() => setIsOpen(true)}
         />
       ) : (
@@ -217,11 +219,11 @@ const Documents = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
-                  <th className="py-4 px-6">Name</th>
-                  <th className="py-4 px-6">Type</th>
-                  <th className="py-4 px-6">Comments</th>
-                  <th className="py-4 px-6">Date Uploaded</th>
-                  <th className="py-4 px-6 text-right">Actions</th>
+                  <th className="py-4 px-6">{t('documents.name')}</th>
+                  <th className="py-4 px-6">{t('documents.type')}</th>
+                  <th className="py-4 px-6">{t('documents.comments')}</th>
+                  <th className="py-4 px-6">{t('documents.dateUploaded')}</th>
+                  <th className="py-4 px-6 text-right">{t('documents.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
@@ -249,7 +251,7 @@ const Documents = () => {
                           target="_blank"
                           rel="noreferrer"
                           className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-[#0084D1] hover:bg-[#0084D1]/10"
-                          title="Download document"
+                          title={t('documents.downloadFile')}
                         >
                           <FaDownload className="h-4 w-4" />
                         </a>
@@ -258,7 +260,7 @@ const Documents = () => {
                         onClick={() => handleDeleteDoc(doc._id)}
                         type="button"
                         className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                        title="Delete document"
+                        title={t('documents.deleteDocument')}
                       >
                         <FaTrash className="h-4 w-4" />
                       </button>
@@ -272,21 +274,21 @@ const Documents = () => {
       )}
 
       {/* Upload Document Modal */}
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Upload Document">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title={t('documents.uploadModal')}>
         <form onSubmit={handleUploadSubmit} className="space-y-5">
           {/* File Picker Input */}
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Select File *
+              {t('documents.selectFile')}
             </label>
             <div className="flex items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 p-6 dark:border-gray-850 bg-gray-50/50 hover:bg-white transition-colors duration-200">
               <label className="flex flex-col items-center justify-center cursor-pointer text-center w-full">
                 <FaFileUpload className="h-8 w-8 text-[#0084D1] mb-2" />
                 <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {fileName || 'Choose a file...'}
+                  {fileName || t('documents.chooseFile')}
                 </span>
                 <span className="text-xs text-gray-400 mt-1">
-                  PDF, DOCX, ZIP, PPTX (max 10MB)
+                  {t('documents.fileHint')}
                 </span>
                 <input
                   type="file"
@@ -301,7 +303,7 @@ const Documents = () => {
           {/* Document Name */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Document Display Name *
+              {t('documents.displayName')}
             </label>
             <input
               type="text"
@@ -309,7 +311,7 @@ const Documents = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="e.g. Interim Progress Report"
+              placeholder={t('documents.displayNamePlaceholder')}
             />
           </div>
 
@@ -317,17 +319,17 @@ const Documents = () => {
             {/* Type */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Document Type *
+                {t('documents.documentType')}
               </label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
                 className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
-                <option value="rapport">Rapport (Report)</option>
-                <option value="presentation">Presentation</option>
-                <option value="code">Source Code (Zip)</option>
-                <option value="other">Other</option>
+                <option value="rapport">{t('documents.typeReport')}</option>
+                <option value="presentation">{t('documents.typePresentation')}</option>
+                <option value="code">{t('documents.typeSourceCode')}</option>
+                <option value="other">{t('documents.typeOther')}</option>
               </select>
             </div>
           </div>
@@ -335,14 +337,14 @@ const Documents = () => {
           {/* Comment */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Comment
+              {t('documents.comment')}
             </label>
             <input
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="e.g. Draft version 1.0 for supervisor review"
+              placeholder={t('documents.commentPlaceholder')}
             />
           </div>
 
@@ -353,14 +355,14 @@ const Documents = () => {
               type="button"
               className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-750 dark:text-gray-300 dark:hover:bg-gray-800"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={formLoading}
               className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
-              Upload
+              {t('common.upload')}
             </button>
           </div>
         </form>

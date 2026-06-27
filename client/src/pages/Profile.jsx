@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import Tabs from '../components/common/Tabs';
@@ -31,20 +32,21 @@ const getPasswordStrength = (pwd) => {
   if (/[0-9]/.test(pwd)) score++;
   if (/[^A-Za-z0-9]/.test(pwd)) score++;
 
-  if (score <= 1) return { label: 'Weak', color: 'bg-red-500', width: '20%' };
-  if (score <= 2) return { label: 'Fair', color: 'bg-orange-500', width: '40%' };
-  if (score <= 3) return { label: 'Good', color: 'bg-yellow-500', width: '60%' };
-  if (score <= 4) return { label: 'Strong', color: 'bg-emerald-500', width: '80%' };
-  return { label: 'Very Strong', color: 'bg-emerald-400', width: '100%' };
+  if (score <= 1) return { label: 'weak', color: 'bg-red-500', width: '20%' };
+  if (score <= 2) return { label: 'fair', color: 'bg-orange-500', width: '40%' };
+  if (score <= 3) return { label: 'good', color: 'bg-yellow-500', width: '60%' };
+  if (score <= 4) return { label: 'strong', color: 'bg-emerald-500', width: '80%' };
+  return { label: 'veryStrong', color: 'bg-emerald-400', width: '100%' };
 };
 
-// ─── Tab definitions ────────────────────────────────────────────────────────
-const tabItems = [
-  { key: 'profile', label: 'Profile Settings', icon: FiUser },
-  { key: 'security', label: 'Security', icon: FiShield },
-];
-
 const Profile = () => {
+  const { t } = useTranslation();
+
+  // ─── Tab definitions ──────────────────────────────────────────────────────
+  const tabItems = [
+    { key: 'profile', label: t('profile.profileSettings'), icon: FiUser },
+    { key: 'security', label: t('profile.security'), icon: FiShield },
+  ];
   const { user, updateUserProfileState } = useAuth();
 
   // ─── Profile Settings state ─────────────────────────────────────────────
@@ -281,21 +283,21 @@ const Profile = () => {
           to="/"
           className="hover:text-[#0084D1] transition-colors"
         >
-          Home
+          {t('profile.home')}
         </Link>
         <FiChevronRight className="h-3 w-3" />
         <span className="font-medium text-gray-800 dark:text-gray-200">
-          Profile
+          {t('profile.accountProfile')}
         </span>
       </nav>
 
       {/* ─── Page Header ─────────────────────────────────────────────────── */}
       <div className="space-y-1">
         <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-          Account Profile
+          {t('profile.accountProfile')}
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Manage your personal details and academic department information.
+          {t('profile.manageDetails')}
         </p>
       </div>
       <hr className="border-gray-200 dark:border-gray-800" />
@@ -347,7 +349,7 @@ const Profile = () => {
               ) : (
                 <FaCamera className="h-3 w-3" />
               )}
-              {uploadingAvatar ? 'Uploading...' : 'Change Photo'}
+              {uploadingAvatar ? t('profile.uploading') : t('profile.changePhoto')}
             </button>
           </div>
 
@@ -366,16 +368,16 @@ const Profile = () => {
           {/* Role & Department */}
           <div className="space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
             <div className="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400">
-              <span>Account Role</span>
+              <span>{t('profile.accountRole')}</span>
               <span className="rounded-full bg-[#0084D1]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0084D1]">
                 {user.role}
               </span>
             </div>
             {user.role !== 'admin' && (
               <div className="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400">
-                <span>Department</span>
-                <span className={`max-w-[140px] truncate ${user.department ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 italic'}`} title={user.department || 'Not assigned yet'}>
-                  {user.department || (user.role === 'student' ? 'Not assigned yet' : 'N/A')}
+                <span>{t('profile.department')}</span>
+                <span className={`max-w-[140px] truncate ${user.department ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 italic'}`} title={user.department || (user.role === 'student' ? t('profile.notAssigned') : t('profile.na'))}>
+                  {user.department || (user.role === 'student' ? t('profile.notAssigned') : t('profile.na'))}
                 </span>
               </div>
             )}
@@ -402,7 +404,7 @@ const Profile = () => {
                   {/* Full Name */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                      Full Name *
+                      {t('profile.fullName')}
                     </label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -422,7 +424,7 @@ const Profile = () => {
                   {/* Email */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                      Email Address *
+                      {t('profile.email')}
                     </label>
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -445,7 +447,7 @@ const Profile = () => {
                     {/* Department */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        Department
+                        {t('profile.department')}
                       </label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -457,19 +459,19 @@ const Profile = () => {
                           value={formData.department}
                           className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs opacity-60 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                         >
-                          <option value="">Select department</option>
+                          <option value="">{t('profile.selectDepartment')}</option>
                           {departments.map(d => (
                             <option key={d._id} value={d.name}>{d.name}</option>
                           ))}
                         </select>
                       </div>
-                      <p className="mt-1 text-[10px] text-gray-400 italic">Only admin can change your department</p>
+                      <p className="mt-1 text-[10px] text-gray-400 italic">{t('profile.deptChangeHint')}</p>
                     </div>
 
                     {/* Phone */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        Phone Number *
+                        {t('profile.phone')}
                       </label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -492,7 +494,7 @@ const Profile = () => {
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        Phone Number *
+                        {t('profile.phone')}
                       </label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -522,7 +524,7 @@ const Profile = () => {
                     ) : (
                       <FiSave className="h-3.5 w-3.5" />
                     )}
-                    Save Changes
+                    {t('profile.saveChanges')}
                   </button>
                 </div>
               </form>
@@ -533,30 +535,30 @@ const Profile = () => {
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
                 <div>
                   <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200">
-                    Change Password
+                    {t('profile.changePassword')}
                   </h4>
                   <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                    Update your password to keep your account secure.
+                    {t('profile.securityDesc')}
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <PasswordInput
-                    label="Current Password *"
+                    label={t('profile.currentPassword')}
                     name="current"
                     value={passwords.current}
                     onChange={handlePasswordChange}
-                    placeholder="Enter current password"
+                    placeholder={t('profile.currentPasswordPlaceholder')}
                     required
                   />
 
                   <div>
                     <PasswordInput
-                      label="New Password *"
+                      label={t('profile.newPassword')}
                       name="newPassword"
                       value={passwords.newPassword}
                       onChange={handlePasswordChange}
-                      placeholder="Minimum 6 characters"
+                      placeholder={t('profile.newPasswordPlaceholder')}
                       required
                     />
                     {/* Strength indicator */}
@@ -569,9 +571,9 @@ const Profile = () => {
                           />
                         </div>
                         <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400">
-                          Strength:{' '}
+                          {t('profile.strength')}{' '}
                           <span className="text-gray-700 dark:text-gray-300">
-                            {strength.label}
+                            {strength.label ? t(`profile.${strength.label}`) : ''}
                           </span>
                         </p>
                       </div>
@@ -579,11 +581,11 @@ const Profile = () => {
                   </div>
 
                   <PasswordInput
-                    label="Confirm New Password *"
+                    label={t('profile.confirmPassword')}
                     name="confirm"
                     value={passwords.confirm}
                     onChange={handlePasswordChange}
-                    placeholder="Re-enter new password"
+                    placeholder={t('profile.confirmPasswordPlaceholder')}
                     required
                   />
                 </div>
@@ -599,7 +601,7 @@ const Profile = () => {
                     ) : (
                       <FiShield className="h-3.5 w-3.5" />
                     )}
-                    Update Password
+                    {t('profile.updatePassword')}
                   </button>
                 </div>
               </form>

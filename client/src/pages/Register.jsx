@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaSpinner } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
@@ -7,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../components/auth/AuthLayout';
 
 const Register = () => {
+  const { t } = useTranslation();
   const { register, token, user } = useAuth();
   const navigate = useNavigate();
 
@@ -49,9 +51,9 @@ const Register = () => {
   const getPasswordStrength = (pwd) => {
     if (!pwd) return { label: '', color: '', width: '0%' };
     const met = Object.values(passwordRules).filter((fn) => fn(pwd)).length;
-    if (met <= 2) return { label: 'Weak', color: 'bg-red-500', width: '20%' };
-    if (met <= 3) return { label: 'Medium', color: 'bg-orange-500', width: '50%' };
-    return { label: 'Strong', color: 'bg-emerald-500', width: '100%' };
+    if (met <= 2) return { label: t('profile.weak'), color: 'bg-red-500', width: '20%' };
+    if (met <= 3) return { label: t('profile.fair'), color: 'bg-orange-500', width: '50%' };
+    return { label: t('profile.strong'), color: 'bg-emerald-500', width: '100%' };
   };
 
   const strength = getPasswordStrength(formData.password);
@@ -93,13 +95,13 @@ const Register = () => {
   const inputClassError = 'block w-full rounded-xl border border-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20 py-3 pl-11 pr-10 text-sm outline-none transition-all duration-200 focus:border-red-500 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-red-500/20 dark:text-white placeholder:text-gray-400';
 
   return (
-    <AuthLayout title="Create your account" subtitle="Join NAJAH to start your learning journey">
+    <AuthLayout title={t('auth.createAccountTitle')} subtitle={t('auth.createAccountSubtitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {/* Full Name */}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              Full Name *
+              {t('auth.fullName')} *
             </label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -112,7 +114,7 @@ const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className={inputClass}
-                placeholder="John Doe"
+                placeholder={t('auth.fullName')}
               />
             </div>
           </div>
@@ -120,7 +122,7 @@ const Register = () => {
           {/* Email */}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              Email Address *
+              {t('auth.email')} *
             </label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -145,7 +147,7 @@ const Register = () => {
         {/* Password */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Password *
+            {t('auth.password')} *
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -176,7 +178,7 @@ const Register = () => {
                 <div className="flex-1 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
                   <div className={`h-full rounded-full transition-all duration-300 ${strength.color}`} style={{ width: strength.width }} />
                 </div>
-                <span className={`text-[10px] font-semibold ${strength.label === 'Weak' ? 'text-red-500' : strength.label === 'Medium' ? 'text-orange-500' : 'text-emerald-500'}`}>
+                <span className={`text-[10px] font-semibold ${strength.label === t('profile.weak') ? 'text-red-500' : strength.label === t('profile.fair') ? 'text-orange-500' : 'text-emerald-500'}`}>
                   {strength.label}
                 </span>
               </div>
@@ -207,7 +209,7 @@ const Register = () => {
         {/* Phone */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Phone Number *
+            {t('auth.phone')} *
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -233,18 +235,18 @@ const Register = () => {
         >
           <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
           {loading && <FaSpinner className="h-4 w-4 animate-spin" />}
-          {loading ? 'Creating account...' : 'Create Account'}
+          {loading ? t('auth.creatingAccount') : t('auth.createAccount')}
         </button>
       </form>
 
       {/* Footer */}
       <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-        Already have an account?{' '}
+        {t('auth.haveAccount')}{' '}
         <Link
           to="/login"
           className="font-semibold text-[#0084D1] hover:text-[#0277BD] transition-colors"
         >
-          Sign in here
+          {t('auth.signInHere')}
         </Link>
       </p>
     </AuthLayout>

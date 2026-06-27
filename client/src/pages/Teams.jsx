@@ -8,9 +8,11 @@ import Modal from '../components/common/Modal';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 import { useConfirm } from '../context/ModalContext';
+import { useTranslation } from 'react-i18next';
 
 const Teams = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const [teams, setTeams] = useState([]);
   const [students, setStudents] = useState([]);
@@ -184,10 +186,10 @@ const Teams = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Workspace Teams
+            {t('teams.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Create groups, link them to projects, and organize student members.
+            {t('teams.subtitle')}
           </p>
         </div>
         {user?.role !== 'student' && (
@@ -198,7 +200,7 @@ const Teams = () => {
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] sm:w-auto"
             >
               <FaPlus className="h-4 w-4" />
-              Create Team
+              {t('teams.newTeam')}
             </button>
           </div>
         )}
@@ -208,9 +210,9 @@ const Teams = () => {
       {teams.length === 0 ? (
         <EmptyState
           icon={FaUsers}
-          title="No teams created yet"
-          description="Build teams and link them to Final Year Projects to start assigning tasks."
-          actionText="Create Team"
+          title={t('teams.noTeamsYet')}
+          description={t('teams.noTeamsDesc')}
+          actionText={t('teams.newTeam')}
           onActionClick={() => setIsCreateOpen(true)}
         />
       ) : (
@@ -227,13 +229,13 @@ const Teams = () => {
                     {team.name}
                   </h3>
                   <span className="rounded-xl bg-[#0084D1]/10 px-2.5 py-0.5 text-xs font-semibold text-[#0084D1]">
-                    {team.members ? team.members.length : 0} members
+                    {team.members ? team.members.length : 0} {t('teams.members')}
                   </span>
                 </div>
 
                 {/* Linked Project */}
                 <div className="mt-3">
-                  <p className="text-xs text-gray-400">LINKED PROJECT</p>
+                  <p className="text-xs text-gray-400">{t('teams.linkedProjectLabel')}</p>
                   {team.project ? (
                     <Link
                       to={`/projects/${team.project._id || team.project}`}
@@ -242,19 +244,19 @@ const Teams = () => {
                       {team.project.title || 'View Linked Project'}
                     </Link>
                   ) : (
-                    <p className="mt-0.5 text-sm text-gray-500 italic">None</p>
+                    <p className="mt-0.5 text-sm text-gray-500 italic">{t('teams.none')}</p>
                   )}
                 </div>
 
                 {/* Members List */}
                 <div className="mt-4 space-y-2">
-                  <p className="text-xs text-gray-400">MEMBERS</p>
+                  <p className="text-xs text-gray-400">{t('teams.membersLabel')}</p>
                   <div className="space-y-1.5 max-h-[150px] overflow-y-auto pr-1">
                     {team.members && team.members.map((member) => (
                       <div key={member._id || member.id} className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300 py-0.5">
                         <span className="flex items-center gap-1">
                           {isLeader(team, member) && (
-                            <FaCrown className="h-3 w-3 text-amber-500" title="Team Leader" />
+                            <FaCrown className="h-3 w-3 text-amber-500" title={t('teams.teamLeader')} />
                           )}
                           <span className={isLeader(team, member) ? 'font-bold' : ''}>
                             {member.name}
@@ -280,7 +282,7 @@ const Teams = () => {
                     type="button"
                     className="text-xs font-bold text-[#0084D1] hover:text-[#0277BD]"
                   >
-                    Manage Members
+                    {t('teams.manageMembers')}
                   </button>
                 )}
                 
@@ -289,7 +291,7 @@ const Teams = () => {
                     onClick={() => handleDeleteTeam(team._id)}
                     type="button"
                     className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20 dark:hover:text-red-400"
-                    title="Delete Team"
+                    title={t('teams.deleteTeam')}
                   >
                     <FaTrash className="h-4 w-4" />
                   </button>
@@ -301,12 +303,12 @@ const Teams = () => {
       )}
 
       {/* Create Team Modal */}
-      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title="Create New Team">
+      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title={t('teams.createTeamModal')}>
         <form onSubmit={handleCreateTeam} className="space-y-5">
           {/* Name */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Team Name *
+              {t('teams.teamName')}
             </label>
             <input
               type="text"
@@ -314,7 +316,7 @@ const Teams = () => {
               value={newTeamName}
               onChange={(e) => setNewTeamName(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="e.g. Apollo Developers"
+              placeholder={t('teams.teamNamePlaceholder')}
             />
           </div>
 
@@ -322,14 +324,14 @@ const Teams = () => {
             {/* Leader */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Team Leader
+                {t('teams.teamLeader')}
               </label>
               <select
                 value={selectedLeader}
                 onChange={(e) => setSelectedLeader(e.target.value)}
                 className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
-                <option value="">Select Leader</option>
+                <option value="">{t('teams.selectLeader')}</option>
                 {students.map((student) => (
                   <option key={student._id} value={student._id}>
                     {student.name} ({student.department})
@@ -341,14 +343,14 @@ const Teams = () => {
             {/* Linked Project */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Linked Project
+                {t('teams.linkedProject')}
               </label>
               <select
                 value={selectedProject}
                 onChange={(e) => setSelectedProject(e.target.value)}
                 className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
-                <option value="">Select Project</option>
+                <option value="">{t('teams.selectProject')}</option>
                 {projects.map((proj) => (
                   <option key={proj._id} value={proj._id}>
                     {proj.title}
@@ -361,7 +363,7 @@ const Teams = () => {
           {/* Members checklist */}
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Select Initial Members
+              {t('teams.selectInitialMembers')}
             </label>
             <div className="max-h-[160px] overflow-y-auto border border-gray-200 rounded-xl p-3 space-y-2 dark:border-gray-850">
               {students.map((student) => (
@@ -390,14 +392,14 @@ const Teams = () => {
               type="button"
               className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-750 dark:text-gray-300 dark:hover:bg-gray-800"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={formLoading}
               className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
-              Create Team
+              {t('teams.newTeam')}
             </button>
           </div>
         </form>
@@ -407,7 +409,7 @@ const Teams = () => {
       <Modal
         isOpen={isManageOpen}
         onClose={() => setIsManageOpen(false)}
-        title={currentTeam ? `Manage Members: ${currentTeam.name}` : 'Manage Members'}
+        title={currentTeam ? t('teams.manageMembersModal', { name: currentTeam.name }) : t('teams.manageMembers')}
       >
         {currentTeam && (
           <div className="space-y-6">
@@ -419,7 +421,7 @@ const Teams = () => {
                 onChange={(e) => setStudentToAdd(e.target.value)}
                 className="block flex-1 rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
               >
-                <option value="">Select Student to Add</option>
+                <option value="">{t('teams.selectStudentAdd')}</option>
                 {students
                   .filter((s) => !currentTeam.members?.some((m) => m._id === s._id))
                   .map((student) => (
@@ -432,23 +434,23 @@ const Teams = () => {
                 type="submit"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD]"
               >
-                <FaUserPlus /> Add
+                <FaUserPlus /> {t('teams.add')}
               </button>
             </form>
 
             {/* Members List */}
             <div className="space-y-3">
-              <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200">Current Members</h4>
+              <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200">{t('teams.currentMembers')}</h4>
               <div className="divide-y divide-gray-100 dark:divide-gray-800 border border-gray-100 rounded-2xl dark:border-gray-800 px-4">
                 {currentTeam.members?.length === 0 ? (
-                  <p className="text-center py-4 text-xs text-gray-400">No members in this team</p>
+                  <p className="text-center py-4 text-xs text-gray-400">{t('teams.noMembers')}</p>
                 ) : (
                   currentTeam.members?.map((member) => (
                     <div key={member._id || member.id} className="flex items-center justify-between py-3">
                       <div className="flex items-center gap-2">
                         {isLeader(currentTeam, member) && <FaCrown className="h-3 w-3 text-amber-500" />}
                         <span className="text-xs font-semibold text-gray-800 dark:text-gray-200">
-                          {member.name} {isLeader(currentTeam, member) && '(Leader)'}
+                          {member.name} {isLeader(currentTeam, member) && t('teams.leaderLabel')}
                         </span>
                       </div>
                       <button
@@ -456,7 +458,7 @@ const Teams = () => {
                         type="button"
                         className="inline-flex items-center gap-1 text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-950/20 px-2 py-1 rounded-lg"
                       >
-                        <FaUserMinus /> Remove
+                        <FaUserMinus /> {t('teams.remove')}
                       </button>
                     </div>
                   ))

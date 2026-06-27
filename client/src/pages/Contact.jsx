@@ -2,9 +2,11 @@ import { useState } from 'react';
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,13 +21,13 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
-              Get in{' '}
+              {t('static.contact.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                Touch
+                {t('static.contact.titleAccent')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400">
-              Have a question? We would love to hear from you.
+              {t('static.contact.subtitle')}
             </p>
           </div>
 
@@ -34,37 +36,37 @@ export default function Contact() {
             <div className="p-8 rounded-3xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
+                  <label className="block text-sm font-medium mb-2">{t('static.contact.name')}</label>
                   <input
                     type="text"
                     required
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
-                    placeholder="Your name"
+                    placeholder={t('static.contact.namePlaceholder')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <label className="block text-sm font-medium mb-2">{t('static.contact.email')}</label>
                   <input
                     type="email"
                     required
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
-                    placeholder="you@example.com"
+                    placeholder={t('static.contact.emailPlaceholder')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
+                  <label className="block text-sm font-medium mb-2">{t('static.contact.message')}</label>
                   <textarea
                     required
                     rows={5}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition resize-none"
-                    placeholder="Your message..."
+                    placeholder={t('static.contact.messagePlaceholder')}
                   />
                 </div>
                 <button
                   type="submit"
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white font-semibold hover:from-[#FFB900] hover:to-[#0277BD] transition-all shadow-lg shadow-[#0084D1]/25"
                 >
-                  {sent ? 'Message Sent!' : 'Send Message'}
+                  {sent ? t('static.contact.messageSent') : t('static.contact.send')}
                   <FiSend className="w-4 h-4" />
                 </button>
               </form>
@@ -77,8 +79,8 @@ export default function Contact() {
                   <FiMail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Email</p>
-                  <p className="text-sm text-gray-400">contact@najah-platform.com</p>
+                  <p className="text-sm font-medium">{t('static.contact.email')}</p>
+                  <p className="text-sm text-gray-400">{t('static.contact.email')}</p>
                 </div>
               </div>
 
@@ -87,8 +89,8 @@ export default function Contact() {
                   <FiPhone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Phone</p>
-                  <p className="text-sm text-gray-400">+212 5XX XX XX XX</p>
+                  <p className="text-sm font-medium">{t('static.contact.phone')}</p>
+                  <p className="text-sm text-gray-400">{t('static.contact.phone')}</p>
                 </div>
               </div>
 
@@ -97,8 +99,8 @@ export default function Contact() {
                   <FiMapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">Address</p>
-                  <p className="text-sm text-gray-400">Casablanca, Morocco</p>
+                  <p className="text-sm font-medium">{t('static.contact.address')}</p>
+                  <p className="text-sm text-gray-400">{t('static.contact.address')}</p>
                 </div>
               </div>
 

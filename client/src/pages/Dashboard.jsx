@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaProjectDiagram, FaUsers, FaTasks, FaCalendarAlt, FaPlus, FaChalkboardTeacher, FaUserGraduate, FaLayerGroup, FaArrowRight, FaBell, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import {
   ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend
@@ -13,6 +14,7 @@ import Loader from '../components/common/Loader';
 
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -66,7 +68,7 @@ const Dashboard = () => {
         setRecentProjects(sorted);
 
         const statusCounts = projects.reduce((acc, curr) => { const s = curr.status || 'pending'; acc[s] = (acc[s] || 0) + 1; return acc; }, {});
-        const statusMap = { 'pending': 'Pending', 'approved': 'Approved', 'in-progress': 'In Progress', 'completed': 'Completed', 'rejected': 'Rejected' };
+        const statusMap = { 'pending': t('common.statusPending'), 'approved': t('common.statusApproved'), 'in-progress': t('common.statusInProgress'), 'completed': t('common.statusCompleted'), 'rejected': t('common.statusRejected') };
         setStatusChartData(Object.keys(statusCounts).map(k => ({ name: statusMap[k] || k, value: statusCounts[k] })));
         setProgressChartData(projects.slice(0, 8).map(p => ({ name: p.title.length > 15 ? p.title.slice(0, 15) + '...' : p.title, progress: p.progress || 0 })));
 
@@ -88,22 +90,22 @@ const Dashboard = () => {
           } catch { /* ignore */ }
         }
       } catch {
-        toast.error('Failed to load dashboard data.');
+        toast.error(t('common.loadError'));
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [user]);
+  }, [user, t]);
 
   const handleApprove = async (groupId, userId) => {
     setProcessing(`approve-${groupId}-${userId}`);
     try {
       await axiosInstance.post(`/groups/${groupId}/approve/${userId}`);
       setPendingRequests(prev => prev.filter(r => !(r.groupId === groupId && r.student.id === userId)));
-      toast.success('Student approved!');
+      toast.success(t('common.approvedSuccess'));
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to approve');
+      toast.error(err.response?.data?.message || t('common.approveFailed'));
     } finally {
       setProcessing(null);
     }
@@ -114,15 +116,15 @@ const Dashboard = () => {
     try {
       await axiosInstance.post(`/groups/${groupId}/reject/${userId}`);
       setPendingRequests(prev => prev.filter(r => !(r.groupId === groupId && r.student.id === userId)));
-      toast.success('Request rejected');
+      toast.success(t('common.rejectedSuccess'));
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to reject');
+      toast.error(err.response?.data?.message || t('common.rejectFailed'));
     } finally {
       setProcessing(null);
     }
   };
 
-  const COLORS = { 'Pending': '#f59e0b', 'Approved': '#0284c7', 'In Progress': '#0084D1', 'Completed': '#10b981', 'Rejected': '#ef4444' };
+  const COLORS = { [t('common.statusPending')]: '#f59e0b', [t('common.statusApproved')]: '#0284c7', [t('common.statusInProgress')]: '#0084D1', [t('common.statusCompleted')]: '#10b981', [t('common.statusRejected')]: '#ef4444' };
 
   if (loading) {
     return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
@@ -132,20 +134,20 @@ const Dashboard = () => {
     <div className="space-y-8 p-1">
       {/* Welcome Banner */}
       <div className="flex flex-col gap-4 rounded-3xl bg-gradient-to-r from-[#F59E0B] to-white p-6 shadow-lg md:flex-row md:items-center md:justify-between md:p-8">
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 text-left rtl:text-right">
           <h1 className="text-2xl font-black text-white md:text-3xl">
-            Welcome to NAJAH, {user?.name}!
+            {t('dashboard.welcome', { name: user?.name })}
           </h1>
           <p className="text-sm font-medium text-gray-700">
-            {user?.role === 'student' && "Track your projects, tasks, and group activities."}
-            {user?.role === 'instructor' && "Manage your groups, projects, and students."}
-            {user?.role === 'admin' && "Overview of system-wide statistics."}
+            {user?.role === 'student' && t('dashboard.subtitleStudent')}
+            {user?.role === 'instructor' && t('dashboard.subtitleInstructor')}
+            {user?.role === 'admin' && t('dashboard.subtitleAdmin')}
           </p>
         </div>
         {user?.role === 'student' && (
           <div className="flex-shrink-0">
             <Link to="/projects" className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-bold shadow-sm hover:bg-amber-50 transition" style={{ color: '#0284C7' }}>
-              <FaPlus className="h-4 w-4" /> New Project Proposal
+              <FaPlus className="h-4 w-4" /> {t('dashboard.newProjectProposal')}
             </Link>
           </div>
         )}
@@ -153,10 +155,10 @@ const Dashboard = () => {
 
       {/* KPI Counters */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <StatsCard title="Total Projects" value={stats.projectsCount} icon={FaProjectDiagram} color="indigo" />
-        <StatsCard title="Active Teams" value={stats.teamsCount} icon={FaUsers} color="purple" />
-        <StatsCard title="Overall Tasks" value={stats.tasksCount} icon={FaTasks} color="amber" />
-        <StatsCard title="Upcoming Meetings" value={stats.meetingsCount} icon={FaCalendarAlt} color="emerald" />
+        <StatsCard title={t('dashboard.totalProjects')} value={stats.projectsCount} icon={FaProjectDiagram} color="indigo" />
+        <StatsCard title={t('dashboard.activeTeams')} value={stats.teamsCount} icon={FaUsers} color="purple" />
+        <StatsCard title={t('dashboard.overallTasks')} value={stats.tasksCount} icon={FaTasks} color="amber" />
+        <StatsCard title={t('dashboard.upcomingMeetings')} value={stats.meetingsCount} icon={FaCalendarAlt} color="emerald" />
       </div>
 
       {/* Student-specific: My Joined Groups */}
@@ -164,10 +166,10 @@ const Dashboard = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaUsers className="h-5 w-5 text-[#0084D1]" /> My Groups
+              <FaUsers className="h-5 w-5 text-[#0084D1]" /> {t('dashboard.myGroups')}
             </h3>
             <Link to="/instructors" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">
-              Browse All Groups <FaArrowRight className="inline h-3 w-3" />
+              {t('dashboard.browseAllGroups')} <FaArrowRight className="inline h-3 w-3" />
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -177,7 +179,7 @@ const Dashboard = () => {
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{group.specialty}</p>
                 <div className="mt-2 flex items-center gap-2 text-xs text-gray-400">
                   <FaChalkboardTeacher className="h-3 w-3" />
-                  <span>{group.instructor?.name || 'Instructor'}</span>
+                  <span>{group.instructor?.name || t('common.instructor')}</span>
                 </div>
               </div>
             ))}
@@ -190,10 +192,10 @@ const Dashboard = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <FaLayerGroup className="h-5 w-5 text-amber-500" /> My Groups ({myGroups.length})
+              <FaLayerGroup className="h-5 w-5 text-amber-500" /> {t('dashboard.myGroups')} ({myGroups.length})
             </h3>
             <Link to="/my-groups" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">
-              Manage Groups <FaArrowRight className="inline h-3 w-3" />
+              {t('dashboard.manageGroups')} <FaArrowRight className="inline h-3 w-3" />
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -202,7 +204,7 @@ const Dashboard = () => {
                 <h4 className="font-bold text-gray-900 dark:text-white">{group.name}</h4>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   <FaUserGraduate className="inline h-3 w-3 mr-1" />
-                  {group.members?.length || 0} / {group.maxMembers} students
+                  {group.members?.length || 0} / {group.maxMembers} {t('common.students')}
                 </p>
               </div>
             ))}
@@ -216,7 +218,7 @@ const Dashboard = () => {
           <div className="flex items-center gap-2 mb-4">
             <FaBell className="h-5 w-5 text-amber-500" />
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-              Pending Join Requests ({pendingRequests.length})
+              {t('dashboard.pendingRequestsCount', { count: pendingRequests.length })}
             </h3>
           </div>
           <div className="space-y-3">
@@ -234,7 +236,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">{req.student.name}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Wants to join: <span className="font-medium text-gray-700 dark:text-gray-300">{req.groupName}</span></p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t('dashboard.wantsToJoin')} <span className="font-medium text-gray-700 dark:text-gray-300">{req.groupName}</span></p>
                   </div>
                 </div>
                 <div className="flex gap-2 shrink-0">
@@ -244,7 +246,7 @@ const Dashboard = () => {
                     className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-600 hover:bg-emerald-100 disabled:opacity-50 dark:bg-emerald-950/20 dark:text-emerald-400"
                   >
                     <FaCheckCircle className="h-3.5 w-3.5" />
-                    Approve
+                    {t('nav.approve')}
                   </button>
                   <button
                     onClick={() => handleReject(req.groupId, req.student.id)}
@@ -252,7 +254,7 @@ const Dashboard = () => {
                     className="inline-flex items-center gap-1.5 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-100 disabled:opacity-50 dark:bg-red-950/20 dark:text-red-400"
                   >
                     <FaTimesCircle className="h-3.5 w-3.5" />
-                    Reject
+                    {t('nav.reject')}
                   </button>
                 </div>
               </div>
@@ -262,12 +264,12 @@ const Dashboard = () => {
       )}
 
       {/* Charts Grid */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+      <div dir="ltr" className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="flex flex-col rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
-          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">Project Status Overview</h3>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">{t('dashboard.projectStatus')}</h3>
           <div className="flex-1 min-h-[300px] flex items-center justify-center">
             {statusChartData.length === 0 ? (
-              <span className="text-sm text-gray-400">No project status data</span>
+              <span className="text-sm text-gray-400">{t('dashboard.noProjectStatusData')}</span>
             ) : (
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
@@ -283,10 +285,10 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 lg:col-span-3">
-          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">Project Progress (%)</h3>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">{t('dashboard.projectProgress')}</h3>
           <div className="flex-1 min-h-[300px]">
             {progressChartData.length === 0 ? (
-              <div className="flex h-full items-center justify-center"><span className="text-sm text-gray-400">No projects to plot progress</span></div>
+              <div className="flex h-full items-center justify-center"><span className="text-sm text-gray-400">{t('dashboard.noProjectProgress')}</span></div>
             ) : (
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={progressChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -307,8 +309,8 @@ const Dashboard = () => {
       {recentProjects.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Recently Added Projects</h2>
-            <Link to="/projects" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">View all projects</Link>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('dashboard.recentProjects')}</h2>
+            <Link to="/projects" className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD]">{t('dashboard.viewAllProjects')}</Link>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {recentProjects.map((project) => (<ProjectCard key={project._id} project={project} />))}

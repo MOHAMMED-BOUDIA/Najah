@@ -9,9 +9,11 @@ import Modal from '../components/common/Modal';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 import { useConfirm } from '../context/ModalContext';
+import { useTranslation } from 'react-i18next';
 
 const Projects = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const [projects, setProjects] = useState([]);
   const [supervisors, setSupervisors] = useState([]);
@@ -136,10 +138,10 @@ const Projects = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Final Year Projects
+            {t('projects.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Browse, search, and manage project proposals and assignments.
+            {t('projects.subtitle')}
           </p>
         </div>
         <div>
@@ -149,7 +151,7 @@ const Projects = () => {
             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] sm:w-auto"
           >
             <FaPlus className="h-4 w-4" />
-            Propose Project
+            {t('projects.newProject')}
           </button>
         </div>
       </div>
@@ -166,7 +168,7 @@ const Projects = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="block w-full rounded-xl border border-gray-200 bg-gray-50/50 py-2 pl-10 pr-4 text-sm outline-none focus:border-[#0084D1] focus:bg-white dark:border-gray-800 dark:bg-gray-800/40 dark:text-white"
-            placeholder="Search projects by title or description..."
+            placeholder={t('projects.searchPlaceholder')}
           />
           {searchQuery && (
             <button
@@ -188,12 +190,12 @@ const Projects = () => {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="block w-full rounded-xl border border-gray-250 bg-white py-2 pl-9 pr-4 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
-            <option value="">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="rejected">Rejected</option>
+            <option value="">{t('projects.allStatuses')}</option>
+            <option value="pending">{t('common.statusPending')}</option>
+            <option value="approved">{t('common.statusApproved')}</option>
+            <option value="in-progress">{t('common.statusInProgress')}</option>
+            <option value="completed">{t('common.statusCompleted')}</option>
+            <option value="rejected">{t('common.statusRejected')}</option>
           </select>
         </div>
       </div>
@@ -201,9 +203,9 @@ const Projects = () => {
       {/* Projects List */}
       {filteredProjects.length === 0 ? (
         <EmptyState
-          title="No projects found"
-          description="Try broadening your search or propose a new project project."
-          actionText={searchQuery || statusFilter ? "Clear Filters" : "Propose Project"}
+          title={t('projects.noProjectsFound')}
+          description={t('projects.noProjectsDesc')}
+          actionText={searchQuery || statusFilter ? t('projects.clearFilters') : t('projects.newProject')}
           onActionClick={() => {
             if (searchQuery || statusFilter) {
               setSearchQuery('');
@@ -227,13 +229,13 @@ const Projects = () => {
                       onClick={() => handleEditClick(project)}
                       className="rounded-lg bg-white p-2 text-gray-600 shadow-sm border border-gray-100 hover:bg-[#0084D1]/10 hover:text-[#0084D1] transition dark:bg-gray-800 dark:text-gray-300 dark:border-gray-750"
                     >
-                      Edit
+                      {t('common.edit')}
                     </button>
                     <button
                       onClick={() => handleDeleteClick(project._id)}
                       className="rounded-lg bg-white p-2 text-red-600 shadow-sm border border-gray-100 hover:bg-red-50 hover:text-red-700 transition dark:bg-gray-800 dark:text-red-400 dark:border-gray-750 dark:hover:bg-red-950/30"
                     >
-                      Delete
+                      {t('common.delete')}
                     </button>
                   </>
                 )}
@@ -244,7 +246,7 @@ const Projects = () => {
       )}
 
       {/* Propose Modal */}
-      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title="Propose New Project">
+      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title={t('projects.newProjectModal')}>
         <ProjectForm
           supervisors={supervisors}
           teams={teams}
@@ -256,7 +258,7 @@ const Projects = () => {
       </Modal>
 
       {/* Edit Modal */}
-      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title="Edit Project">
+      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title={t('projects.editProjectModal')}>
         <ProjectForm
           initialData={currentProject}
           supervisors={supervisors}

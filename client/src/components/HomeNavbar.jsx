@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const scrollLinks = [
-  { label: 'Formations', id: 'formations' },
-  { label: 'Instructors', id: 'instructors' },
-  { label: 'How It Works', id: 'how-it-works' },
+  { labelKey: 'nav.formations', id: 'formations' },
+  { labelKey: 'nav.instructors', id: 'instructors' },
+  { labelKey: 'nav.howItWorks', id: 'how-it-works' },
 ];
 
 export default function HomeNavbar() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(
@@ -73,23 +76,24 @@ export default function HomeNavbar() {
           <div className="hidden md:flex items-center gap-8">
             {scrollLinks.map((link) => (
               <button
-                key={link.label}
+                key={link.labelKey}
                 onClick={() => handleScroll(link.id)}
                 className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] transition-colors"
               >
-                {link.label}
+                {t(link.labelKey)}
               </button>
             ))}
             <Link
               to="/contact"
               className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] transition-colors"
             >
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-2">
+            <LanguageSwitcher />
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
@@ -101,13 +105,13 @@ export default function HomeNavbar() {
               to="/login"
               className="px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
             >
-              Login
+              {t('nav.login')}
             </Link>
             <Link
               to="/register"
               className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] shadow-lg shadow-[#FFB900]/25 hover:shadow-[#FFB900]/40 transition-all"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Link>
           </div>
 
@@ -134,11 +138,11 @@ export default function HomeNavbar() {
             <div className="px-4 py-4 space-y-3">
               {scrollLinks.map((link) => (
                 <button
-                  key={link.label}
+                  key={link.labelKey}
                   onClick={() => handleScroll(link.id)}
                   className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </button>
               ))}
               <Link
@@ -146,8 +150,11 @@ export default function HomeNavbar() {
                 onClick={() => setMobileOpen(false)}
                 className="block px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
               >
-                Contact
+                {t('nav.contact')}
               </Link>
+              <div className="flex justify-center">
+                <LanguageSwitcher />
+              </div>
               <button
                 onClick={() => { setDarkMode(!darkMode); setMobileOpen(false); }}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
@@ -160,14 +167,14 @@ export default function HomeNavbar() {
                 onClick={() => setMobileOpen(false)}
                 className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
               >
-                Login
+                {t('nav.login')}
               </Link>
               <Link
                 to="/register"
                 onClick={() => setMobileOpen(false)}
                 className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] transition-all"
               >
-                Get Started
+                {t('nav.getStarted')}
               </Link>
             </div>
           </motion.div>

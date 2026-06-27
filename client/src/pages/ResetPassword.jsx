@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaSpinner, FaLock } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
@@ -25,6 +26,7 @@ const getPasswordStrength = (pwd) => {
 };
 
 const ResetPassword = () => {
+  const { t } = useTranslation();
   const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -37,7 +39,7 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirm) {
-      toast.error('Passwords do not match');
+      toast.error(t('auth.passwordsDoNotMatch'));
       return;
     }
     setLoading(true);
@@ -55,12 +57,12 @@ const ResetPassword = () => {
   const inputClass = 'block w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 py-3.5 pl-11 pr-12 text-sm outline-none transition-all duration-200 focus:border-[#0084D1] focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[#0084D1]/20 dark:text-white placeholder:text-gray-400';
 
   return (
-    <AuthLayout title="Set new password" subtitle="Must be at least 8 characters with uppercase, lowercase, number & special character">
+    <AuthLayout title={t('auth.setNewPasswordTitle')} subtitle={t('auth.setNewPasswordSubtitle')}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* New Password */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            New Password
+            {t('auth.newPassword')}
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -72,7 +74,7 @@ const ResetPassword = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={inputClass}
-              placeholder="Enter new password"
+              placeholder={t('auth.newPassword')}
             />
             <button
               type="button"
@@ -97,7 +99,7 @@ const ResetPassword = () => {
         {/* Confirm Password */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Confirm Password
+            {t('auth.confirmPassword')}
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -109,7 +111,7 @@ const ResetPassword = () => {
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               className={inputClass}
-              placeholder="Re-enter new password"
+              placeholder={t('auth.confirmPassword')}
             />
             <button
               type="button"
@@ -122,7 +124,7 @@ const ResetPassword = () => {
             </button>
           </div>
           {confirm && password !== confirm && (
-            <p className="text-[11px] font-medium text-red-500 mt-1">Passwords do not match</p>
+            <p className="text-[11px] font-medium text-red-500 mt-1">{t('auth.passwordsDoNotMatch')}</p>
           )}
         </div>
 
@@ -133,7 +135,7 @@ const ResetPassword = () => {
         >
           <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
           {loading && <FaSpinner className="h-4 w-4 animate-spin" />}
-          {loading ? 'Resetting...' : 'Reset Password'}
+          {loading ? t('auth.resetting') : t('auth.resetPassword')}
         </button>
       </form>
 
@@ -142,7 +144,7 @@ const ResetPassword = () => {
           to="/login"
           className="text-sm font-semibold text-[#0084D1] hover:text-[#0277BD] transition-colors"
         >
-          Back to login
+          {t('auth.backToLogin')}
         </Link>
       </p>
     </AuthLayout>

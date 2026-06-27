@@ -3,6 +3,7 @@ import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { FiSearch, FiBookOpen, FiUserCheck, FiSettings, FiShield, FiLayers, FiTool, FiX, FiClock, FiArrowRight, FiMail } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const articles = [
   {
@@ -71,19 +72,29 @@ const articles = [
   },
 ];
 
-const categories = [
-  { key: 'Getting Started', icon: FiBookOpen, desc: 'New to NAJAH? Start here.' },
-  { key: 'Account', icon: FiUserCheck, desc: 'Manage your account settings.' },
-  { key: 'Formations', icon: FiLayers, desc: 'Learn how formations work.' },
-  { key: 'Instructors', icon: FiTool, desc: 'Working with instructors.' },
-  { key: 'Billing', icon: FiSettings, desc: 'Billing and payments.' },
-  { key: 'Security', icon: FiShield, desc: 'Keeping your data safe.' },
-];
-
 export default function Help() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  const categoryOptions = [
+    { key: 'Getting Started', label: t('static.help.gettingStarted'), icon: FiBookOpen, desc: t('static.help.gettingStartedDesc') },
+    { key: 'Account', label: t('static.help.account'), icon: FiUserCheck, desc: t('static.help.accountDesc') },
+    { key: 'Formations', label: t('static.help.formations'), icon: FiLayers, desc: t('static.help.formationsDesc') },
+    { key: 'Instructors', label: t('static.help.instructors'), icon: FiTool, desc: t('static.help.instructorsDesc') },
+    { key: 'Billing', label: t('static.help.billing'), icon: FiSettings, desc: t('static.help.billingDesc') },
+    { key: 'Security', label: t('static.help.security'), icon: FiShield, desc: t('static.help.securityDesc') },
+  ];
+
+  const categoryLabels = {
+    'Getting Started': t('static.help.gettingStarted'),
+    'Account': t('static.help.account'),
+    'Formations': t('static.help.formations'),
+    'Instructors': t('static.help.instructors'),
+    'Billing': t('static.help.billing'),
+    'Security': t('static.help.security'),
+  };
 
   const filtered = articles.filter((a) => {
     const matchSearch = a.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -103,25 +114,25 @@ export default function Help() {
             <div className="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
               <button onClick={() => setSelectedArticle(null)} className="flex items-center gap-2 text-sm text-gray-400 hover:text-[#0084D1] transition-colors">
                 <FiX className="w-4 h-4" />
-                Close
+                {t('static.help.close')}
               </button>
-              <span className="text-xs text-gray-400">Last updated June 2026</span>
+              <span className="text-xs text-gray-400">{t('static.help.lastUpdated')}</span>
             </div>
             <div className="px-6 py-8">
               <span className="inline-flex px-3 py-1 rounded-full bg-[#0084D1]/10 text-[#0084D1] text-xs font-medium mb-4">
-                {selectedArticle.category}
+                {categoryLabels[selectedArticle.category] || selectedArticle.category}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold mb-4">{selectedArticle.title}</h2>
               <div className="flex items-center gap-2 text-xs text-gray-400 mb-6">
                 <FiClock className="w-3 h-3" />
-                {selectedArticle.readTime} read
+                {selectedArticle.readTime}
               </div>
               <div className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 {selectedArticle.content}
               </div>
 
               <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
-                <h3 className="font-semibold mb-3">Related Articles</h3>
+                <h3 className="font-semibold mb-3">{t('static.help.relatedArticles')}</h3>
                 <div className="space-y-2">
                   {articles.filter((a) => a.category === selectedArticle.category && a.id !== selectedArticle.id).slice(0, 3).map((rel) => (
                     <button key={rel.id} onClick={() => setSelectedArticle(rel)} className="block text-sm text-[#0084D1] hover:underline text-left">
@@ -139,13 +150,13 @@ export default function Help() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
-              Help{' '}
+              {t('static.help.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                Center
+                {t('static.help.titleAccent')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
-              How can we help you today?
+              {t('static.help.subtitle')}
             </p>
 
             {/* Search */}
@@ -155,7 +166,7 @@ export default function Help() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search for answers..."
+                placeholder={t('static.help.searchPlaceholder')}
                 className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#0084D1] focus:border-transparent outline-none transition"
               />
             </div>
@@ -171,10 +182,10 @@ export default function Help() {
                   : 'border-gray-200 dark:border-gray-800 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-700'
               }`}
             >
-              <h3 className="font-semibold">All Articles</h3>
-              <p className="text-sm text-gray-400 mt-1">{articles.length} articles</p>
+              <h3 className="font-semibold">{t('static.help.allArticles')}</h3>
+              <p className="text-sm text-gray-400 mt-1">{articles.length} {t('static.help.articles')}</p>
             </button>
-            {categories.map((cat) => (
+            {categoryOptions.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setCategory(cat.key)}
@@ -187,7 +198,7 @@ export default function Help() {
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white mb-3">
                   <cat.icon className="w-4 h-4" />
                 </div>
-                <h3 className="font-semibold text-sm">{cat.key}</h3>
+                <h3 className="font-semibold text-sm">{cat.label}</h3>
                 <p className="text-xs text-gray-400 mt-1">{cat.desc}</p>
               </button>
             ))}
@@ -196,18 +207,18 @@ export default function Help() {
           {/* Results Header */}
           <div className="max-w-3xl mx-auto mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">
-              {search || category !== 'All' ? 'Search Results' : 'Popular Articles'}
+              {search || category !== 'All' ? t('static.help.searchResults') : t('static.help.popularArticles')}
             </h2>
-            <span className="text-xs text-gray-400">{filtered.length} article{filtered.length !== 1 ? 's' : ''}</span>
+            <span className="text-xs text-gray-400">{filtered.length} {t('static.help.articles')}</span>
           </div>
 
           {/* Articles List */}
           <div className="max-w-3xl mx-auto space-y-3 mb-16">
             {filtered.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-400">No articles found matching your search.</p>
+                <p className="text-gray-400">{t('static.help.noResults')}</p>
                 <button onClick={() => { setSearch(''); setCategory('All'); }} className="text-sm text-[#0084D1] hover:underline mt-2">
-                  Clear filters
+                  {t('static.help.clearFilters')}
                 </button>
               </div>
             ) : (
@@ -219,7 +230,7 @@ export default function Help() {
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium text-[#0084D1]">{article.category}</span>
+                      <span className="text-xs font-medium text-[#0084D1]">{categoryLabels[article.category] || article.category}</span>
                       <span className="text-xs text-gray-400 flex items-center gap-1"><FiClock className="w-3 h-3" />{article.readTime}</span>
                     </div>
                     <h3 className="font-semibold text-sm">{article.title}</h3>
@@ -233,13 +244,13 @@ export default function Help() {
 
           {/* Contact Support */}
           <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-gradient-to-br from-[#0084D1]/10 to-[#FFB900]/10 border border-[#0084D1]/30 text-center">
-            <h2 className="text-2xl font-bold mb-2">Still need help?</h2>
+            <h2 className="text-2xl font-bold mb-2">{t('static.help.stillNeedHelp')}</h2>
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
-              Our support team is here to help you with any issue.
+              {t('static.help.supportDesc')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white font-semibold text-sm hover:from-[#FFB900] hover:to-[#0277BD] transition-all shadow-lg shadow-[#0084D1]/25">
-                Contact Support
+                {t('static.help.contactSupport')}
                 <FiArrowRight className="w-4 h-4" />
               </Link>
               <a href="mailto:support@najah.com" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
@@ -7,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthLayout from '../components/auth/AuthLayout';
 
 const Login = () => {
+  const { t } = useTranslation();
   const { login, token, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -50,12 +52,12 @@ const Login = () => {
   const inputClass = 'block w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 py-3.5 pl-11 pr-12 text-sm outline-none transition-all duration-200 focus:border-[#0084D1] focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[#0084D1]/20 dark:text-white placeholder:text-gray-400';
 
   return (
-    <AuthLayout title="Sign in to your account" subtitle="Continue your learning journey">
+    <AuthLayout title={t('auth.signInTitle')} subtitle={t('auth.signInSubtitle')}>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Email Address
+            {t('auth.email')}
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -67,7 +69,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={inputClass}
-              placeholder="you@university.edu"
+              placeholder={t('auth.email')}
             />
           </div>
         </div>
@@ -75,7 +77,7 @@ const Login = () => {
         {/* Password */}
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Password
+            {t('auth.password')}
           </label>
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -107,7 +109,7 @@ const Login = () => {
             to="/forgot-password"
             className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD] hover:underline transition-all"
           >
-            Forgot password?
+            {t('auth.forgotPassword')}
           </Link>
         </div>
 
@@ -119,7 +121,7 @@ const Login = () => {
         >
           <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
           {loading && <FaSpinner className="h-4 w-4 animate-spin" />}
-          {loading ? 'Signing in...' : 'Sign In'}
+          {loading ? t('auth.signingIn') : t('auth.signIn')}
         </button>
 
 
@@ -127,12 +129,12 @@ const Login = () => {
 
       {/* Footer */}
       <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-        Don't have an account?{' '}
+        {t('auth.noAccount')}{' '}
         <Link
           to="/register"
           className="font-semibold text-[#0084D1] hover:text-[#0277BD] transition-colors"
         >
-          Sign up now
+          {t('auth.signUpNow')}
         </Link>
       </p>
     </AuthLayout>

@@ -9,8 +9,10 @@ import Modal from '../components/common/Modal';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 import { useConfirm } from '../context/ModalContext';
+import { useTranslation } from 'react-i18next';
 
 const Tasks = () => {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState('');
@@ -198,10 +200,10 @@ const Tasks = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Kanban Task Board
+            {t('tasks.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Track and collaborate on project action items.
+            {t('tasks.subtitle')}
           </p>
         </div>
         
@@ -209,14 +211,14 @@ const Tasks = () => {
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
             <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
-            Project:
+            {t('tasks.projectLabel')}
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
             className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
-            <option value="">Choose a Project</option>
+            <option value="">{t('tasks.chooseProject')}</option>
             {projects.map((proj) => (
               <option key={proj._id} value={proj._id}>
                 {proj.title}
@@ -229,7 +231,7 @@ const Tasks = () => {
               onClick={() => setIsCreateOpen(true)}
               type="button"
               className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
-              title="Create Task"
+              title={t('tasks.createTask')}
             >
               <FaPlus className="h-4 w-4" />
             </button>
@@ -241,8 +243,8 @@ const Tasks = () => {
       {!selectedProjectId ? (
         <EmptyState
           icon={FaTasks}
-          title="Select a project first"
-          description="Please choose a Final Year Project from the selector above to view its Kanban board."
+          title={t('tasks.selectProjectFirst')}
+          description={t('tasks.selectProjectDesc')}
         />
       ) : tasksLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
@@ -252,7 +254,7 @@ const Tasks = () => {
         <DragDropContext onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           <TaskColumn
-            title="To Do"
+            title={t('tasks.columnTodo')}
             status="todo"
             tasks={todoTasks}
             onEdit={handleEditClick}
@@ -261,7 +263,7 @@ const Tasks = () => {
             teamMembers={teamMembers}
           />
           <TaskColumn
-            title="In Progress"
+            title={t('tasks.columnInProgress')}
             status="in-progress"
             tasks={inProgressTasks}
             onEdit={handleEditClick}
@@ -270,7 +272,7 @@ const Tasks = () => {
             teamMembers={teamMembers}
           />
           <TaskColumn
-            title="Review"
+            title={t('tasks.columnReview')}
             status="review"
             tasks={reviewTasks}
             onEdit={handleEditClick}
@@ -279,7 +281,7 @@ const Tasks = () => {
             teamMembers={teamMembers}
           />
           <TaskColumn
-            title="Done"
+            title={t('tasks.columnDone')}
             status="done"
             tasks={doneTasks}
             onEdit={handleEditClick}
@@ -292,7 +294,7 @@ const Tasks = () => {
       )}
 
       {/* Add Task Modal */}
-      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title="Create New Task">
+      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title={t('tasks.newTask')}>
         <TaskForm
           teamMembers={teamMembers}
           onSubmit={handleCreateSubmit}
@@ -302,7 +304,7 @@ const Tasks = () => {
       </Modal>
 
       {/* Edit Task Modal */}
-      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title="Edit Task">
+      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title={t('tasks.editTask')}>
         <TaskForm
           initialData={currentTask}
           teamMembers={teamMembers}

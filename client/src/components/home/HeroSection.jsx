@@ -1,5 +1,6 @@
 import { useRef, memo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { HiArrowRight, HiStar } from 'react-icons/hi';
 
@@ -154,6 +155,7 @@ const ScrollIndicator = memo(function ScrollIndicator() {
 });
 
 function HeroSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
@@ -176,7 +178,7 @@ function HeroSection() {
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFB900]/10 border border-[#FFB900]/30 text-sm font-medium text-[#FFB900]"
               >
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                Learn from the best instructors
+                {t('home.heroBadge')}
               </motion.div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
@@ -186,7 +188,7 @@ function HeroSection() {
                   transition={{ duration: 0.4, delay: 0.1 }}
                   className="block"
                 >
-                  Master New Skills with
+                  {t('home.heroTitle')}
                 </motion.span>
                 <motion.span
                   initial={{ opacity: 0, y: 24 }}
@@ -195,7 +197,7 @@ function HeroSection() {
                   className="block mt-1"
                 >
                   <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient">
-                    Expert-Led Training
+                    {t('home.heroTitleAccent')}
                   </span>
                 </motion.span>
               </h1>
@@ -206,8 +208,7 @@ function HeroSection() {
                 transition={{ delay: 0.3, duration: 0.4 }}
                 className="text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed"
               >
-                Najah is the modern learning platform where students enroll in professional formations
-                and learn from experienced instructors.
+                {t('home.heroSubtitle')}
               </motion.p>
 
               <motion.div
@@ -216,8 +217,8 @@ function HeroSection() {
                 transition={{ delay: 0.5, duration: 0.4 }}
                 className="flex flex-wrap gap-4"
               >
-                <CTAButton to="/register" primary>Start Learning Free</CTAButton>
-                <CTAButton to="#formations">Browse Formations</CTAButton>
+                <CTAButton to="/register" primary>{t('home.startLearning')}</CTAButton>
+                <CTAButton to="#formations">{t('home.browseFormations')}</CTAButton>
               </motion.div>
 
               <motion.div
@@ -244,7 +245,7 @@ function HeroSection() {
                     ))}
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Joined by <span className="font-semibold text-gray-900 dark:text-white">500+</span> students &middot; <span className="font-semibold text-gray-900 dark:text-white">4.9</span>/5 rating
+                    {t('home.joinedBy')} <span className="font-semibold text-gray-900 dark:text-white">500+</span> {t('home.studentsAndRating')}
                   </p>
                 </div>
               </motion.div>

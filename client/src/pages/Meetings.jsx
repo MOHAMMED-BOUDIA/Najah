@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaCalendarAlt, FaFolderOpen, FaPlus, FaTrash, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
 import Modal from '../components/common/Modal';
@@ -11,6 +12,7 @@ import { formatDate } from '../utils/helpers';
 import { useConfirm } from '../context/ModalContext';
 
 const Meetings = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const confirm = useConfirm();
   const [projects, setProjects] = useState([]);
@@ -116,7 +118,7 @@ const Meetings = () => {
   };
 
   const handleDeleteMeeting = async (meetingId) => {
-    const ok = await confirm({ title: 'Cancel Meeting', message: 'Are you sure you want to cancel this meeting?', confirmLabel: 'Cancel Meeting', destructive: true });
+    const ok = await confirm({ title: t('meetings.cancelTitle'), message: 'Are you sure you want to cancel this meeting?', confirmLabel: t('meetings.cancelTitle'), destructive: true });
     if (!ok) return;
 
     try {
@@ -152,10 +154,10 @@ const Meetings = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Meetings & Milestones
+            {t('meetings.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Schedule project reviews, team sync-ups, and supervisor briefings.
+            {t('meetings.subtitle')}
           </p>
         </div>
 
@@ -163,14 +165,14 @@ const Meetings = () => {
         <div className="flex items-center gap-3">
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 whitespace-nowrap">
             <FaFolderOpen className="text-[#0084D1] h-4 w-4" />
-            Project:
+            {t('meetings.projectLabel')}
           </label>
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
             className="block w-full max-w-[280px] rounded-xl border border-gray-250 bg-white px-4 py-2 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
           >
-            <option value="">Choose a Project</option>
+            <option value="">{t('meetings.chooseProject')}</option>
             {projects.map((proj) => (
               <option key={proj._id} value={proj._id}>
                 {proj.title}
@@ -183,7 +185,7 @@ const Meetings = () => {
               onClick={() => setIsOpen(true)}
               type="button"
               className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#0084D1] text-white shadow-sm hover:bg-[#0277BD] focus:outline-none"
-              title="Schedule Meeting"
+              title={t('meetings.scheduleMeeting')}
             >
               <FaPlus className="h-4 w-4" />
             </button>
@@ -195,8 +197,8 @@ const Meetings = () => {
       {!selectedProjectId ? (
         <EmptyState
           icon={FaCalendarAlt}
-          title="Select a project first"
-          description="Please choose a Final Year Project to browse and manage scheduled meetings."
+          title={t('meetings.selectProjectFirst')}
+          description={t('meetings.selectProjectDesc')}
         />
       ) : meetingsLoading ? (
         <div className="flex h-[40vh] items-center justify-center">
@@ -205,9 +207,9 @@ const Meetings = () => {
       ) : meetings.length === 0 ? (
         <EmptyState
           icon={FaCalendarAlt}
-          title="No meetings scheduled"
-          description="Plan a meeting to touch base with your team or review progress with your supervisor."
-          actionText="Schedule Meeting"
+          title={t('meetings.noMeetings')}
+          description={t('meetings.noMeetingsDesc')}
+          actionText={t('meetings.scheduleMeeting')}
           onActionClick={() => setIsOpen(true)}
         />
       ) : (
@@ -226,11 +228,11 @@ const Meetings = () => {
                   <div className="flex shrink-0 gap-1.5">
                     {meeting.createdAt === meeting.updatedAt || !meeting.updatedAt ? (
                       <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">
-                        NEW
+                        {t('meetings.new')}
                       </span>
                     ) : (
                       <span className="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-bold text-white">
-                        UPDATED
+                        {t('meetings.updated')}
                       </span>
                     )}
                   </div>
@@ -255,7 +257,7 @@ const Meetings = () => {
                 {/* Notes */}
                 {meeting.notes && (
                   <div className="mt-4 rounded-xl bg-gray-50 p-3 dark:bg-gray-800/40">
-                    <p className="text-[10px] font-bold text-gray-400">NOTES</p>
+                    <p className="text-[10px] font-bold text-gray-400">{t('meetings.notes')}</p>
                     <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400 whitespace-pre-line italic">
                       "{meeting.notes}"
                     </p>
@@ -266,7 +268,7 @@ const Meetings = () => {
               {/* Actions */}
               <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
                 <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-100 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/40 uppercase">
-                  Scheduled
+                  {t('meetings.scheduled')}
                 </span>
                 {user?.role !== 'student' && (
                   <div className="flex items-center gap-1">
@@ -274,7 +276,7 @@ const Meetings = () => {
                       onClick={() => handleEditClick(meeting)}
                       type="button"
                       className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20 dark:hover:text-blue-400"
-                      title="Edit Meeting"
+                      title={t('meetings.editMeeting')}
                     >
                       <FiEdit className="h-4 w-4" />
                     </button>
@@ -282,7 +284,7 @@ const Meetings = () => {
                       onClick={() => handleDeleteMeeting(meeting._id)}
                       type="button"
                       className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20 dark:hover:text-red-400"
-                      title="Cancel Meeting"
+                      title={t('meetings.cancelTitle')}
                     >
                       <FaTrash className="h-4 w-4" />
                     </button>
@@ -295,12 +297,12 @@ const Meetings = () => {
       )}
 
       {/* Schedule / Edit Meeting Modal */}
-      <Modal isOpen={isOpen} onClose={() => { setIsOpen(false); resetForm(); }} title={editingMeeting ? 'Edit Meeting' : 'Schedule Meeting'}>
+      <Modal isOpen={isOpen} onClose={() => { setIsOpen(false); resetForm(); }} title={editingMeeting ? t('meetings.editModal') : t('meetings.scheduleModal')}>
         <form onSubmit={handleCreateMeeting} className="space-y-5">
           {/* Title */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Meeting Title *
+              {t('meetings.meetingTitle')}
             </label>
             <input
               type="text"
@@ -308,7 +310,7 @@ const Meetings = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="e.g. Mid-term Review Presentation"
+              placeholder={t('meetings.meetingTitlePlaceholder')}
             />
           </div>
 
@@ -316,7 +318,7 @@ const Meetings = () => {
             {/* Date */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Date *
+                {t('meetings.date')}
               </label>
               <input
                 type="date"
@@ -330,7 +332,7 @@ const Meetings = () => {
             {/* Time */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Time *
+                {t('meetings.time')}
               </label>
               <input
                 type="time"
@@ -345,7 +347,7 @@ const Meetings = () => {
           {/* Location */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Location *
+              {t('meetings.location')}
             </label>
             <input
               type="text"
@@ -353,21 +355,21 @@ const Meetings = () => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="e.g. Lab 4B or Zoom Link"
+              placeholder={t('meetings.locationPlaceholder')}
             />
           </div>
 
           {/* Notes */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-              Meeting Notes / Agenda
+              {t('meetings.meetingNotes')}
             </label>
             <textarea
               rows="3"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className="mt-1.5 block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-white"
-              placeholder="Provide topics to discuss, prerequisites, or zoom links..."
+              placeholder={t('meetings.notesPlaceholder')}
             />
           </div>
 
@@ -378,14 +380,14 @@ const Meetings = () => {
               type="button"
               className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-750 dark:text-gray-300 dark:hover:bg-gray-800"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={formLoading}
               className="rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] disabled:bg-[#0084D1]/50"
             >
-              {editingMeeting ? 'Save Changes' : 'Schedule'}
+              {editingMeeting ? t('meetings.saveChanges') : t('common.submit')}
             </button>
           </div>
         </form>

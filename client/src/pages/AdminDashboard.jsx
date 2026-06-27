@@ -10,6 +10,7 @@ import {
   FiUsers, FiUser, FiUserCheck, FiLayers,
   FiTrendingUp, FiTarget, FiAward, FiActivity
 } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const StatCard = ({ icon, label, value, color }) => (
   <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm flex items-center justify-between">
@@ -43,6 +44,7 @@ const CompletionCard = ({ title, rate, icon, color }) => (
 const AdminDashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     let mounted = true;
@@ -53,8 +55,8 @@ const AdminDashboard = () => {
     return () => { mounted = false; };
   }, []);
 
-  if (loading) return <div className="p-8 text-center text-gray-500">Loading analytics...</div>;
-  if (!data) return <div className="p-8 text-center text-gray-500">No data available</div>;
+  if (loading) return <div className="p-8 text-center text-gray-500">{t('common.loading')}</div>;
+  if (!data) return <div className="p-8 text-center text-gray-500">{t('common.noData')}</div>;
 
   const growthData = data.userGrowth.map(item => ({
     month: `${item._id.year}-${String(item._id.month).padStart(2, '0')}`,
@@ -64,9 +66,9 @@ const AdminDashboard = () => {
   }));
 
   const projectStatusData = [
-    { name: 'Completed', value: data.stats.completedProjects, color: '#10b981' },
-    { name: 'In Progress', value: data.stats.inProgressProjects, color: '#0084D1' },
-    { name: 'Pending', value: data.stats.pendingProjects, color: '#FFB900' },
+    { name: t('common.statusCompleted'), value: data.stats.completedProjects, color: '#10b981' },
+    { name: t('common.statusInProgress'), value: data.stats.inProgressProjects, color: '#0084D1' },
+    { name: t('common.statusPending'), value: data.stats.pendingProjects, color: '#FFB900' },
   ];
 
   const endDate = new Date();
@@ -76,25 +78,25 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6 p-6">
       <div>
-        <h1 className="text-3xl font-bold">Admin Analytics</h1>
-        <p className="text-gray-500">Comprehensive overview of platform activity</p>
+        <h1 className="text-3xl font-bold">{t('admin.dashboard')}</h1>
+        <p className="text-gray-500">{t('admin.systemOverview')}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <StatCard icon={<FiUsers />} label="Total Users" value={data.stats.totalUsers} color="bg-[#0084D1]" />
-        <StatCard icon={<FiUser />} label="Students" value={data.stats.totalStudents} color="bg-green-500" />
-        <StatCard icon={<FiUserCheck />} label="Instructors" value={data.stats.totalInstructors} color="bg-[#FFB900]" />
-        <StatCard icon={<FiLayers />} label="Total Groups" value={data.stats.totalGroups} color="bg-purple-500" />
+        <StatCard icon={<FiUsers />} label={t('admin.totalUsers')} value={data.stats.totalUsers} color="bg-[#0084D1]" />
+        <StatCard icon={<FiUser />} label={t('admin.students')} value={data.stats.totalStudents} color="bg-green-500" />
+        <StatCard icon={<FiUserCheck />} label={t('admin.instructors')} value={data.stats.totalInstructors} color="bg-[#FFB900]" />
+        <StatCard icon={<FiLayers />} label={t('admin.totalGroups')} value={data.stats.totalGroups} color="bg-purple-500" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <CompletionCard title="Project Completion Rate" rate={data.stats.completionRate} icon={<FiTarget />} color="#0084D1" />
-        <CompletionCard title="Task Completion Rate" rate={data.stats.taskCompletionRate} icon={<FiAward />} color="#FFB900" />
+        <CompletionCard title={t('admin.projectCompletionRate')} rate={data.stats.completionRate} icon={<FiTarget />} color="#0084D1" />
+        <CompletionCard title={t('admin.taskCompletionRate')} rate={data.stats.taskCompletionRate} icon={<FiAward />} color="#FFB900" />
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <FiTrendingUp className="text-[#0084D1]" /> User Growth (Last 12 Months)
+          <FiTrendingUp className="text-[#0084D1]" /> {t('admin.userGrowth')}
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={growthData}>
@@ -121,7 +123,7 @@ const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-          <h3 className="text-lg font-semibold mb-4">Project Status Distribution</h3>
+          <h3 className="text-lg font-semibold mb-4">{t('admin.projectStatus')}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie data={projectStatusData} cx="50%" cy="50%" outerRadius={100} dataKey="value"
@@ -136,7 +138,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-          <h3 className="text-lg font-semibold mb-4">Users by Department</h3>
+          <h3 className="text-lg font-semibold mb-4">{t('admin.usersByDepartment')}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data.departmentStats}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -151,7 +153,7 @@ const AdminDashboard = () => {
 
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <FiActivity className="text-[#FFB900]" /> Activity Heatmap (Last Year)
+          <FiActivity className="text-[#FFB900]" /> {t('admin.activityHeatmap')}
         </h3>
         <div className="overflow-x-auto">
           <CalendarHeatmap
@@ -166,7 +168,7 @@ const AdminDashboard = () => {
               return 'color-scale-1';
             }}
             tooltipDataAttrs={(value) => ({
-              'data-tip': value?.date ? `${value.date}: ${value.count} activities` : 'No data'
+              'data-tip': value?.date ? `${value.date}: ${value.count} ${t('admin.activityHeatmap')}` : t('common.noData')
             })}
           />
         </div>
@@ -181,17 +183,17 @@ const AdminDashboard = () => {
 
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <FiAward className="text-[#FFB900]" /> Most Active Instructors
+          <FiAward className="text-[#FFB900]" /> {t('admin.topInstructors')}
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-medium">Rank</th>
-                <th className="px-4 py-3 text-left text-sm font-medium">Instructor</th>
-                <th className="px-4 py-3 text-left text-sm font-medium">Department</th>
-                <th className="px-4 py-3 text-left text-sm font-medium">Groups</th>
-                <th className="px-4 py-3 text-left text-sm font-medium">Students</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">{t('admin.rank')}</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">{t('admin.instructor')}</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">{t('admin.department')}</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">{t('admin.groups')}</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">{t('admin.students')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">

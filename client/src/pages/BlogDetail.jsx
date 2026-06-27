@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { FiArrowLeft, FiClock, FiUser, FiCalendar } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const posts = [
   { id: 'future-online-learning', title: 'The Future of Online Learning in Morocco', excerpt: 'How digital education platforms are transforming the way Moroccan students learn and develop professional skills.', content: 'Online learning in Morocco has seen unprecedented growth over the past few years. With platforms like NAJAH leading the way, students now have access to high-quality instructor-led training from anywhere in the country.\n\nThe traditional education system faces challenges in keeping up with the rapidly evolving job market. NAJAH bridges this gap by connecting students with industry professionals who bring real-world experience to the classroom.\n\nWhether you are in Casablanca, Rabat, or a small rural town, NAJAH brings expert-led formations directly to your screen. The future of education is digital, accessible, and personalized.', category: 'Education', author: 'Sara Amrani', date: 'Jun 22, 2026', readTime: '5 min', color: 'from-[#FFB900] to-[#0084D1]' },
@@ -13,6 +14,7 @@ const posts = [
 ];
 
 export default function BlogDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const post = posts.find((p) => p.id === id);
 
@@ -22,8 +24,8 @@ export default function BlogDetail() {
         <HomeNavbar />
         <section className="pt-32 pb-20">
           <div className="max-w-3xl mx-auto px-6 text-center">
-            <h1 className="text-4xl font-bold mb-4">Article not found</h1>
-            <Link to="/blog" className="text-[#0084D1] hover:underline">Back to blog</Link>
+            <h1 className="text-4xl font-bold mb-4">{t('static.blog.notFound')}</h1>
+            <Link to="/blog" className="text-[#0084D1] hover:underline">{t('static.blog.backToBlog')}</Link>
           </div>
         </section>
         <Footer />
@@ -38,7 +40,7 @@ export default function BlogDetail() {
         <div className="max-w-3xl mx-auto px-6">
           <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#0084D1] transition-colors mb-8">
             <FiArrowLeft className="w-4 h-4" />
-            Back to blog
+            {t('static.blog.backToBlog')}
           </Link>
 
           <div className={`inline-flex px-3 py-1 rounded-full bg-gradient-to-r ${post.color} text-white text-xs font-medium mb-4`}>
@@ -50,7 +52,7 @@ export default function BlogDetail() {
           <div className="flex items-center gap-6 text-sm text-gray-400 mb-10 pb-8 border-b border-gray-200 dark:border-gray-800">
             <span className="flex items-center gap-1.5"><FiUser className="w-4 h-4" />{post.author}</span>
             <span className="flex items-center gap-1.5"><FiCalendar className="w-4 h-4" />{post.date}</span>
-            <span className="flex items-center gap-1.5"><FiClock className="w-4 h-4" />{post.readTime} read</span>
+            <span className="flex items-center gap-1.5"><FiClock className="w-4 h-4" />{post.readTime}{' '}{t('static.blog.minRead')}</span>
           </div>
 
           <div className="prose prose-gray dark:prose-invert max-w-none">

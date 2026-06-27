@@ -1,26 +1,29 @@
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { FiMapPin, FiClock, FiBriefcase } from 'react-icons/fi';
-
-const positions = [
-  { title: 'Senior Full-Stack Developer', dept: 'Engineering', location: 'Remote', type: 'Full-time', desc: 'Build and scale the NAJAH platform using React, Node.js, and MongoDB.' },
-  { title: 'UX Designer', dept: 'Design', location: 'Casablanca', type: 'Full-time', desc: 'Design intuitive learning experiences for students and instructors.' },
-  { title: 'Content Creator', dept: 'Education', location: 'Remote', type: 'Part-time', desc: 'Create engaging course materials and video content for our formations.' },
-  { title: 'Community Manager', dept: 'Community', location: 'Remote', type: 'Full-time', desc: 'Grow and engage the NAJAH student and instructor community.' },
-  { title: 'Data Analyst', dept: 'Data', location: 'Casablanca', type: 'Full-time', desc: 'Analyze platform data to improve learning outcomes and user experience.' },
-  { title: 'Marketing Intern', dept: 'Marketing', location: 'Remote', type: 'Internship', desc: 'Support marketing campaigns and social media growth initiatives.' },
-];
-
-const perks = [
-  'Remote-friendly work environment',
-  'Flexible working hours',
-  'Professional development budget',
-  'Team retreats and events',
-  'Competitive compensation',
-  'Make a real impact in education',
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Careers() {
+  const { t } = useTranslation();
+
+  const positions = [
+    { title: 'Senior Full-Stack Developer', dept: 'Engineering', location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: 'Build and scale the NAJAH platform using React, Node.js, and MongoDB.' },
+    { title: 'UX Designer', dept: 'Design', location: 'Casablanca', type: t('static.careers.fullTime'), desc: 'Design intuitive learning experiences for students and instructors.' },
+    { title: 'Content Creator', dept: 'Education', location: t('static.careers.remote'), type: t('static.careers.partTime'), desc: 'Create engaging course materials and video content for our formations.' },
+    { title: 'Community Manager', dept: 'Community', location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: 'Grow and engage the NAJAH student and instructor community.' },
+    { title: 'Data Analyst', dept: 'Data', location: 'Casablanca', type: t('static.careers.fullTime'), desc: 'Analyze platform data to improve learning outcomes and user experience.' },
+    { title: 'Marketing Intern', dept: 'Marketing', location: t('static.careers.remote'), type: t('static.careers.internship'), desc: 'Support marketing campaigns and social media growth initiatives.' },
+  ];
+
+  const perks = [
+    t('static.careers.perks[0]'),
+    t('static.careers.perks[1]'),
+    t('static.careers.perks[2]'),
+    t('static.careers.perks[3]'),
+    t('static.careers.perks[4]'),
+    t('static.careers.perks[5]'),
+  ];
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <HomeNavbar />
@@ -29,29 +32,27 @@ export default function Careers() {
           {/* Hero */}
           <div className="text-center max-w-3xl mx-auto mb-6">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
-              Join the{' '}
+              {t('static.careers.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                NAJAH Team
+                {t('static.careers.titleAccent')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
-              Help us shape the future of education in Morocco and beyond.
+              {t('static.careers.subtitle')}
             </p>
           </div>
 
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0084D1]/10 border border-[#0084D1]/30 text-sm font-medium text-[#0084D1] mx-auto block w-fit mb-16">
             <span className="w-2 h-2 rounded-full bg-[#0084D1] animate-pulse" />
-            We are hiring! 6 open positions
+            {t('static.careers.hiring')}
           </div>
 
           {/* Culture */}
           <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Our Culture</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('static.careers.ourCulture')}</h2>
               <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
-                At NAJAH, we believe in the power of education to transform lives. Our team is
-                passionate, collaborative, and driven by a shared mission. We value creativity,
-                inclusivity, and continuous learning.
+                {t('static.careers.cultureText')}
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {perks.map((p) => (
@@ -74,7 +75,7 @@ export default function Careers() {
 
           {/* Open Positions */}
           <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Open Positions</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">{t('static.careers.openPositions')}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {positions.map((pos) => (
                 <div key={pos.title} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all group cursor-pointer">

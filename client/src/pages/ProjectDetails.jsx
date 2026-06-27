@@ -19,8 +19,10 @@ import StatusBadge from '../components/common/StatusBadge';
 import Loader from '../components/common/Loader';
 import { formatDate } from '../utils/helpers';
 import { useConfirm } from '../context/ModalContext';
+import { useTranslation } from 'react-i18next';
 
 const ProjectDetails = () => {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const { id } = useParams();
   const { user } = useAuth();
@@ -153,7 +155,7 @@ const ProjectDetails = () => {
         className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <FaArrowLeft className="h-4 w-4" />
-        Back to projects
+        {t('projects.backToProjects')}
       </Link>
 
       {/* Main Project Overview Card */}
@@ -168,7 +170,7 @@ const ProjectDetails = () => {
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300">Description</h3>
+            <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300">{t('projects.description')}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-pre-line leading-relaxed">
               {project.description}
             </p>
@@ -177,7 +179,7 @@ const ProjectDetails = () => {
           {/* Tech Stack */}
           {project.technologies && project.technologies.length > 0 && (
             <div className="space-y-2">
-              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300">Technologies</h3>
+              <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300">{t('projects.technologies')}</h3>
               <div className="flex flex-wrap gap-1.5">
                 {project.technologies.map(tech => (
                   <span
@@ -198,7 +200,7 @@ const ProjectDetails = () => {
                 <FaCalendarAlt className="h-5 w-5 text-[#0084D1]" />
               </div>
               <div>
-                <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">PROJECT TIMELINE</p>
+                <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">{t('projects.projectTimeline')}</p>
                 <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                   {formatDate(project.startDate)} - {formatDate(project.endDate)}
                 </p>
@@ -211,7 +213,7 @@ const ProjectDetails = () => {
                   <FaChalkboardTeacher className="h-5 w-5 text-[#0084D1]" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">SUPERVISOR</p>
+                  <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500">{t('projects.supervisor')}</p>
                   <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                     {project.supervisor.name} ({project.supervisor.department})
                   </p>
@@ -224,12 +226,12 @@ const ProjectDetails = () => {
         {/* Progress & Controls Card */}
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 flex flex-col justify-between">
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">Project Progress</h3>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white">{t('projects.projectProgress')}</h3>
             
             {/* Progress Display */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-gray-500 dark:text-gray-400">Completion</span>
+                <span className="font-semibold text-gray-500 dark:text-gray-400">{t('projects.completion')}</span>
                 <span className="font-bold text-[#0084D1]">{project.progress}%</span>
               </div>
               <div className="h-3 w-full rounded-full bg-gray-100 dark:bg-gray-800">
@@ -244,7 +246,7 @@ const ProjectDetails = () => {
             {isSupervisorOrAdmin && (
               <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Update Project Status
+                  {t('projects.updateProjectStatus')}
                 </label>
                 <select
                   value={statusVal}
@@ -252,11 +254,11 @@ const ProjectDetails = () => {
                   disabled={updating}
                   className="block w-full rounded-xl border border-gray-250 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] disabled:bg-gray-50 dark:border-gray-750 dark:bg-gray-800 dark:text-white"
                 >
-                  <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                  <option value="rejected">Rejected</option>
+                  <option value="pending">{t('common.statusPending')}</option>
+                  <option value="approved">{t('common.statusApproved')}</option>
+                  <option value="in-progress">{t('common.statusInProgress')}</option>
+                  <option value="completed">{t('common.statusCompleted')}</option>
+                  <option value="rejected">{t('common.statusRejected')}</option>
                 </select>
               </div>
             )}
@@ -265,7 +267,7 @@ const ProjectDetails = () => {
             <form onSubmit={handleUpdateProgress} className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Update Progress: {progressVal}%
+                  {t('projects.updateProgress', { val: progressVal })}
                 </label>
               </div>
               <input
@@ -281,7 +283,7 @@ const ProjectDetails = () => {
                 disabled={updating || progressVal === project.progress}
                 className="w-full rounded-xl bg-[#0084D1]/10 py-2.5 text-sm font-bold text-[#0084D1] hover:bg-[#0084D1]/20 disabled:opacity-50 transition"
               >
-                Save Progress
+                {t('projects.saveProgress')}
               </button>
             </form>
           </div>
@@ -295,7 +297,7 @@ const ProjectDetails = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <FaUsers className="h-5 w-5 text-[#0084D1]" />
-              Assigned Team
+              {t('projects.assignedTeam')}
             </h3>
             {project.team && (
               <span className="text-xs font-semibold text-gray-400">{project.team.name}</span>
@@ -304,7 +306,7 @@ const ProjectDetails = () => {
 
           {!project.team ? (
             <div className="text-center py-6 text-sm text-gray-400">
-              No team is currently assigned to this project.
+              {t('projects.noTeamAssigned')}
             </div>
           ) : (
             <div className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -315,7 +317,7 @@ const ProjectDetails = () => {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-gray-800 dark:text-gray-200">
-                      {member.name} {member._id === project.team.leader?._id && <span className="ml-1 text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 px-1.5 py-0.5 rounded font-bold uppercase">Leader</span>}
+                      {member.name} {member._id === project.team.leader?._id && <span className="ml-1 text-[10px] bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 px-1.5 py-0.5 rounded font-bold uppercase">{t('projects.leader')}</span>}
                     </h4>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       {member.email} • {member.department}
@@ -332,31 +334,31 @@ const ProjectDetails = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <FaTasks className="h-5 w-5 text-[#0084D1]" />
-              Tasks Summary
+              {t('projects.tasksSummary')}
             </h3>
             <Link
               to="/tasks"
               className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD]"
             >
-              Open Kanban Board
+              {t('projects.openKanban')}
             </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl bg-gray-50 p-4 dark:bg-gray-800/40 text-center space-y-1">
-              <span className="text-xs font-bold text-gray-500">To Do</span>
+              <span className="text-xs font-bold text-gray-500">{t('projects.toDo')}</span>
               <p className="text-2xl font-black text-gray-800 dark:text-white">{taskCounts.todo}</p>
             </div>
             <div className="rounded-2xl bg-[#0084D1]/10 p-4 text-center space-y-1">
-              <span className="text-xs font-bold text-[#0084D1]">In Progress</span>
+              <span className="text-xs font-bold text-[#0084D1]">{t('projects.inProgress')}</span>
               <p className="text-2xl font-black text-[#0084D1]">{taskCounts['in-progress']}</p>
             </div>
             <div className="rounded-2xl bg-amber-50/50 p-4 dark:bg-amber-950/20 text-center space-y-1">
-              <span className="text-xs font-bold text-amber-500">In Review</span>
+              <span className="text-xs font-bold text-amber-500">{t('projects.inReview')}</span>
               <p className="text-2xl font-black text-amber-600 dark:text-amber-400">{taskCounts.review}</p>
             </div>
             <div className="rounded-2xl bg-emerald-50/50 p-4 dark:bg-emerald-950/20 text-center space-y-1">
-              <span className="text-xs font-bold text-emerald-500">Completed</span>
+              <span className="text-xs font-bold text-emerald-500">{t('projects.completed')}</span>
               <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{taskCounts.done}</p>
             </div>
           </div>
@@ -370,19 +372,19 @@ const ProjectDetails = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <FaFileAlt className="h-5 w-5 text-[#0084D1]" />
-              Documents List
+              {t('projects.documentsList')}
             </h3>
             <Link
               to="/documents"
               className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD] inline-flex items-center gap-1"
             >
-              <FaPlus className="h-3 w-3" /> Upload
+              <FaPlus className="h-3 w-3" /> {t('projects.upload')}
             </Link>
           </div>
 
           {documents.length === 0 ? (
             <div className="text-center py-8 text-sm text-gray-400">
-              No documents uploaded yet.
+              {t('projects.noDocuments')}
             </div>
           ) : (
             <div className="divide-y divide-gray-150 dark:divide-gray-800 max-h-[300px] overflow-y-auto pr-1">
@@ -395,7 +397,7 @@ const ProjectDetails = () => {
                         {doc.name}
                       </h4>
                       <p className="text-xs text-gray-400 capitalize">
-                        {doc.type} • {doc.comment || 'No comment'}
+                        {doc.type} • {doc.comment || t('projects.noComment')}
                       </p>
                     </div>
                   </div>
@@ -406,7 +408,7 @@ const ProjectDetails = () => {
                         target="_blank"
                         rel="noreferrer"
                         className="rounded-lg p-2 text-[#0084D1] hover:bg-[#0084D1]/10"
-                        title="Download file"
+                        title={t('projects.downloadFile')}
                       >
                         <FaDownload className="h-3.5 w-3.5" />
                       </a>
@@ -414,7 +416,7 @@ const ProjectDetails = () => {
                     <button
                       onClick={() => handleDeleteDoc(doc._id)}
                       className="rounded-lg p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                      title="Delete document"
+                      title={t('projects.deleteDocument')}
                     >
                       <FaTrash className="h-3.5 w-3.5" />
                     </button>
@@ -430,19 +432,19 @@ const ProjectDetails = () => {
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <FaCalendarCheck className="h-5 w-5 text-[#0084D1]" />
-              Scheduled Meetings
+              {t('projects.scheduledMeetings')}
             </h3>
             <Link
               to="/meetings"
               className="text-xs font-semibold text-[#0084D1] hover:text-[#0277BD] inline-flex items-center gap-1"
             >
-              <FaPlus className="h-3 w-3" /> Schedule
+              <FaPlus className="h-3 w-3" /> {t('projects.schedule')}
             </Link>
           </div>
 
           {meetings.length === 0 ? (
             <div className="text-center py-8 text-sm text-gray-400">
-              No meetings scheduled yet.
+              {t('projects.noMeetings')}
             </div>
           ) : (
             <div className="divide-y divide-gray-150 dark:divide-gray-800 max-h-[300px] overflow-y-auto pr-1">
@@ -459,7 +461,7 @@ const ProjectDetails = () => {
                       </p>
                       {meet.notes && (
                         <p className="text-[11px] text-gray-400 italic">
-                          Notes: {meet.notes}
+                          {t('projects.notes')} {meet.notes}
                         </p>
                       )}
                     </div>
@@ -468,7 +470,7 @@ const ProjectDetails = () => {
                     <button
                       onClick={() => handleDeleteMeeting(meet._id)}
                       className="rounded-lg p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                      title="Cancel meeting"
+                      title={t('projects.cancelMeeting')}
                     >
                       <FaTrash className="h-3.5 w-3.5" />
                     </button>

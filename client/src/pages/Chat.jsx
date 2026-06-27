@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { FaPaperPlane, FaSpinner, FaCommentDots } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const Chat = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [activeGroup, setActiveGroup] = useState(null);
@@ -103,7 +105,7 @@ const Chat = () => {
   if (groups.length === 0) {
     return (
       <div className="p-1">
-        <EmptyState title="No groups" description={user?.role === 'student' ? 'Join and get approved into a group to start chatting.' : 'Create a group to start chatting with students.'} />
+        <EmptyState title={t('chat.noGroups')} description={user?.role === 'student' ? t('chat.noGroupsStudent') : t('chat.noGroupsOther')} />
       </div>
     );
   }
@@ -113,7 +115,7 @@ const Chat = () => {
       {/* Group list — sidebar */}
       <div className="hidden w-64 shrink-0 flex-col rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 md:flex">
         <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-800">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white">Groups</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white">{t('chat.groups')}</h3>
         </div>
         <div className="flex-1 overflow-y-auto">
           {groups.map(g => (
@@ -125,7 +127,7 @@ const Chat = () => {
               }`}
             >
               <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{g.name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{g.members?.length || 0} members</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{g.members?.length || 0} {t('chat.members')}</p>
             </button>
           ))}
         </div>
@@ -139,7 +141,7 @@ const Chat = () => {
             <div className="flex-1">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white">{activeGroup.name}</h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                {activeGroup.members?.length || 0} members
+                {activeGroup.members?.length || 0} {t('chat.members')}
                 {activeGroup.instructor?.name ? ` • ${activeGroup.instructor.name}` : ''}
               </p>
             </div>
@@ -153,7 +155,7 @@ const Chat = () => {
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <FaCommentDots className="mx-auto h-10 w-10 text-gray-300 dark:text-gray-600" />
-                  <p className="mt-2 text-sm text-gray-400">No messages yet. Start the conversation!</p>
+                  <p className="mt-2 text-sm text-gray-400">{t('chat.noMessages')}</p>
                 </div>
               </div>
             ) : (
@@ -202,7 +204,7 @@ const Chat = () => {
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder="Type a message..."
+              placeholder={t('chat.typeMessage')}
               className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-[#0084D1] focus:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:bg-gray-800"
             />
             <button
@@ -218,7 +220,7 @@ const Chat = () => {
         <div className="flex flex-1 items-center justify-center rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
           <div className="text-center">
             <FaCommentDots className="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600" />
-            <p className="mt-3 text-lg font-semibold text-gray-500 dark:text-gray-400">Select a group to start chatting</p>
+            <p className="mt-3 text-lg font-semibold text-gray-500 dark:text-gray-400">{t('chat.selectGroup')}</p>
           </div>
         </div>
       )}

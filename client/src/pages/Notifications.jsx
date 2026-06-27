@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { FaBell, FaCheck, FaTrash, FaInfoCircle, FaCheckCircle, FaExclamationTriangle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const Notifications = () => {
+  const { t } = useTranslation();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -113,10 +115,10 @@ const Notifications = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Notifications Center
+            {t('notifications.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Keep track of approvals, tasks assignments, and meeting reminders.
+            {t('notifications.subtitle')}
           </p>
         </div>
 
@@ -129,7 +131,7 @@ const Notifications = () => {
               className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0084D1]/10 px-4 py-2.5 text-sm font-semibold text-[#0084D1] hover:bg-[#0084D1]/10 transition sm:w-auto"
             >
               <FaCheck className="h-3.5 w-3.5" />
-              Mark all as read
+              {t('notifications.markAllRead')}
             </button>
           </div>
         )}
@@ -139,8 +141,8 @@ const Notifications = () => {
       {notifications.length === 0 ? (
         <EmptyState
           icon={FaBell}
-          title="All caught up!"
-          description="You don't have any notifications at the moment."
+          title={t('notifications.allCaughtUp')}
+          description={t('notifications.noNotifications')}
         />
       ) : (
         <div className="space-y-3 max-w-3xl">
@@ -167,7 +169,7 @@ const Notifications = () => {
                     <button
                       onClick={() => handleMarkAsRead(notif._id)}
                       className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800"
-                      title="Mark as read"
+                      title={t('notifications.markAsRead')}
                     >
                       <FaCheck className="h-3.5 w-3.5" />
                     </button>
@@ -175,7 +177,7 @@ const Notifications = () => {
                   <button
                     onClick={() => handleDeleteNotification(notif._id)}
                     className="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
-                    title="Delete notification"
+                    title={t('notifications.deleteNotification')}
                   >
                     <FaTrash className="h-3.5 w-3.5" />
                   </button>

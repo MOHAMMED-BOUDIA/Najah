@@ -1,5 +1,6 @@
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
+import { useTranslation } from 'react-i18next';
 
 const team = [
   { name: 'Dr. Ahmed Benali', role: 'Founder & CEO', avatar: 'AB', initials: 'AB', color: 'from-[#FFB900] to-[#0084D1]' },
@@ -9,6 +10,7 @@ const team = [
 ];
 
 export default function About() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <HomeNavbar />
@@ -16,28 +18,25 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
-              About{' '}
+              {t('static.about.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                NAJAH
+                {t('static.about.title')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
-              We are on a mission to make quality education accessible to every student.
+              {t('static.about.mission')}
             </p>
           </div>
 
           {/* Story */}
           <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Our Story</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('static.about.ourStory')}</h2>
               <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
-                NAJAH was founded with a simple vision: connect students with expert instructors
-                through a modern, accessible platform. What started as a small pilot program has
-                grown into a thriving community of learners and educators.
+                {t('static.about.storyP1')}
               </p>
               <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                Today, we serve over 500 students across 100+ formations, helping them gain the
-                skills they need to succeed in their careers.
+                {t('static.about.storyP2')}
               </p>
             </div>
             <div className="relative flex items-center justify-center">
@@ -45,7 +44,7 @@ export default function About() {
               <div className="relative w-full aspect-[4/3] rounded-3xl bg-white border border-gray-200 dark:border-gray-700 flex items-center justify-center p-8 shadow-sm">
                 <img
                   src="/img/najah.png"
-                  alt="NAJAH logo"
+                  alt={t('static.about.logoAlt')}
                   className="w-64 sm:w-72 lg:w-80 object-contain"
                 />
               </div>
@@ -55,24 +54,22 @@ export default function About() {
           {/* Mission & Vision */}
           <div className="grid md:grid-cols-2 gap-8 mb-24">
             <div className="p-8 rounded-3xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-              <h3 className="text-xl font-bold mb-3">Our Mission</h3>
+              <h3 className="text-xl font-bold mb-3">{t('static.about.ourMission')}</h3>
               <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                To provide every student with access to high-quality, instructor-led training
-                that bridges the gap between academic knowledge and industry skills.
+                {t('static.about.missionText')}
               </p>
             </div>
             <div className="p-8 rounded-3xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-              <h3 className="text-xl font-bold mb-3">Our Vision</h3>
+              <h3 className="text-xl font-bold mb-3">{t('static.about.ourVision')}</h3>
               <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                A world where anyone, anywhere, can learn from the best instructors and build
-                the career they dream of.
+                {t('static.about.visionText')}
               </p>
             </div>
           </div>
 
           {/* Team */}
           <div>
-            <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">{t('static.about.meetTeam')}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member) => (
                 <div key={member.name} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 text-center hover:shadow-lg transition-shadow">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { FiClock, FiUser } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const posts = [
   { id: 'future-online-learning', title: 'The Future of Online Learning in Morocco', excerpt: 'How digital education platforms are transforming the way Moroccan students learn and develop professional skills.', category: 'Education', author: 'Sara Amrani', date: 'Jun 22, 2026', readTime: '5 min', color: 'from-[#FFB900] to-[#0084D1]' },
@@ -16,7 +17,17 @@ const posts = [
 const categories = ['All', 'Education', 'Student Tips', 'Guidance', 'Community', 'Career'];
 
 export default function Blog() {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('All');
+
+  const categoryLabels = {
+    All: t('static.blog.all'),
+    Education: t('static.blog.education'),
+    'Student Tips': t('static.blog.studentTips'),
+    Guidance: t('static.blog.guidance'),
+    Community: t('static.blog.community'),
+    Career: t('static.blog.career'),
+  };
 
   const filteredPosts = activeCategory === 'All'
     ? posts
@@ -29,13 +40,13 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-6">
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
-              Our{' '}
+              {t('static.blog.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                Blog
+                {t('static.blog.title')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
-              Insights, tips, and stories from the NAJAH community.
+              {t('static.blog.subtitle')}
             </p>
           </div>
 
@@ -51,7 +62,7 @@ export default function Blog() {
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
-                {cat}
+                {categoryLabels[cat]}
               </button>
             ))}
           </div>
@@ -65,11 +76,11 @@ export default function Blog() {
                 className="group rounded-3xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl transition-all block"
               >
                 <div className={`h-44 bg-gradient-to-br ${post.color} flex items-center justify-center`}>
-                  <span className="text-4xl font-bold text-white/30">{post.category}</span>
+                  <span className="text-4xl font-bold text-white/30">{categoryLabels[post.category]}</span>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
-                    <span className={`px-2 py-0.5 rounded-full bg-gradient-to-r ${post.color} text-white`}>{post.category}</span>
+                    <span className={`px-2 py-0.5 rounded-full bg-gradient-to-r ${post.color} text-white`}>{categoryLabels[post.category]}</span>
                     <span className="flex items-center gap-1"><FiClock className="w-3 h-3" />{post.readTime}</span>
                   </div>
                   <h3 className="font-bold mb-2 group-hover:text-[#0084D1] transition-colors">{post.title}</h3>
@@ -84,7 +95,7 @@ export default function Blog() {
           </div>
 
           {filteredPosts.length === 0 && (
-            <p className="text-center text-gray-400 mt-12">No articles found in this category.</p>
+            <p className="text-center text-gray-400 mt-12">{t('static.blog.noArticles')}</p>
           )}
         </div>
       </section>

@@ -1,13 +1,8 @@
 import { useRef, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { HiOutlineBookOpen, HiOutlineUserGroup, HiOutlineClipboardList, HiOutlineCalendar, HiOutlineChatAlt2, HiOutlineChartBar } from 'react-icons/hi';
 import { HiCheck } from 'react-icons/hi';
-
-const checkItems = [
-  '50+ expert-led formations',
-  'Hands-on projects & labs',
-  'Certificate on completion',
-];
 
 const colors = {
   formations: 'from-[#FFB900] to-[#0084D1]',
@@ -62,8 +57,15 @@ const BentoCard = memo(function BentoCard({ icon: Icon, title, desc, color, size
 });
 
 function FeaturesBento() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const sectionInView = useInView(ref, { once: true, margin: '-60px' });
+
+  const checkItems = [
+    t('home.featuresCheck1'),
+    t('home.featuresCheck2'),
+    t('home.featuresCheck3'),
+  ];
 
   return (
     <section id="formations" className="py-24 lg:py-32">
@@ -77,20 +79,20 @@ function FeaturesBento() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-              Everything you need
+              {t('home.featuresTitle')}
             </span>{' '}
-            to learn and grow
+            {t('home.featuresTitleSuffix')}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-lg">
-            All the tools you need to enroll in formations, learn from instructors, and track your progress in one place.
+            {t('home.featuresSubtitle')}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[180px] sm:auto-rows-[200px]">
           <BentoCard
             icon={HiOutlineBookOpen}
-            title="Expert Formations"
-            desc="Enroll in high-quality training programs created by industry experts"
+            title={t('home.featuresFormations')}
+            desc={t('home.featuresFormationsDesc')}
             color={colors.formations}
             size="large"
             i={0}
@@ -107,14 +109,14 @@ function FeaturesBento() {
             </div>
 
             <div className="mt-4 grid grid-cols-3 gap-2 py-3 border-t border-gray-100 dark:border-gray-800">
-              <MiniStat value="50+" label="Formations" />
-              <MiniStat value="25+" label="Instructors" />
-              <MiniStat value="4.9" label="Avg Rating" />
+              <MiniStat value="50+" label={t('home.featuresFormationsCount')} />
+              <MiniStat value="25+" label={t('home.featuresInstructorsCount')} />
+              <MiniStat value="4.9" label={t('home.featuresAvgRating')} />
             </div>
 
             <div className="mt-2">
               <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mb-1.5">
-                <span>Completion rate</span>
+                <span>{t('home.featuresCompletionRate')}</span>
                 <span>78%</span>
               </div>
               <div className="w-full h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -130,8 +132,8 @@ function FeaturesBento() {
 
           <BentoCard
             icon={HiOutlineUserGroup}
-            title="Learn from Instructors"
-            desc="Direct access to qualified instructors in your field"
+            title={t('home.featuresInstructors')}
+            desc={t('home.featuresInstructorsDesc')}
             color={colors.instructors}
             size="small"
             i={1}
@@ -139,8 +141,8 @@ function FeaturesBento() {
 
           <BentoCard
             icon={HiOutlineClipboardList}
-            title="Group Learning"
-            desc="Join study groups and collaborate with fellow students"
+            title={t('home.featuresGroupLearning')}
+            desc={t('home.featuresGroupLearningDesc')}
             color={colors.group}
             size="small"
             i={2}
@@ -148,8 +150,8 @@ function FeaturesBento() {
 
           <BentoCard
             icon={HiOutlineCalendar}
-            title="Live Meetings"
-            desc="Attend scheduled sessions with your instructor and group"
+            title={t('home.featuresLiveMeetings')}
+            desc={t('home.featuresLiveMeetingsDesc')}
             color={colors.meetings}
             size="wide"
             i={3}
@@ -157,16 +159,16 @@ function FeaturesBento() {
             <div className="mt-3 flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                Live now
+                {t('home.featuresLiveNow')}
               </span>
-              <span>12 sessions this week</span>
+              <span>12 {t('home.featuresSessionsThisWeek')}</span>
             </div>
           </BentoCard>
 
           <BentoCard
             icon={HiOutlineChatAlt2}
-            title="Group Chat"
-            desc="Ask questions and discuss topics in real-time"
+            title={t('home.featuresGroupChat')}
+            desc={t('home.featuresGroupChatDesc')}
             color={colors.chat}
             size="small"
             i={4}
@@ -174,8 +176,8 @@ function FeaturesBento() {
 
           <BentoCard
             icon={HiOutlineChartBar}
-            title="Track Your Progress"
-            desc="Monitor your learning journey with detailed progress tracking"
+            title={t('home.featuresProgress')}
+            desc={t('home.featuresProgressDesc')}
             color={colors.progress}
             size="small"
             i={5}

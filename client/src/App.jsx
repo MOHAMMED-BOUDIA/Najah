@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -53,6 +54,7 @@ const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const Careers = lazy(() => import('./pages/Careers'));
 
 const DashboardLayout = () => {
+  const { i18n } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -69,7 +71,7 @@ const DashboardLayout = () => {
           onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
           onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
         />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <main dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex-1 overflow-y-auto p-4 md:p-6">
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>

@@ -1,11 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaBars, FaMoon, FaSun, FaSignOutAlt, FaBell, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import axiosInstance from '../../api/axios';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 const Navbar = ({ onMenuToggle }) => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -125,7 +128,7 @@ const Navbar = ({ onMenuToggle }) => {
           </span>
           <span className="text-sm text-gray-400 dark:text-gray-600">|</span>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Workspace
+            {t('nav.workspace')}
           </span>
           {pageName && (
             <>
@@ -140,6 +143,9 @@ const Navbar = ({ onMenuToggle }) => {
 
       {/* Right side: Utilities */}
       <div className="flex items-center gap-2 md:gap-4">
+        {/* Language Switcher */}
+        <LanguageSwitcher />
+
         {/* Dark Mode Toggle */}
         <button
           onClick={() => setDarkMode(!darkMode)}
@@ -157,7 +163,7 @@ const Navbar = ({ onMenuToggle }) => {
               onClick={() => setShowDropdown(prev => !prev)}
               type="button"
               className="relative flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-              title="Pending Requests"
+              title={t('nav.pendingRequests')}
             >
               <FaBell className="h-5 w-5" />
               {count > 0 && (
@@ -172,16 +178,16 @@ const Navbar = ({ onMenuToggle }) => {
               <div className="absolute right-0 top-full mt-2 w-80 origin-top-right animate-fadeIn rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900 overflow-hidden" style={{ animation: 'fadeIn 0.2s ease-out' }}>
                 <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-800">
                   <p className="text-sm font-bold text-gray-900 dark:text-white">
-                    Pending Requests
+                    {t('nav.pendingRequests')}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {count} {count === 1 ? 'student' : 'students'} waiting
+                    {count} {count === 1 ? t('nav.studentWaiting') : t('nav.studentsWaiting')}
                   </p>
                 </div>
                 <div className="max-h-72 overflow-y-auto">
                   {count === 0 ? (
                     <div className="px-4 py-8 text-center text-sm text-gray-400">
-                      No pending requests
+                      {t('nav.noPendingRequests')}
                     </div>
                   ) : (
                     pendingRequests.map((req) => (
@@ -201,7 +207,7 @@ const Navbar = ({ onMenuToggle }) => {
                               {req.student.name}
                             </p>
                             <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                              Wants to join: <span className="font-medium text-gray-700 dark:text-gray-300">{req.groupName}</span>
+                              {t('nav.wantsToJoin')}: <span className="font-medium text-gray-700 dark:text-gray-300">{req.groupName}</span>
                             </p>
                           </div>
                         </div>
@@ -212,7 +218,7 @@ const Navbar = ({ onMenuToggle }) => {
                             className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-emerald-50 py-1.5 text-xs font-semibold text-emerald-600 hover:bg-emerald-100 disabled:opacity-50 dark:bg-emerald-950/20 dark:text-emerald-400"
                           >
                             <FaCheckCircle className="h-3 w-3" />
-                            Approve
+                            {t('nav.approve')}
                           </button>
                           <button
                             onClick={() => handleReject(req.groupId, req.student.id)}
@@ -220,7 +226,7 @@ const Navbar = ({ onMenuToggle }) => {
                             className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-red-50 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-100 disabled:opacity-50 dark:bg-red-950/20 dark:text-red-400"
                           >
                             <FaTimesCircle className="h-3 w-3" />
-                            Reject
+                            {t('nav.reject')}
                           </button>
                         </div>
                       </div>
@@ -280,7 +286,7 @@ const Navbar = ({ onMenuToggle }) => {
             onClick={handleLogout}
             type="button"
             className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20 dark:hover:text-red-400"
-            title="Log Out"
+            title={t('nav.logOut')}
           >
             <FaSignOutAlt className="h-4 w-4" />
           </button>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaBookOpen, FaExternalLinkAlt, FaPlus, FaEdit, FaTrash, FaLink } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Loader from '../components/common/Loader';
@@ -10,6 +11,7 @@ import Modal from '../components/common/Modal';
 const initialForm = { title: '', description: '', url: '', category: '' };
 
 const Resources = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,10 +117,10 @@ const Resources = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            Resources
+            {t('resources.title')}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Useful links, courses, docs, and tutorials shared by supervisors and admins.
+            {t('resources.subtitle')}
           </p>
         </div>
         {canManage && (
@@ -128,7 +130,7 @@ const Resources = () => {
             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#0277BD] transition sm:w-auto"
           >
             <FaPlus className="h-3.5 w-3.5" />
-            Add Resource
+            {t('resources.addResource')}
           </button>
         )}
       </div>
@@ -137,9 +139,9 @@ const Resources = () => {
       {resources.length === 0 ? (
         <EmptyState
           icon={FaBookOpen}
-          title="No resources yet"
-          description="No resources have been shared yet."
-          actionText={canManage ? 'Add Resource' : undefined}
+          title={t('resources.noResources')}
+          description={t('resources.noResourcesDesc')}
+          actionText={canManage ? t('resources.addResource') : undefined}
           onActionClick={canManage ? openAdd : undefined}
         />
       ) : (
@@ -183,7 +185,7 @@ const Resources = () => {
                   className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#0084D1]/10 px-3 py-2 text-sm font-semibold text-[#0084D1] transition hover:bg-[#0084D1]/20"
                 >
                   <FaExternalLinkAlt className="h-3 w-3" />
-                  Open Link
+                  {t('resources.openLink')}
                 </a>
                 {canManage && (
                   <>
@@ -191,7 +193,7 @@ const Resources = () => {
                       onClick={() => openEdit(resource)}
                       type="button"
                       className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-[#0084D1]"
-                      title="Edit"
+                      title={t('common.edit')}
                     >
                       <FaEdit className="h-4 w-4" />
                     </button>
@@ -200,7 +202,7 @@ const Resources = () => {
                       disabled={deleting === resource._id}
                       type="button"
                       className="rounded-xl p-2 text-gray-400 transition hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20 dark:hover:text-red-400"
-                      title="Delete"
+                      title={t('common.delete')}
                     >
                       <FaTrash className={`h-4 w-4 ${deleting === resource._id ? 'animate-pulse' : ''}`} />
                     </button>
@@ -216,39 +218,39 @@ const Resources = () => {
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        title={editing ? 'Edit Resource' : 'Add Resource'}
+        title={editing ? t('resources.editModal') : t('resources.addModal')}
         size="md"
       >
         <form onSubmit={handleSave} className="space-y-5">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Title
+              {t('resources.titleLabel')}
             </label>
             <input
               type="text"
               name="title"
               value={form.title}
               onChange={handleChange}
-              placeholder="e.g. React Documentation"
+              placeholder={t('resources.titlePlaceholder')}
               className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Description
+              {t('resources.description')}
             </label>
             <textarea
               name="description"
               value={form.description}
               onChange={handleChange}
-              placeholder="Brief description of the resource..."
+              placeholder={t('resources.descriptionPlaceholder')}
               rows={3}
               className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              URL
+              {t('resources.url')}
             </label>
             <div className="relative">
               <FaLink className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -257,21 +259,21 @@ const Resources = () => {
                 name="url"
                 value={form.url}
                 onChange={handleChange}
-                placeholder="https://example.com"
+                placeholder={t('resources.urlPlaceholder')}
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Category
+              {t('resources.category')}
             </label>
             <input
               type="text"
               name="category"
               value={form.category}
               onChange={handleChange}
-              placeholder="e.g. Documentation, Course, Tutorial, Tool"
+              placeholder={t('resources.categoryPlaceholder')}
               className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:border-[#0084D1] focus:ring-2 focus:ring-[#0084D1]/20 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
@@ -281,7 +283,7 @@ const Resources = () => {
               onClick={() => setModalOpen(false)}
               className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
             >
-              Cancel
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
@@ -291,9 +293,9 @@ const Resources = () => {
               {saving ? (
                 <Loader size="sm" />
               ) : editing ? (
-                'Update Resource'
+                t('resources.updateResource')
               ) : (
-                'Add Resource'
+                t('resources.addResource')
               )}
             </button>
           </div>

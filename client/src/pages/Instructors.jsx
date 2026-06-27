@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { FaUsers, FaArrowRight, FaBookOpen } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const Instructors = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [instructors, setInstructors] = useState([]);
   const [groupsMap, setGroupsMap] = useState({});
@@ -69,16 +71,16 @@ const Instructors = () => {
   return (
     <div className="space-y-6 p-1">
       <div>
-        <h1 className="text-2xl font-black text-gray-900 dark:text-white">Instructors</h1>
+        <h1 className="text-2xl font-black text-gray-900 dark:text-white">{t('instructors.title')}</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Browse instructors and their groups to find your project supervisor.
+          {t('instructors.subtitle')}
         </p>
       </div>
 
       {instructors.length === 0 ? (
         <EmptyState
-          title="No instructors found"
-          description="There are no instructors registered in the system yet."
+          title={t('instructors.noInstructors')}
+          description={t('instructors.noInstructorsDesc')}
         />
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -108,7 +110,7 @@ const Instructors = () => {
                       {inst.name}
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {inst.department || 'No department'}
+                      {inst.department || t('instructors.noDepartment')}
                     </p>
                   </div>
                 </div>
@@ -116,7 +118,7 @@ const Instructors = () => {
                 <div className="mt-4 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1.5">
                     <FaBookOpen className="h-4 w-4 text-[#0084D1]" />
-                    <span>{instGroups.length} {instGroups.length === 1 ? 'group' : 'groups'}</span>
+                    <span>{instGroups.length} {instGroups.length === 1 ? t('instructors.group') : t('instructors.groups')}</span>
                   </div>
                 </div>
 
@@ -134,7 +136,7 @@ const Instructors = () => {
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0277BD]"
                   >
                     <FaUsers className="h-4 w-4" />
-                    View Groups
+                    {t('instructors.viewGroups')}
                     <FaArrowRight className="h-3 w-3" />
                   </Link>
                 </div>

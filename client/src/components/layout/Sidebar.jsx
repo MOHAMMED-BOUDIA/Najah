@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   FaTachometerAlt, 
   FaProjectDiagram, 
@@ -22,6 +23,7 @@ import { useAuth } from '../../context/AuthContext';
 import axiosInstance from '../../api/axios';
 
 const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [isApproved, setIsApproved] = useState(false);
   const [assignedInstructorId, setAssignedInstructorId] = useState(null);
@@ -47,41 +49,41 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
   };
 
   const studentLinks = [
-    { name: 'Instructors', path: '/instructors', icon: FaChalkboardTeacher },
-    { name: 'Profile', path: '/profile', icon: FaUser },
+    { nameKey: 'nav.instructors', path: '/instructors', icon: FaChalkboardTeacher },
+    { nameKey: 'nav.profile', path: '/profile', icon: FaUser },
   ];
 
   const approvedStudentLinks = [
-    { name: 'My Instructor', path: assignedInstructorId ? `/instructors/${assignedInstructorId}/groups` : '/instructors', icon: FaChalkboardTeacher },
-    { name: 'Group Chat', path: '/chat', icon: FaCommentAlt },
-    { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
-    { name: 'Tasks', path: '/tasks', icon: FaTasks },
-    { name: 'Teams', path: '/teams', icon: FaUsers },
-    { name: 'Documents', path: '/documents', icon: FaFileAlt },
-    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt },
-    { name: 'Resources', path: '/resources', icon: FaBookOpen },
-    { name: 'Profile', path: '/profile', icon: FaUser },
+    { nameKey: 'nav.myInstructor', path: assignedInstructorId ? `/instructors/${assignedInstructorId}/groups` : '/instructors', icon: FaChalkboardTeacher },
+    { nameKey: 'nav.groupChat', path: '/chat', icon: FaCommentAlt },
+    { nameKey: 'nav.projects', path: '/projects', icon: FaProjectDiagram },
+    { nameKey: 'nav.tasks', path: '/tasks', icon: FaTasks },
+    { nameKey: 'nav.teams', path: '/teams', icon: FaUsers },
+    { nameKey: 'nav.documents', path: '/documents', icon: FaFileAlt },
+    { nameKey: 'nav.meetings', path: '/meetings', icon: FaCalendarAlt },
+    { nameKey: 'nav.resources', path: '/resources', icon: FaBookOpen },
+    { nameKey: 'nav.profile', path: '/profile', icon: FaUser },
   ];
 
   const instructorLinks = [
-    { name: 'Dashboard', path: '/dashboard', icon: FaTachometerAlt },
-    { name: 'My Groups', path: '/my-groups', icon: FaUsers },
-    { name: 'Group Chat', path: '/chat', icon: FaCommentAlt },
-    { name: 'Projects', path: '/projects', icon: FaProjectDiagram },
-    { name: 'Tasks', path: '/tasks', icon: FaTasks },
-    { name: 'Teams', path: '/teams', icon: FaUsers },
-    { name: 'Documents', path: '/documents', icon: FaFileAlt },
-    { name: 'Meetings', path: '/meetings', icon: FaCalendarAlt },
-    { name: 'Resources', path: '/resources', icon: FaBookOpen },
-    { name: 'Profile', path: '/profile', icon: FaUser },
+    { nameKey: 'nav.dashboard', path: '/dashboard', icon: FaTachometerAlt },
+    { nameKey: 'nav.myGroups', path: '/my-groups', icon: FaUsers },
+    { nameKey: 'nav.groupChat', path: '/chat', icon: FaCommentAlt },
+    { nameKey: 'nav.projects', path: '/projects', icon: FaProjectDiagram },
+    { nameKey: 'nav.tasks', path: '/tasks', icon: FaTasks },
+    { nameKey: 'nav.teams', path: '/teams', icon: FaUsers },
+    { nameKey: 'nav.documents', path: '/documents', icon: FaFileAlt },
+    { nameKey: 'nav.meetings', path: '/meetings', icon: FaCalendarAlt },
+    { nameKey: 'nav.resources', path: '/resources', icon: FaBookOpen },
+    { nameKey: 'nav.profile', path: '/profile', icon: FaUser },
   ];
 
   const adminLinks = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: FaTachometerAlt },
-    { name: 'Instructors', path: '/admin/instructors', icon: FaChalkboardTeacher },
-    { name: 'Students', path: '/admin/students', icon: FaGraduationCap },
-    { name: 'Departments', path: '/admin/departments', icon: FaLayerGroup },
-    { name: 'Profile', path: '/profile', icon: FaUser },
+    { nameKey: 'nav.dashboard', path: '/admin/dashboard', icon: FaTachometerAlt },
+    { nameKey: 'nav.instructors', path: '/admin/instructors', icon: FaChalkboardTeacher },
+    { nameKey: 'nav.students', path: '/admin/students', icon: FaGraduationCap },
+    { nameKey: 'nav.departments', path: '/admin/departments', icon: FaLayerGroup },
+    { nameKey: 'nav.profile', path: '/profile', icon: FaUser },
   ];
 
   let menuItems = [];
@@ -105,7 +107,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
         />
       )}
 
-      <aside 
+      <aside dir="ltr"
         className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col h-screen overflow-hidden border-r border-gray-200 bg-white transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 md:sticky md:translate-x-0 ${
           collapsed ? 'w-16' : 'w-64'
         } ${
@@ -182,7 +184,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
         <nav className={`flex-1 overflow-y-auto no-scrollbar ${collapsed ? 'space-y-1 p-2' : 'space-y-1 p-4'}`}>
           {menuItems.map((item) => (
             <NavLink
-              key={item.name}
+              key={item.nameKey}
               to={item.path}
               onClick={onClose}
               className={({ isActive }) => {
@@ -191,10 +193,10 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
                   ? `${base} justify-center px-0 py-3`
                   : base;
               }}
-              title={collapsed ? item.name : undefined}
+              title={collapsed ? t(item.nameKey) : undefined}
             >
               <item.icon className="h-5 w-5 flex-shrink-0" />
-              {!collapsed && <span>{item.name}</span>}
+              {!collapsed && <span>{t(item.nameKey)}</span>}
             </NavLink>
           ))}
         </nav>
@@ -206,10 +208,10 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
             className={`flex items-center rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/20 transition-all ${
               collapsed ? 'justify-center px-0 py-3 w-full' : 'w-full gap-3 px-4 py-3'
             }`}
-            title={collapsed ? 'Sign Out' : undefined}
+            title={collapsed ? t('nav.logOut') : undefined}
           >
             <FaSignOutAlt className="h-5 w-5 flex-shrink-0" />
-            {!collapsed && <span>Sign Out</span>}
+            {!collapsed && <span>{t('nav.logOut')}</span>}
           </button>
         </div>
 
@@ -217,7 +219,7 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
           onClick={onToggleCollapse}
           type="button"
           className="absolute -right-3 top-1/2 z-50 hidden h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-md transition-all hover:text-gray-600 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:text-gray-500 dark:hover:text-gray-300 md:flex"
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-label={collapsed ? t('nav.expandSidebar') : t('nav.collapseSidebar')}
         >
           {collapsed ? (
             <FaChevronRight className="h-3 w-3" />

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaUsers, FaSave, FaTimes, FaUserCheck, FaCamera, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 
 const MyGroups = () => {
+  const { t } = useTranslation();
   const confirm = useConfirm();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -104,7 +106,7 @@ const MyGroups = () => {
   const [processing, setProcessing] = useState(null);
 
   const handleDelete = async (group) => {
-    if (!await confirm({ title: 'Delete Group', message: `Delete "${group.name}"? This cannot be undone.`, confirmLabel: 'Delete', destructive: true })) return;
+    if (!await confirm({ title: t('common.delete'), message: `Delete "${group.name}"? This cannot be undone.`, confirmLabel: t('common.delete'), destructive: true })) return;
     try {
       await axiosInstance.delete(`/groups/${group._id}`);
       setGroups(prev => prev.filter(g => g._id !== group._id));
@@ -152,9 +154,9 @@ const MyGroups = () => {
     <div className="space-y-6 p-1">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 dark:text-white">My Groups</h1>
+          <h1 className="text-2xl font-black text-gray-900 dark:text-white">{t('groups.title')}</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Create and manage student groups for your projects.
+            {t('groups.subtitle')}
           </p>
         </div>
         <button
@@ -162,7 +164,7 @@ const MyGroups = () => {
           className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD] transition-all"
         >
           <FaPlus className="h-4 w-4" />
-          New Group
+          {t('groups.newGroup')}
         </button>
       </div>
 
@@ -171,7 +173,7 @@ const MyGroups = () => {
         <div className="rounded-3xl border border-gray-150 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-              {editing ? 'Edit Group' : 'Create New Group'}
+              {editing ? t('groups.editModal') : t('groups.createModal')}
             </h3>
             <button onClick={() => { setShowForm(false); setEditing(null); setImageFile(null); setImagePreview(null); }} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
               <FaTimes className="h-5 w-5" />
@@ -179,21 +181,21 @@ const MyGroups = () => {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Group Name *</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('groups.groupName')}</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                placeholder="e.g. PFE Group A"
+                placeholder={t('groups.groupNamePlaceholder')}
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Group Image</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('groups.groupImage')}</label>
               <div className="flex items-center gap-4">
                 <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-sm text-gray-500 hover:border-[#0084D1] hover:text-[#0084D1] dark:border-gray-600 dark:text-gray-400 transition-colors">
                   <FaCamera className="h-4 w-4" />
-                  <span>{imageFile ? imageFile.name : 'Choose image'}</span>
+                  <span>{imageFile ? imageFile.name : t('groups.chooseImage')}</span>
                   <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                 </label>
                 {imagePreview && (
@@ -211,27 +213,27 @@ const MyGroups = () => {
               </div>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('groups.description')}</label>
               <textarea
                 value={formData.description}
                 onChange={e => setFormData({...formData, description: e.target.value})}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                 rows={3}
-                placeholder="Group description..."
+                placeholder={t('groups.descriptionPlaceholder')}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Specialty</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('groups.specialty')}</label>
               <input
                 type="text"
                 value={formData.specialty}
                 onChange={e => setFormData({...formData, specialty: e.target.value})}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#0084D1] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                placeholder="e.g. AI, Web Development"
+                placeholder={t('groups.specialtyPlaceholder')}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Max Members</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('groups.maxMembers')}</label>
               <input
                 type="number"
                 value={formData.maxMembers}
@@ -244,11 +246,11 @@ const MyGroups = () => {
           </div>
           <div className="mt-5 flex justify-end gap-3">
             <button onClick={() => { setShowForm(false); setEditing(null); setImageFile(null); setImagePreview(null); }} className="rounded-xl border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">
-              Cancel
+              {t('common.cancel')}
             </button>
             <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-[#0084D1] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#0277BD] disabled:opacity-50">
               <FaSave className="h-4 w-4" />
-              {saving ? 'Saving...' : editing ? 'Update Group' : 'Create Group'}
+              {saving ? t('groups.saving') : editing ? t('groups.updateGroup') : t('groups.createGroup')}
             </button>
           </div>
         </div>
@@ -257,9 +259,9 @@ const MyGroups = () => {
       {/* Groups List */}
       {groups.length === 0 ? (
         <EmptyState
-          title="No groups yet"
-          description="Create your first group to start managing students."
-          actionText="Create Group"
+          title={t('groups.noGroups')}
+          description={t('groups.noGroupsDesc')}
+          actionText={t('groups.createGroup')}
           onActionClick={openCreate}
         />
       ) : (
@@ -290,11 +292,11 @@ const MyGroups = () => {
                     <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold mt-1 ${
                       group.status === 'open' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                     }`}>
-                      {group.status === 'open' ? 'Open' : 'Closed'}
+                      {group.status === 'open' ? t('groups.open') : t('groups.closed')}
                     </span>
                     {group.pendingRequests?.length > 0 && (
                       <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950/30 dark:text-amber-400">
-                        {group.pendingRequests.length} pending
+                        {group.pendingRequests.length} {t('groups.pending')}
                       </span>
                     )}
                   </div>
@@ -329,7 +331,7 @@ const MyGroups = () => {
 
                 {group.members?.length > 0 && (
                   <div className="mt-3 space-y-2">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">Enrolled Students</p>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">{t('groups.enrolledStudents')}</p>
                     <div className="flex flex-wrap gap-2">
                       {group.members.map((member) => (
                         <span key={member._id} className="inline-flex items-center gap-1.5 rounded-full bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
@@ -344,7 +346,7 @@ const MyGroups = () => {
                 {group.pendingRequests?.length > 0 && (
                   <div className="mt-4 space-y-2 border-t border-gray-100 pt-4 dark:border-gray-800">
                     <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider dark:text-amber-400">
-                      Pending Requests ({group.pendingRequests.length})
+                      {t('groups.pendingRequests', { count: group.pendingRequests.length })}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {group.pendingRequests.map((student) => (
@@ -356,7 +358,7 @@ const MyGroups = () => {
                             onClick={() => handleApprove(group._id, student._id)}
                             disabled={processing === `approve-${group._id}-${student._id}`}
                             className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 disabled:opacity-50 dark:bg-emerald-950/30 dark:text-emerald-400"
-                            title="Approve"
+                            title={t('groups.approve')}
                           >
                             <FaCheckCircle className="h-3.5 w-3.5" />
                           </button>
@@ -364,7 +366,7 @@ const MyGroups = () => {
                             onClick={() => handleReject(group._id, student._id)}
                             disabled={processing === `reject-${group._id}-${student._id}`}
                             className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 text-red-500 hover:bg-red-200 disabled:opacity-50 dark:bg-red-950/30 dark:text-red-400"
-                            title="Reject"
+                            title={t('groups.reject')}
                           >
                             <FaTimesCircle className="h-3.5 w-3.5" />
                           </button>
