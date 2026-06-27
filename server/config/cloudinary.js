@@ -7,15 +7,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const avatarStorage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'najah/avatars',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: [{ width: 400, height: 400, crop: 'fill', gravity: 'face' }],
-  },
-});
-
 const groupImageStorage = new CloudinaryStorage({
   cloudinary,
   params: {
@@ -25,4 +16,4 @@ const groupImageStorage = new CloudinaryStorage({
   },
 });
 
-module.exports = { cloudinary, avatarStorage, groupImageStorage };
+module.exports = { cloudinary, groupImageStorage };
