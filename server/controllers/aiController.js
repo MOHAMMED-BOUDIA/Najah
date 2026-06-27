@@ -49,7 +49,15 @@ Guidelines:
 - Use emojis occasionally to be friendly 😊`
     });
 
-    const geminiHistory = history.map(msg => ({
+    let cleanHistory = history.filter(m => m.content && m.content.trim());
+    const firstUserIndex = cleanHistory.findIndex(m => m.role === 'user');
+    if (firstUserIndex > 0) {
+      cleanHistory = cleanHistory.slice(firstUserIndex);
+    } else if (firstUserIndex === -1) {
+      cleanHistory = [];
+    }
+
+    const geminiHistory = cleanHistory.map(msg => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: msg.content }]
     }));
