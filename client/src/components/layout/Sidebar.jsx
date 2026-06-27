@@ -114,10 +114,10 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
       >
         <div className={`flex h-16 shrink-0 items-center border-b border-gray-100 dark:border-gray-800 ${collapsed ? 'justify-center px-0' : 'justify-between px-6'}`}>
           <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'}`}>
-            <img src="/img/najah.png" alt="NAJAH" className="w-10 h-10 object-contain" />
+            <img src="/img/najah-circle-removebg-preview.png" alt="Najah" className="w-10 h-10 object-contain" />
             {!collapsed && (
               <span className="text-lg font-bold text-gray-900 dark:text-white">
-                NAJAH
+                Najah
               </span>
             )}
           </div>

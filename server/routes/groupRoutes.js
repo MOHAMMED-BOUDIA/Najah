@@ -16,10 +16,8 @@ const {
   getMyMembership,
   getPendingRequests
 } = require('../controllers/groupController');
-const { groupImageStorage } = require('../config/cloudinary');
-
 const upload = multer({
-  storage: groupImageStorage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 

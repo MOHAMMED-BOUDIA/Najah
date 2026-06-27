@@ -1,5 +1,4 @@
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,13 +6,4 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const groupImageStorage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'najah/groups',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: [{ width: 1200, height: 630, crop: 'fill' }],
-  },
-});
-
-module.exports = { cloudinary, groupImageStorage };
+module.exports = { cloudinary };

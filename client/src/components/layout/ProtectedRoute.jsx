@@ -19,10 +19,10 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, token, loading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const isStudent = user?.role === 'student';
   const [membershipStatus, setMembershipStatus] = useState(null);
   const [checkingMembership, setCheckingMembership] = useState(isStudent);
   const hasRedirected = useRef(false);
-  const isStudent = user?.role === 'student';
 
   useEffect(() => {
     if (!isStudent) return;
@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
       setCheckingMembership(false);
       hasRedirected.current = false;
     });
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user, isStudent]);
 
   useEffect(() => {
     if (loading || checkingMembership || !user) return;
