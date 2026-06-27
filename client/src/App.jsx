@@ -12,6 +12,7 @@ import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
 import Loader from './components/common/Loader';
+import AIChatbot from './components/AIChatbot';
 
 // Light pages — eager load
 import Home from './pages/Home';
@@ -139,6 +140,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         </Suspense>
+      <AIChatbot />
       </Router>
 
       <ToastContainer
