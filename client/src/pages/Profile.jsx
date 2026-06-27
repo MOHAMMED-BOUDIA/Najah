@@ -66,6 +66,7 @@ const Profile = () => {
 
   // ─── Stats placeholders ─────────────────────────────────────────────────
   const [, setStats] = useState({ projects: 0, tasks: 0, teams: 0 });
+  const [avatarError, setAvatarError] = useState(false);
 
   // ─── Active tab ─────────────────────────────────────────────────────────
   const [activeTab, setActiveTab] = useState('profile');
@@ -77,7 +78,9 @@ const Profile = () => {
   const SERVER_ORIGIN = (import.meta.env.VITE_API_URL || 'https://back-njah.vercel.app').replace('/api', '');
 
   const getAvatarUrl = (avatarPath) => {
-    if (!avatarPath) return '';
+    if (!avatarPath) return null;
+    if (avatarPath.startsWith('http') || avatarPath.startsWith('data:')) return avatarPath;
+    if (avatarPath.startsWith('uploads/')) return null;
     return `${SERVER_ORIGIN}/${avatarPath.replace(/\\/g, '/')}`;
   };
 
@@ -306,19 +309,22 @@ const Profile = () => {
             <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-[#0084D1] relative">
               {(() => {
                 const avatarUrl = getAvatarUrl(user?.avatar);
+                const showImg = avatarUrl && !avatarError;
                 return (
                   <>
-                    {avatarUrl && (
+                    {showImg && (
                       <img
                         src={avatarUrl}
                         alt={user.name}
                         className="absolute inset-0 w-full h-full object-cover object-top"
-                        onError={(e) => { e.target.remove(); }}
+                        onError={() => setAvatarError(true)}
                       />
                     )}
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-3xl font-bold text-white">
-                      {initials}
-                    </div>
+                    {!showImg && (
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-3xl font-bold text-white">
+                        {initials}
+                      </div>
+                    )}
                   </>
                 );
               })()}
