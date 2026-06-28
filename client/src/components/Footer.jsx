@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiGithub, FiTwitter, FiLinkedin } from 'react-icons/fi';
@@ -38,7 +39,7 @@ const socialLinks = [
   { icon: FiLinkedin, href: 'https://linkedin.com/company/najah' },
 ];
 
-export default function Footer() {
+const Footer = memo(function Footer() {
   const { t } = useTranslation();
   return (
     <footer className="bg-gray-950 text-gray-300">
@@ -119,4 +120,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+export default Footer;

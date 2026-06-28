@@ -6,7 +6,7 @@ import axiosInstance from '../api/axios';
 import ProjectCard from '../components/project/ProjectCard';
 import ProjectForm from '../components/project/ProjectForm';
 import Modal from '../components/common/Modal';
-import Loader from '../components/common/Loader';
+import { CardSkeleton } from '../components/common/Skeleton';
 import EmptyState from '../components/common/EmptyState';
 import { useConfirm } from '../context/ModalContext';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,9 @@ const Projects = () => {
   const [supervisors, setSupervisors] = useState([]);
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   // Form Modals state
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -30,20 +33,27 @@ const Projects = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (pageNum = 1, append = false) => {
     try {
-      const res = await axiosInstance.get('/projects');
-      setProjects(res.data || []);
+      if (append) setLoadingMore(true); else setLoading(true);
+      const res = await axiosInstance.get(`/projects?page=${pageNum}&limit=20`);
+      const result = res.data.data || [];
+      setProjects(prev => append ? [...prev, ...result] : result);
+      setTotalPages(res.data.totalPages || 1);
+      setPage(pageNum);
     } catch (err) {
       console.error(err);
       toast.error('Failed to load projects.');
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
     }
   };
 
   const fetchFormMetadata = async () => {
     try {
       const supervisorsRes = await axiosInstance.get('/users/instructors');
-      setSupervisors(supervisorsRes.data || []);
+      setSupervisors(supervisorsRes.data.data || []);
       const teamsRes = await axiosInstance.get('/teams');
       setTeams(teamsRes.data || []);
     } catch (err) {
@@ -126,8 +136,8 @@ const Projects = () => {
 
   if (loading) {
     return (
-      <div className="flex h-[70vh] items-center justify-center">
-        <Loader size="lg" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
       </div>
     );
   }
@@ -242,6 +252,24 @@ const Projects = () => {
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {page < totalPages && (
+        <div className="flex justify-center pt-4">
+          <button
+            onClick={() => fetchProjects(page + 1, true)}
+            disabled={loadingMore}
+            className="rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-6 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 disabled:opacity-50 transition"
+          >
+            {loadingMore ? (
+              <span className="flex items-center gap-2">
+                <span className="animate-spin h-4 w-4 border-2 border-[#0084D1] border-t-transparent rounded-full" />
+                Loading...
+              </span>
+            ) : (
+              `Load More (${page}/${totalPages})`
+            )}
+          </button>
         </div>
       )}
 

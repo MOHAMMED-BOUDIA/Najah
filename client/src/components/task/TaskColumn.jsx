@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';
 
@@ -77,4 +78,4 @@ const TaskColumn = ({
   );
 };
 
-export default TaskColumn;
+export default memo(TaskColumn);

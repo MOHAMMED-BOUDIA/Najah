@@ -28,7 +28,7 @@ const CTAButton = memo(function CTAButton({ children, to, primary }) {
         onClick={handleClick}
         className={`relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ${
           primary
-            ? 'bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white shadow-xl shadow-[#FFB900]/25 hover:shadow-[#FFB900]/40 hover:scale-[1.03]'
+            ? 'bg-[#FFB900] text-white shadow-xl shadow-[#FFB900]/25 hover:bg-[#0084D1] hover:shadow-[#0084D1]/40 hover:scale-[1.03]'
             : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
         }`}
       >
@@ -42,7 +42,7 @@ const CTAButton = memo(function CTAButton({ children, to, primary }) {
       to={to}
       className={`relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 ${
         primary
-          ? 'bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white shadow-xl shadow-[#FFB900]/25 hover:shadow-[#FFB900]/40 hover:scale-[1.03]'
+          ? 'bg-[#FFB900] text-white shadow-xl shadow-[#FFB900]/25 hover:bg-[#0084D1] hover:shadow-[#0084D1]/40 hover:scale-[1.03]'
           : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
       }`}
     >
@@ -116,8 +116,8 @@ const DashboardMockup = memo(function DashboardMockup() {
         transition={{ delay: 0.8, duration: 0.4 }}
         className="absolute -right-6 -bottom-6 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 p-3 flex items-center gap-3"
       >
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white flex-shrink-0">
-          <HiStar className="w-4 h-4" />
+        <div className="flex-shrink-0">
+          <HiStar className="w-10 h-10 text-[#FFB900]" />
         </div>
         <div>
           <p className="text-sm font-semibold text-gray-900 dark:text-white">New Certificate</p>
@@ -239,9 +239,9 @@ function HeroSection() {
                   ))}
                 </div>
                 <div>
-                  <div className="flex items-center gap-1 text-amber-400">
+                  <div className="flex items-center gap-1 text-[#FFB900]">
                     {[...Array(5)].map((_, i) => (
-                      <HiStar key={i} className="w-3.5 h-3.5 fill-current" />
+                      <HiStar key={i} className="w-6 h-6" />
                     ))}
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">

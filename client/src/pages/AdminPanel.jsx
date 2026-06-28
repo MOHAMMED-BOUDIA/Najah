@@ -22,8 +22,8 @@ const AdminPanel = () => {
         axiosInstance.get('/users'),
         axiosInstance.get('/projects'),
       ]);
-      setUsersList(usersRes.data || []);
-      setProjectsList(projectsRes.data || []);
+      setUsersList(usersRes.data.data || []);
+      setProjectsList(projectsRes.data.data || []);
     } catch (err) {
       console.error(err);
       toast.error('Failed to load administration data.');

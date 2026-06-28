@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
+import { CardSkeleton } from '../components/common/Skeleton';
 import EmptyState from '../components/common/EmptyState';
 
 const Chat = () => {
@@ -53,7 +54,7 @@ const Chat = () => {
       const res = await axiosInstance.get(`/messages/group/${groupId}`);
       setMessages(res.data || []);
     } catch {
-      if (!silent) toast.error('Failed to load messages');
+      if (!silent) toast.error(t('chat.failedLoad'));
     } finally {
       if (!silent) setLoadingMessages(false);
     }
@@ -83,7 +84,7 @@ const Chat = () => {
       setMessages(prev => [...prev, res.data]);
       setInput('');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to send message');
+      toast.error(err.response?.data?.message || t('chat.failedSend'));
     } finally {
       setSending(false);
     }
@@ -99,7 +100,7 @@ const Chat = () => {
   };
 
   if (loadingGroups) {
-    return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
+    return <div className="p-6 space-y-4"><CardSkeleton /><CardSkeleton /><CardSkeleton /></div>;
   }
 
   if (groups.length === 0) {
@@ -161,7 +162,7 @@ const Chat = () => {
             ) : (
               messages.map(msg => {
                 const isOwn = (msg.sender?._id || msg.sender) === user.id;
-                const senderName = msg.sender?.name || 'Unknown';
+                const senderName = msg.sender?.name || t('chat.unknown');
                 const senderAvatar = msg.sender?.avatar;
                 return (
                   <div key={msg._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>

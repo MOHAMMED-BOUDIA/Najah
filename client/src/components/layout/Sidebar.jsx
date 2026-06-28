@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -232,4 +232,4 @@ const Sidebar = ({ isOpen, onClose, collapsed, onToggleCollapse }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

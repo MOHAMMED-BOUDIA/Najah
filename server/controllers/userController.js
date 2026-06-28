@@ -36,8 +36,14 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-password -avatar').lean();
-    res.json(users);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+    const [users, total] = await Promise.all([
+      User.find().skip(skip).limit(limit).select('-password -avatar').lean(),
+      User.countDocuments(),
+    ]);
+    res.json({ data: users, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -102,8 +108,15 @@ exports.deleteUser = async (req, res) => {
 
 exports.getInstructors = async (req, res) => {
   try {
-    const instructors = await User.find({ role: 'instructor' }).select('-password -avatar').lean();
-    res.json(instructors);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+    const filter = { role: 'instructor' };
+    const [instructors, total] = await Promise.all([
+      User.find(filter).skip(skip).limit(limit).select('-password -avatar').lean(),
+      User.countDocuments(filter),
+    ]);
+    res.json({ data: instructors, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -124,8 +137,15 @@ exports.getMyInstructor = async (req, res) => {
 
 exports.getStudents = async (req, res) => {
   try {
-    const students = await User.find({ role: 'student' }).select('-password -avatar').lean();
-    res.json(students);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+    const filter = { role: 'student' };
+    const [students, total] = await Promise.all([
+      User.find(filter).skip(skip).limit(limit).select('-password -avatar').lean(),
+      User.countDocuments(filter),
+    ]);
+    res.json({ data: students, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

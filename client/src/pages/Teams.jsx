@@ -42,8 +42,8 @@ const Teams = () => {
         axiosInstance.get('/projects'),
       ]);
       setTeams(teamsRes.data || []);
-      setStudents(studentsRes.data || []);
-      setProjects(projectsRes.data || []);
+      setStudents(studentsRes.data.data || []);
+      setProjects(projectsRes.data.data || []);
     } catch (err) {
       console.error(err);
       toast.error('Failed to load team data.');

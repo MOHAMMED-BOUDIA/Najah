@@ -22,8 +22,8 @@ const StepItem = memo(function StepItem({ step, i }) {
       className="relative flex items-start gap-6 md:gap-10"
     >
       <div className="relative z-10 flex-shrink-0">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white shadow-lg">
-          <StepIcon className="w-5 h-5" />
+        <div className="flex-shrink-0">
+          <StepIcon className="w-10 h-10 text-[#FFB900]" />
         </div>
         <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-950 border-2 border-[#0084D1] flex items-center justify-center">
           <span className="text-[10px] font-bold text-[#0084D1]">{i + 1}</span>

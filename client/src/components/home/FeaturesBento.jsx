@@ -44,8 +44,8 @@ const BentoCard = memo(function BentoCard({ icon: Icon, title, desc, color, size
       <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
       <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${color} opacity-10 blur-2xl transition-opacity duration-300`} />
 
-      <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white mb-4 flex-shrink-0`}>
-        <Icon className="w-5 h-5" />
+      <div className="mb-4 flex-shrink-0">
+        <Icon className="w-10 h-10 text-[#FFB900]" />
       </div>
 
       <h3 className="font-bold text-gray-900 dark:text-white mb-1.5">{title}</h3>

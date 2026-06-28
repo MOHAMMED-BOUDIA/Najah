@@ -5,78 +5,14 @@ import { FiSearch, FiBookOpen, FiUserCheck, FiSettings, FiShield, FiLayers, FiTo
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const articles = [
-  {
-    id: 1, title: 'How to create an account', description: 'Step-by-step guide to register on NAJAH', category: 'Getting Started', readTime: '3 min',
-    content: 'Creating an account on NAJAH is quick and free. Click "Get Started" on the homepage, enter your name, email, and password, then verify your email address through the link we send you. Once verified, you can immediately browse formations and instructors.'
-  },
-  {
-    id: 2, title: 'Navigating the dashboard', description: 'Learn how to use your student dashboard', category: 'Getting Started', readTime: '4 min',
-    content: 'Your dashboard is the central hub for all your learning activity. From here you can view your enrolled formations, track progress, check upcoming live meetings, see new messages, and access your profile settings. The sidebar gives you quick access to all sections.'
-  },
-  {
-    id: 3, title: 'Finding formations', description: 'How to browse and discover formations', category: 'Getting Started', readTime: '3 min',
-    content: 'Head to the Instructors page to see all available instructors and their formations. Each instructor profile lists their specialties, formation count, and ratings. Click on an instructor to view their available formations and request to join.'
-  },
-  {
-    id: 4, title: 'Updating your profile', description: 'Change your name, photo, and preferences', category: 'Account', readTime: '2 min',
-    content: 'Go to your Profile page from the dashboard menu. Here you can update your name, profile photo, bio, and notification preferences. Changes are saved automatically. You can also link your social accounts for easier login.'
-  },
-  {
-    id: 5, title: 'Changing your password', description: 'How to reset or change your password', category: 'Account', readTime: '2 min',
-    content: 'In your Profile settings, click "Change Password". Enter your current password, then your new password twice. Make sure your new password is at least 8 characters and includes a mix of letters, numbers, and symbols.'
-  },
-  {
-    id: 6, title: 'Deleting your account', description: 'Permanently close your NAJAH account', category: 'Account', readTime: '3 min',
-    content: 'To delete your account, go to Profile settings and scroll to "Danger Zone". Click "Delete Account" and confirm. This action is permanent and cannot be undone. Your data will be erased within 30 days. Download any data you want to keep first.'
-  },
-  {
-    id: 7, title: 'How to join a formation', description: 'Enroll in your first formation', category: 'Formations', readTime: '4 min',
-    content: 'Once you find an instructor and formation you like, click "Request to Join". The instructor will review your request and approve it. You will receive a notification once approved. After that, the formation appears in your dashboard and you can access all materials.'
-  },
-  {
-    id: 8, title: 'Tracking your progress', description: 'Monitor your learning journey', category: 'Formations', readTime: '3 min',
-    content: 'Each formation has a progress bar showing how much of the curriculum you have completed. Your dashboard displays overall progress across all formations. You can also view detailed stats per course, including completed tasks, quiz scores, and attendance.'
-  },
-  {
-    id: 9, title: 'Completing assignments', description: 'How to submit and track assignments', category: 'Formations', readTime: '4 min',
-    content: 'Assignments are listed in each formation. Click on an assignment to view instructions and the due date. Submit your work through the upload form. Instructors review submissions and provide feedback, which you can see in the assignment details page.'
-  },
-  {
-    id: 10, title: 'Contacting your instructor', description: 'How to reach your instructor', category: 'Instructors', readTime: '2 min',
-    content: 'You can message your instructor directly through the group chat or send a private message from their profile page. Instructors typically respond within 24 hours. For urgent matters, check if they have office hours listed on their profile.'
-  },
-  {
-    id: 11, title: 'How live meetings work', description: 'Attend and participate in live sessions', category: 'Instructors', readTime: '3 min',
-    content: 'Live meetings are scheduled by your instructor and appear on your dashboard calendar. Click "Join" when the session is active to enter the video call. You can ask questions via chat or raise your hand to speak. Recordings are available afterward.'
-  },
-  {
-    id: 12, title: 'Understanding group chat', description: 'Collaborate with peers in real-time', category: 'Formations', readTime: '2 min',
-    content: 'Each formation has a dedicated group chat where you can discuss topics, ask questions, and share resources with fellow students. Your instructor also participates. Keep conversations respectful and on-topic. Pin important messages for easy reference.'
-  },
-  {
-    id: 13, title: 'Payment and billing FAQ', description: 'Common questions about billing', category: 'Billing', readTime: '3 min',
-    content: 'NAJAH is currently free for all students. There are no hidden fees or subscription costs. If premium features are introduced in the future, we will announce them clearly with transparent pricing. Instructors are compensated through our platform partnership model.'
-  },
-  {
-    id: 14, title: 'Privacy settings explained', description: 'Control your data and visibility', category: 'Security', readTime: '4 min',
-    content: 'In your Profile settings, you can control who sees your profile, activity status, and learning progress. You can choose to make your profile public or private. We never share your data with third parties without your explicit consent.'
-  },
-  {
-    id: 15, title: 'Two-factor authentication', description: 'Add extra security to your account', category: 'Security', readTime: '5 min',
-    content: 'Enable two-factor authentication in Security settings. You can use an authenticator app like Google Authenticator or receive codes via email. Once enabled, you will need a code from your chosen method in addition to your password when logging in.'
-  },
-  {
-    id: 16, title: 'How to reset your password', description: 'Quick steps to regain access', category: 'Account', readTime: '2 min',
-    content: 'On the login page, click "Forgot Password". Enter your email address and we will send you a reset link. Click the link in the email and choose a new password. Make sure to check your spam folder if you do not see the email within a few minutes.'
-  },
-];
-
 export default function Help() {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [selectedArticle, setSelectedArticle] = useState(null);
+
+  const articlesData = t('static.help.articles', { returnObjects: true });
+  const articles = articlesData.map((a, i) => ({ ...a, id: i + 1 }));
 
   const categoryOptions = [
     { key: 'Getting Started', label: t('static.help.gettingStarted'), icon: FiBookOpen, desc: t('static.help.gettingStartedDesc') },
@@ -195,8 +131,8 @@ export default function Help() {
                     : 'border-gray-200 dark:border-gray-800 hover:shadow-md hover:border-gray-300 dark:hover:border-gray-700'
                 }`}
               >
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white mb-3">
-                  <cat.icon className="w-4 h-4" />
+                <div className="mb-3">
+                  <cat.icon className="w-9 h-9 text-[#FFB900]" />
                 </div>
                 <h3 className="font-semibold text-sm">{cat.label}</h3>
                 <p className="text-xs text-gray-400 mt-1">{cat.desc}</p>
@@ -249,7 +185,7 @@ export default function Help() {
               {t('static.help.supportDesc')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white font-semibold text-sm hover:from-[#FFB900] hover:to-[#0277BD] transition-all shadow-lg shadow-[#0084D1]/25">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FFB900] text-white font-semibold text-sm hover:bg-[#0084D1] transition-all shadow-lg shadow-[#0084D1]/25">
                 {t('static.help.contactSupport')}
                 <FiArrowRight className="w-4 h-4" />
               </Link>

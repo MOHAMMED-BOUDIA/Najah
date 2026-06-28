@@ -35,17 +35,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
-      toast.error('Please fill in all fields.');
+      toast.error(t('auth.validation.fillAllFields'));
       return;
     }
     setLoading(true);
     const result = await login(email, password);
     setLoading(false);
     if (result.success) {
-      toast.success('Logged in successfully!');
+      toast.success(t('auth.validation.loginSuccess'));
       navigate(getRoleHome(result.user.role), { replace: true });
     } else {
-      toast.error(result.message || 'Login failed. Please check your credentials.');
+      toast.error(result.message || t('auth.validation.loginFailed'));
     }
   };
 
@@ -89,7 +89,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={inputClass}
-              placeholder="••••••••"
+              placeholder={t('auth.password')}
             />
             <button
               type="button"

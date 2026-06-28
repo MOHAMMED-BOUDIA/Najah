@@ -109,7 +109,7 @@ export default function HomeNavbar() {
             </Link>
             <Link
               to="/register"
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] shadow-lg shadow-[#FFB900]/25 hover:shadow-[#FFB900]/40 transition-all"
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-[#FFB900] rounded-xl hover:bg-[#0084D1] shadow-lg shadow-[#FFB900]/25 hover:shadow-[#0084D1]/40 transition-all"
             >
               {t('nav.getStarted')}
             </Link>
@@ -172,7 +172,7 @@ export default function HomeNavbar() {
               <Link
                 to="/register"
                 onClick={() => setMobileOpen(false)}
-                className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#FFB900] to-[#0084D1] rounded-xl hover:from-[#e6a000] hover:to-[#0277BD] transition-all"
+                className="block w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-[#FFB900] rounded-xl hover:bg-[#0084D1] transition-all"
               >
                 {t('nav.getStarted')}
               </Link>

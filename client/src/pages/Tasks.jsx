@@ -34,7 +34,7 @@ const Tasks = () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get('/projects');
-        const projData = response.data || [];
+        const projData = response.data.data || [];
         setProjects(projData);
         // Automatically select the first project if available
         if (projData.length > 0) {

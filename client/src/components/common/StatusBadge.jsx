@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { getStatusColorClasses } from '../../utils/helpers';
 
 const StatusBadge = ({ status }) => {
@@ -18,4 +19,4 @@ const StatusBadge = ({ status }) => {
   );
 };
 
-export default StatusBadge;
+export default memo(StatusBadge);

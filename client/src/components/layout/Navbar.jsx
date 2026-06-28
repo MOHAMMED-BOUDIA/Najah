@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaBars, FaMoon, FaSun, FaSignOutAlt, FaBell, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
@@ -296,4 +296,4 @@ const Navbar = ({ onMenuToggle }) => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

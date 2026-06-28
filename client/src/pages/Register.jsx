@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FaUser, FaEnvelope, FaLock, FaPhone, FaSpinner } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
@@ -16,7 +16,6 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    phone: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +32,7 @@ const Register = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === 'email') {
       if (value && !value.endsWith('@gmail.com')) {
-        setEmailError('Email must be a valid @gmail.com address');
+        setEmailError(t('auth.validation.emailGmail'));
       } else {
         setEmailError('');
       }
@@ -59,17 +58,16 @@ const Register = () => {
   const strength = getPasswordStrength(formData.password);
 
   const validate = () => {
-    const { name, email, password, phone } = formData;
-    if (!name.trim()) return 'Name is required';
-    if (!email.trim()) return 'Email is required';
-    if (!email.endsWith('@gmail.com')) return 'Email must be a valid @gmail.com address';
-    if (!password) return 'Password is required';
-    if (password.length < 8) return 'Password must be at least 8 characters';
-    if (!/[A-Z]/.test(password)) return 'Password must contain at least 1 uppercase letter';
-    if (!/[a-z]/.test(password)) return 'Password must contain at least 1 lowercase letter';
-    if (!/[0-9]/.test(password)) return 'Password must contain at least 1 number';
-    if (!/[!@#$%^&*]/.test(password)) return 'Password must contain at least 1 special character (!@#$%^&*)';
-    if (!phone.trim()) return 'Phone number is required';
+    const { name, email, password } = formData;
+    if (!name.trim()) return t('auth.validation.nameRequired');
+    if (!email.trim()) return t('auth.validation.emailRequired');
+    if (!email.endsWith('@gmail.com')) return t('auth.validation.emailGmail');
+    if (!password) return t('auth.validation.passwordRequired');
+    if (password.length < 8) return t('auth.validation.passwordMinChars');
+    if (!/[A-Z]/.test(password)) return t('auth.validation.passwordUpper');
+    if (!/[a-z]/.test(password)) return t('auth.validation.passwordLower');
+    if (!/[0-9]/.test(password)) return t('auth.validation.passwordNumber');
+    if (!/[!@#$%^&*]/.test(password)) return t('auth.validation.passwordSpecial');
     return null;
   };
 
@@ -84,10 +82,10 @@ const Register = () => {
     const result = await register(formData);
     setLoading(false);
     if (result.success) {
-      toast.success('Confirmation email sent to your Gmail');
+      toast.success(t('auth.validation.confirmEmailSent'));
       navigate('/verify-email');
     } else {
-      toast.error(result.message || 'Registration failed. Please check your details.');
+      toast.error(result.message || t('auth.validation.registrationFailed'));
     }
   };
 
@@ -135,7 +133,7 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className={emailError ? inputClassError : inputClass}
-                placeholder="john@gmail.com"
+                placeholder={t('auth.placeholders.email')}
               />
             </div>
             {emailError && (
@@ -160,7 +158,7 @@ const Register = () => {
               value={formData.password}
               onChange={handleChange}
               className={inputClass}
-              placeholder="Create a strong password"
+              placeholder={t('auth.placeholders.password')}
             />
             <button
               type="button"
@@ -184,11 +182,11 @@ const Register = () => {
               </div>
               <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5 pt-0.5">
                 {[
-                  { label: '8+ characters', fn: passwordRules.minChars },
-                  { label: '1 uppercase', fn: passwordRules.upper },
-                  { label: '1 lowercase', fn: passwordRules.lower },
-                  { label: '1 number', fn: passwordRules.number },
-                  { label: '1 special (!@#$%^&*)', fn: passwordRules.special },
+                  { label: t('auth.passwordRules.chars'), fn: passwordRules.minChars },
+                  { label: t('auth.passwordRules.upper'), fn: passwordRules.upper },
+                  { label: t('auth.passwordRules.lower'), fn: passwordRules.lower },
+                  { label: t('auth.passwordRules.number'), fn: passwordRules.number },
+                  { label: t('auth.passwordRules.special'), fn: passwordRules.special },
                 ].map((rule) => {
                   const ok = rule.fn(formData.password);
                   return (
@@ -206,26 +204,7 @@ const Register = () => {
         {/* Role hidden */}
         <input type="hidden" name="role" value="student" />
 
-        {/* Phone */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-            {t('auth.phone')} *
-          </label>
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-              <FaPhone className="h-3.5 w-3.5" />
-            </span>
-            <input
-              type="text"
-              name="phone"
-              required
-              value={formData.phone}
-              onChange={handleChange}
-              className={inputClass}
-              placeholder="+1 (555) 000-0000"
-            />
-          </div>
-        </div>
+
 
         {/* Submit */}
         <button

@@ -2,9 +2,15 @@ const Notification = require('../models/Notification');
 
 exports.getUserNotifications = async (req, res) => {
   try {
-    const notifications = await Notification.find({ user: req.user._id })
-      .sort({ createdAt: -1 });
-    res.json(notifications);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+    const filter = { user: req.user._id };
+    const [notifications, total] = await Promise.all([
+      Notification.find(filter).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Notification.countDocuments(filter),
+    ]);
+    res.json({ data: notifications, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

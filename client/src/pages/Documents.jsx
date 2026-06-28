@@ -34,7 +34,7 @@ const Documents = () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get('/projects');
-        const projData = response.data || [];
+        const projData = response.data.data || [];
         setProjects(projData);
         if (projData.length > 0) {
           setSelectedProjectId(projData[0]._id);

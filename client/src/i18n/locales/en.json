@@ -109,7 +109,34 @@
     "didNotReceiveEmail": "Didn't receive the email?",
     "resend": "Resend",
     "goToLogin": "Go to Login",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailGmail": "Email must be a valid @gmail.com address",
+      "passwordRequired": "Password is required",
+      "passwordMinChars": "Password must be at least 8 characters",
+      "passwordUpper": "Password must contain at least 1 uppercase letter",
+      "passwordLower": "Password must contain at least 1 lowercase letter",
+      "passwordNumber": "Password must contain at least 1 number",
+      "passwordSpecial": "Password must contain at least 1 special character (!@#$%^&*)",
+      "confirmEmailSent": "Confirmation email sent to your Gmail",
+      "registrationFailed": "Registration failed. Please check your details.",
+      "fillAllFields": "Please fill in all fields.",
+      "loginSuccess": "Logged in successfully!",
+      "loginFailed": "Login failed. Please check your credentials."
+    },
+    "placeholders": {
+      "email": "john@gmail.com",
+      "password": "Create a strong password"
+    },
+    "passwordRules": {
+      "chars": "8+ characters",
+      "upper": "1 uppercase",
+      "lower": "1 lowercase",
+      "number": "1 number",
+      "special": "1 special (!@#$%^&*)"
+    }
   },
   "dashboard": {
     "welcome": "Welcome to NAJAH, {{name}}!",
@@ -371,7 +398,9 @@
     "unknown": "Unknown",
     "noMessages": "No messages yet. Start the conversation!",
     "typeMessage": "Type a message...",
-    "send": "Send"
+    "send": "Send",
+    "failedLoad": "Failed to load messages",
+    "failedSend": "Failed to send message"
   },
   "notifications": {
     "title": "Notifications Center",
@@ -535,7 +564,7 @@
   },
   "static": {
     "about": {
-      "title": "About",
+      "title": "About Us",
       "mission": "We are on a mission to make quality education accessible to every student.",
       "ourStory": "Our Story",
       "storyP1": "NAJAH was founded with a simple vision: connect students with expert instructors through a modern, accessible platform. What started as a small pilot program has grown into a thriving community of learners and educators.",
@@ -544,7 +573,9 @@
       "missionText": "To provide every student with access to high-quality, instructor-led training that bridges the gap between academic knowledge and industry skills.",
       "ourVision": "Our Vision",
       "visionText": "A world where anyone, anywhere, can learn from the best instructors and build the career they dream of.",
-      "meetTeam": "Meet Our Team"
+      "meetTeam": "Meet Our Team",
+      "logoAlt": "NAJAH Logo",
+      "teamRoles": ["Founder & CEO", "Head of Education", "CTO", "Community Lead"]
     },
     "contact": {
       "title": "Get in",
@@ -560,7 +591,8 @@
       "messageSent": "Message Sent!",
       "emailContact": "contact@najah-platform.com",
       "phone": "+212 5XX XX XX XX",
-      "address": "Casablanca, Morocco"
+      "address": "Casablanca, Morocco",
+      "mapPlaceholder": "Map placeholder"
     },
     "pricing": {
       "title": "Simple,",
@@ -594,7 +626,31 @@
       "general": "General",
       "students": "Students",
       "instructors": "Instructors",
-      "billing": "Billing"
+      "billing": "Billing",
+      "q0": "What is NAJAH?",
+      "a0": "NAJAH is a modern online learning platform that connects students with expert instructors. Students can enroll in formations, join study groups, attend live meetings, and track their progress.",
+      "q1": "Is NAJAH free?",
+      "a1": "Yes! NAJAH is completely free for students. There are no hidden fees or subscription costs.",
+      "q2": "How do I create an account?",
+      "a2": "Click 'Get Started' on the homepage, fill in your details, and verify your email address. It takes less than 2 minutes.",
+      "q3": "How do I join a formation?",
+      "a3": "Browse available instructors and their formations. Click 'Request to Join' on a formation you like, and wait for the instructor to approve your request.",
+      "q4": "Can I study at my own pace?",
+      "a4": "Yes. Formations include recorded materials you can access anytime, along with scheduled live sessions for real-time interaction.",
+      "q5": "How do I track my progress?",
+      "a5": "Your dashboard shows your enrolled formations, progress bars, completed tasks, and upcoming meetings all in one place.",
+      "q6": "How do I become an instructor?",
+      "a6": "Contact us through the contact form with your qualifications and field of expertise. Our team will review your application.",
+      "q7": "Can I create my own formation?",
+      "a7": "Yes, approved instructors can create and manage their own formations through the instructor dashboard.",
+      "q8": "How do I communicate with students?",
+      "a8": "You can use group chats, live meetings, and direct messaging to communicate with your students.",
+      "q9": "Is there any hidden fee?",
+      "a9": "No. The platform is free for students. Instructors are compensated through our platform partnership model.",
+      "q10": "How do I pay for premium features?",
+      "a10": "Premium features are not yet available. If introduced in the future, we will announce them clearly with transparent pricing.",
+      "q11": "Can I get a refund?",
+      "a11": "Since the platform is free for students, there is nothing to refund. For instructors, payments are handled per our partnership agreement."
     },
     "blog": {
       "title": "Our",
@@ -609,7 +665,9 @@
       "noArticles": "No articles found in this category.",
       "readMore": "Read More",
       "by": "by",
-      "minRead": "min read"
+      "minRead": "min read",
+      "notFound": "Article not found",
+      "backToBlog": "Back to Blog"
     },
     "careers": {
       "title": "Join the",
@@ -623,7 +681,25 @@
       "fullTime": "Full-time",
       "partTime": "Part-time",
       "internship": "Internship",
-      "remote": "Remote"
+      "remote": "Remote",
+      "position0Title": "Senior Full-Stack Developer",
+      "position0Dept": "Engineering",
+      "position0Desc": "Build and scale the NAJAH platform using React, Node.js, and MongoDB.",
+      "position1Title": "UX Designer",
+      "position1Dept": "Design",
+      "position1Desc": "Design intuitive learning experiences for students and instructors.",
+      "position2Title": "Content Creator",
+      "position2Dept": "Education",
+      "position2Desc": "Create engaging course materials and video content for our formations.",
+      "position3Title": "Community Manager",
+      "position3Dept": "Community",
+      "position3Desc": "Grow and engage the NAJAH student and instructor community.",
+      "position4Title": "Data Analyst",
+      "position4Dept": "Data",
+      "position4Desc": "Analyze platform data to improve learning outcomes and user experience.",
+      "position5Title": "Marketing Intern",
+      "position5Dept": "Marketing",
+      "position5Desc": "Support marketing campaigns and social media growth initiatives."
     },
     "help": {
       "title": "Help",
@@ -653,17 +729,195 @@
       "relatedArticles": "Related Articles",
       "stillNeedHelp": "Still need help?",
       "supportDesc": "Our support team is here to help you with any issue.",
-      "contactSupport": "Contact Support"
+      "contactSupport": "Contact Support",
+      "articles": [
+        {
+          "title": "How to create an account",
+          "desc": "Step-by-step guide to register on NAJAH",
+          "category": "Getting Started",
+          "readTime": "3 min",
+          "content": "Creating an account on NAJAH is quick and free. Click \"Get Started\" on the homepage, enter your name, email, and password, then verify your email address through the link we send you. Once verified, you can immediately browse formations and instructors."
+        },
+        {
+          "title": "Navigating the dashboard",
+          "desc": "Learn how to use your student dashboard",
+          "category": "Getting Started",
+          "readTime": "4 min",
+          "content": "Your dashboard is the central hub for all your learning activity. From here you can view your enrolled formations, track progress, check upcoming live meetings, see new messages, and access your profile settings. The sidebar gives you quick access to all sections."
+        },
+        {
+          "title": "Finding formations",
+          "desc": "How to browse and discover formations",
+          "category": "Getting Started",
+          "readTime": "3 min",
+          "content": "Head to the Instructors page to see all available instructors and their formations. Each instructor profile lists their specialties, formation count, and ratings. Click on an instructor to view their available formations and request to join."
+        },
+        {
+          "title": "Updating your profile",
+          "desc": "Change your name, photo, and preferences",
+          "category": "Account",
+          "readTime": "2 min",
+          "content": "Go to your Profile page from the dashboard menu. Here you can update your name, profile photo, bio, and notification preferences. Changes are saved automatically. You can also link your social accounts for easier login."
+        },
+        {
+          "title": "Changing your password",
+          "desc": "How to reset or change your password",
+          "category": "Account",
+          "readTime": "2 min",
+          "content": "In your Profile settings, click \"Change Password\". Enter your current password, then your new password twice. Make sure your new password is at least 8 characters and includes a mix of letters, numbers, and symbols."
+        },
+        {
+          "title": "Deleting your account",
+          "desc": "Permanently close your NAJAH account",
+          "category": "Account",
+          "readTime": "3 min",
+          "content": "To delete your account, go to Profile settings and scroll to \"Danger Zone\". Click \"Delete Account\" and confirm. This action is permanent and cannot be undone. Your data will be erased within 30 days."
+        },
+        {
+          "title": "How to join a formation",
+          "desc": "Enroll in your first formation",
+          "category": "Formations",
+          "readTime": "4 min",
+          "content": "Once you find an instructor and formation you like, click \"Request to Join\". The instructor will review your request and approve it. You will receive a notification once approved."
+        },
+        {
+          "title": "Tracking your progress",
+          "desc": "Monitor your learning journey",
+          "category": "Formations",
+          "readTime": "3 min",
+          "content": "Each formation has a progress bar showing how much of the curriculum you have completed. Your dashboard displays overall progress across all formations."
+        },
+        {
+          "title": "Completing assignments",
+          "desc": "How to submit and track assignments",
+          "category": "Formations",
+          "readTime": "4 min",
+          "content": "Assignments are listed in each formation. Click on an assignment to view instructions and the due date. Submit your work through the upload form. Instructors review submissions and provide feedback."
+        },
+        {
+          "title": "Contacting your instructor",
+          "desc": "How to reach your instructor",
+          "category": "Instructors",
+          "readTime": "2 min",
+          "content": "You can message your instructor directly through the group chat or send a private message from their profile page. Instructors typically respond within 24 hours."
+        },
+        {
+          "title": "How live meetings work",
+          "desc": "Attend and participate in live sessions",
+          "category": "Instructors",
+          "readTime": "3 min",
+          "content": "Live meetings are scheduled by your instructor and appear on your dashboard calendar. Click \"Join\" when the session is active to enter the video call."
+        },
+        {
+          "title": "Understanding group chat",
+          "desc": "Collaborate with peers in real-time",
+          "category": "Formations",
+          "readTime": "2 min",
+          "content": "Each formation has a dedicated group chat where you can discuss topics, ask questions, and share resources with fellow students."
+        },
+        {
+          "title": "Payment and billing FAQ",
+          "desc": "Common questions about billing",
+          "category": "Billing",
+          "readTime": "3 min",
+          "content": "NAJAH is currently free for all students. There are no hidden fees or subscription costs. If premium features are introduced, we will announce them clearly."
+        },
+        {
+          "title": "Privacy settings explained",
+          "desc": "Control your data and visibility",
+          "category": "Security",
+          "readTime": "4 min",
+          "content": "In your Profile settings, you can control who sees your profile, activity status, and learning progress. You can choose to make your profile public or private."
+        },
+        {
+          "title": "Two-factor authentication",
+          "desc": "Add extra security to your account",
+          "category": "Security",
+          "readTime": "5 min",
+          "content": "Enable two-factor authentication in Security settings. You can use an authenticator app like Google Authenticator or receive codes via email."
+        },
+        {
+          "title": "How to reset your password",
+          "desc": "Quick steps to regain access",
+          "category": "Account",
+          "readTime": "2 min",
+          "content": "On the login page, click \"Forgot Password\". Enter your email address and we will send you a reset link. Click the link in the email and choose a new password."
+        }
+      ]
     },
     "terms": {
       "title": "Terms of",
       "titleAccent": "Service",
-      "lastUpdated": "Last updated: June 2026"
+      "lastUpdated": "Last updated: June 2026",
+      "sections": [
+        {
+          "title": "1. Acceptance of Terms",
+          "content": "By accessing or using NAJAH, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use the platform."
+        },
+        {
+          "title": "2. Account Registration",
+          "content": "You must provide accurate and complete information when creating an account. You are responsible for maintaining the confidentiality of your login credentials and for all activities under your account."
+        },
+        {
+          "title": "3. User Conduct",
+          "content": "You agree to use NAJAH only for lawful purposes. Harassment, abuse, impersonation, or any disruptive behavior is strictly prohibited."
+        },
+        {
+          "title": "4. Intellectual Property",
+          "content": "All content on NAJAH, including course materials, videos, and platform code, is protected by intellectual property laws. Users may not reproduce, distribute, or create derivative works without permission."
+        },
+        {
+          "title": "5. Instructor Responsibilities",
+          "content": "Instructors are responsible for the accuracy and quality of their content. They must maintain professional conduct and respond to student inquiries in a timely manner."
+        },
+        {
+          "title": "6. Limitation of Liability",
+          "content": "NAJAH is provided 'as is' without warranties of any kind. We are not liable for any damages arising from the use or inability to use the platform."
+        },
+        {
+          "title": "7. Termination",
+          "content": "We reserve the right to suspend or terminate accounts that violate these terms. Users may delete their account at any time through profile settings."
+        },
+        {
+          "title": "8. Contact",
+          "content": "For questions about these terms, please contact us at support@najah-platform.com."
+        }
+      ]
     },
     "privacy": {
       "title": "Privacy",
       "titleAccent": "Policy",
-      "lastUpdated": "Last updated: June 2026"
+      "lastUpdated": "Last updated: June 2026",
+      "sections": [
+        {
+          "title": "Information We Collect",
+          "content": "We collect personal information you provide when creating an account, including your name, email address, and profile details. We also collect usage data to improve our platform."
+        },
+        {
+          "title": "How We Use Your Information",
+          "content": "Your information is used to provide and improve our services, communicate with you, personalize your learning experience, and ensure platform security."
+        },
+        {
+          "title": "Data Sharing",
+          "content": "We do not sell your personal data. Information may be shared with instructors as necessary for your formations and with service providers who help operate the platform."
+        },
+        {
+          "title": "Data Security",
+          "content": "We implement industry-standard security measures to protect your data. However, no method of transmission over the internet is 100% secure."
+        },
+        {
+          "title": "Your Rights",
+          "content": "You have the right to access, update, or delete your personal data at any time through your account settings. You can also contact us to request data portability."
+        },
+        {
+          "title": "Cookies",
+          "content": "We use cookies and similar technologies to enhance your browsing experience, analyze platform traffic, and remember your preferences."
+        },
+        {
+          "title": "Contact",
+          "content": "For privacy-related inquiries, contact us at privacy@najah-platform.com."
+        }
+      ]
     }
   }
 }

@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../api/axios';
 import StatsCard from '../components/common/StatsCard';
 import ProjectCard from '../components/project/ProjectCard';
-import Loader from '../components/common/Loader';
+import { CardSkeleton, StatSkeleton } from '../components/common/Skeleton';
 
 
 const Dashboard = () => {
@@ -52,7 +52,7 @@ const Dashboard = () => {
           axiosInstance.get('/projects'),
           axiosInstance.get('/teams'),
         ]);
-        const projects = projectsRes.data || [];
+        const projects = projectsRes.data.data || [];
         const teams = teamsRes.data || [];
 
         let totalTasks = 0;
@@ -127,7 +127,16 @@ const Dashboard = () => {
   const COLORS = { [t('common.statusPending')]: '#f59e0b', [t('common.statusApproved')]: '#0284c7', [t('common.statusInProgress')]: '#0084D1', [t('common.statusCompleted')]: '#10b981', [t('common.statusRejected')]: '#ef4444' };
 
   if (loading) {
-    return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
+    return (
+      <div className="p-6 space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />)}
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {Array.from({ length: 2 }).map((_, i) => <CardSkeleton key={i} />)}
+        </div>
+      </div>
+    );
   }
 
   return (

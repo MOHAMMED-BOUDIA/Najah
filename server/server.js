@@ -1,10 +1,27 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const mongoose = require('mongoose');
+const dns = require('dns');
+dns.setServers(['192.168.1.1', '192.168.31.1']);
 require('dotenv').config();
 
 const app = express();
 app.use(compression());
+
+// MongoDB — attempt connection, don't block startup
+mongoose.set('bufferCommands', false);
+mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 3000 })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB not connected:', err.message));
+
+// Middleware: reject DB-dependent routes fast when DB is down
+const dbRequired = (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ message: 'Database unavailable. Try again later.' });
+  }
+  next();
+};
 
 // CORS — MUST be first, before everything
 const allowedOrigins = (process.env.CLIENT_URL).split(',').map(s => s.trim());
@@ -71,20 +88,20 @@ app.get('/api/setup-admin/:secretKey', async (req, res) => {
   }
 });
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/teams', require('./routes/teamRoutes'));
-app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api/documents', require('./routes/documentRoutes'));
-app.use('/api/meetings', require('./routes/meetingRoutes'));
-app.use('/api/groups', require('./routes/groupRoutes'));
-app.use('/api/resources', require('./routes/resourceRoutes'));
-app.use('/api/challenges', require('./routes/challengeRoutes'));
-app.use('/api/departments', require('./routes/departmentRoutes'));
-app.use('/api/notifications', require('./routes/notificationRoutes'));
-app.use('/api/messages', require('./routes/messageRoutes'));
-app.use('/api/analytics', require('./routes/analyticsRoutes'));
+app.use('/api/auth', dbRequired, require('./routes/authRoutes'));
+app.use('/api/users', dbRequired, require('./routes/userRoutes'));
+app.use('/api/projects', dbRequired, require('./routes/projectRoutes'));
+app.use('/api/teams', dbRequired, require('./routes/teamRoutes'));
+app.use('/api/tasks', dbRequired, require('./routes/taskRoutes'));
+app.use('/api/documents', dbRequired, require('./routes/documentRoutes'));
+app.use('/api/meetings', dbRequired, require('./routes/meetingRoutes'));
+app.use('/api/groups', dbRequired, require('./routes/groupRoutes'));
+app.use('/api/resources', dbRequired, require('./routes/resourceRoutes'));
+app.use('/api/challenges', dbRequired, require('./routes/challengeRoutes'));
+app.use('/api/departments', dbRequired, require('./routes/departmentRoutes'));
+app.use('/api/notifications', dbRequired, require('./routes/notificationRoutes'));
+app.use('/api/messages', dbRequired, require('./routes/messageRoutes'));
+app.use('/api/analytics', dbRequired, require('./routes/analyticsRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 
 app.use((err, req, res, next) => {

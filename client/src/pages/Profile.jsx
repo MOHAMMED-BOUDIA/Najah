@@ -152,11 +152,11 @@ const Profile = () => {
             axiosInstance.get('/tasks'),
             axiosInstance.get('/groups/my'),
           ]);
-          const myProjectIds = projectsRes.data
+          const myProjectIds = projectsRes.data.data
             .filter(p => (p.supervisor?._id || p.supervisor)?.toString() === uid)
             .map(p => p._id?.toString());
           projectsCount = myProjectIds.length;
-          tasksCount = tasksRes.data.filter(t =>
+          tasksCount = tasksRes.data.data.filter(t =>
             myProjectIds.includes((t.project?._id || t.project)?.toString())
           ).length;
           teamsCount = groupsRes.data?.length || 0;
@@ -167,7 +167,7 @@ const Profile = () => {
             axiosInstance.get('/groups'),
             axiosInstance.get('/teams'),
           ]);
-          tasksCount = tasksRes.data.filter(t =>
+          tasksCount = tasksRes.data.data.filter(t =>
             (t.assignedTo?._id || t.assignedTo)?.toString() === uid
           ).length;
           teamsCount = groupsRes.data.filter(g =>
@@ -176,7 +176,7 @@ const Profile = () => {
           const userTeamIds = teamsRes.data
             .filter(t => t.members?.some(m => (m._id || m)?.toString() === uid))
             .map(t => t._id?.toString());
-          projectsCount = projectsRes.data.filter(p =>
+          projectsCount = projectsRes.data.data.filter(p =>
             userTeamIds.includes((p.team?._id || p.team)?.toString())
           ).length;
         }

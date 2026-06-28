@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const StatsCard = ({ 
   title, 
   value, 
@@ -55,4 +57,4 @@ const StatsCard = ({
   );
 };
 
-export default StatsCard;
+export default memo(StatsCard);

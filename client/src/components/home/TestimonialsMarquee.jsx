@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useState } from 'react';
 
 const testimonials = [
@@ -77,7 +78,7 @@ function MarqueeRow({ items, reverse }) {
   );
 }
 
-export default function TestimonialsMarquee() {
+const TestimonialsMarquee = memo(function TestimonialsMarquee() {
   return (
     <section className="py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-[#FFB900]/5 via-[#0084D1]/5 to-[#FFB900]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
@@ -97,4 +98,6 @@ export default function TestimonialsMarquee() {
       <MarqueeRow items={doubledRev} reverse={true} />
     </section>
   );
-}
+});
+
+export default TestimonialsMarquee;

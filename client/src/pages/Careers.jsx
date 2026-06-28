@@ -7,22 +7,15 @@ export default function Careers() {
   const { t } = useTranslation();
 
   const positions = [
-    { title: 'Senior Full-Stack Developer', dept: 'Engineering', location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: 'Build and scale the NAJAH platform using React, Node.js, and MongoDB.' },
-    { title: 'UX Designer', dept: 'Design', location: 'Casablanca', type: t('static.careers.fullTime'), desc: 'Design intuitive learning experiences for students and instructors.' },
-    { title: 'Content Creator', dept: 'Education', location: t('static.careers.remote'), type: t('static.careers.partTime'), desc: 'Create engaging course materials and video content for our formations.' },
-    { title: 'Community Manager', dept: 'Community', location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: 'Grow and engage the NAJAH student and instructor community.' },
-    { title: 'Data Analyst', dept: 'Data', location: 'Casablanca', type: t('static.careers.fullTime'), desc: 'Analyze platform data to improve learning outcomes and user experience.' },
-    { title: 'Marketing Intern', dept: 'Marketing', location: t('static.careers.remote'), type: t('static.careers.internship'), desc: 'Support marketing campaigns and social media growth initiatives.' },
+    { title: t('static.careers.position0Title'), dept: t('static.careers.position0Dept'), location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: t('static.careers.position0Desc') },
+    { title: t('static.careers.position1Title'), dept: t('static.careers.position1Dept'), location: 'Casablanca', type: t('static.careers.fullTime'), desc: t('static.careers.position1Desc') },
+    { title: t('static.careers.position2Title'), dept: t('static.careers.position2Dept'), location: t('static.careers.remote'), type: t('static.careers.partTime'), desc: t('static.careers.position2Desc') },
+    { title: t('static.careers.position3Title'), dept: t('static.careers.position3Dept'), location: t('static.careers.remote'), type: t('static.careers.fullTime'), desc: t('static.careers.position3Desc') },
+    { title: t('static.careers.position4Title'), dept: t('static.careers.position4Dept'), location: 'Casablanca', type: t('static.careers.fullTime'), desc: t('static.careers.position4Desc') },
+    { title: t('static.careers.position5Title'), dept: t('static.careers.position5Dept'), location: t('static.careers.remote'), type: t('static.careers.internship'), desc: t('static.careers.position5Desc') },
   ];
 
-  const perks = [
-    t('static.careers.perks[0]'),
-    t('static.careers.perks[1]'),
-    t('static.careers.perks[2]'),
-    t('static.careers.perks[3]'),
-    t('static.careers.perks[4]'),
-    t('static.careers.perks[5]'),
-  ];
+  const perks = t('static.careers.perks', { returnObjects: true });
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
@@ -79,8 +72,8 @@ export default function Careers() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {positions.map((pos) => (
                 <div key={pos.title} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all group cursor-pointer">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] flex items-center justify-center text-white mb-4">
-                    <FiBriefcase className="w-5 h-5" />
+                  <div className="mb-4">
+                    <FiBriefcase className="w-10 h-10 text-[#FFB900]" />
                   </div>
                   <h3 className="font-bold mb-1 group-hover:text-[#0084D1] transition-colors">{pos.title}</h3>
                   <p className="text-xs text-[#0084D1] font-medium mb-3">{pos.dept}</p>

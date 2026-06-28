@@ -12,10 +12,14 @@ exports.createProject = async (req, res) => {
 
 exports.getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find()
-      .populate('team')
-      .populate('supervisor', 'name email');
-    res.json(projects);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
+    const [projects, total] = await Promise.all([
+      Project.find().skip(skip).limit(limit).populate('team').populate('supervisor', 'name email'),
+      Project.countDocuments(),
+    ]);
+    res.json({ data: projects, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCalendarAlt, FaChalkboardTeacher, FaUsers } from 'react-icons/fa';
 import StatusBadge from '../common/StatusBadge';
@@ -93,4 +94,4 @@ const ProjectCard = ({ project }) => {
   );
 };
 
-export default ProjectCard;
+export default memo(ProjectCard);

@@ -3,15 +3,15 @@ import { motion, useInView } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 
 const instructors = [
-  { name: 'Dr. Ahmed Benali', specialty: 'Full-Stack Web Development', formations: 12, avatar: 'AB', color: 'from-[#FFB900] to-[#0084D1]' },
-  { name: 'Sara Amrani', specialty: 'Data Science & AI', formations: 8, avatar: 'SA', color: 'from-[#0084D1] to-[#FFB900]' },
-  { name: 'Youssef Karim', specialty: 'Mobile Development', formations: 10, avatar: 'YK', color: 'from-[#FFB900] to-[#e6a000]' },
-  { name: 'Nadia Tazi', specialty: 'UI/UX Design', formations: 6, avatar: 'NT', color: 'from-[#0084D1] to-[#0277BD]' },
-  { name: 'Omar Razi', specialty: 'Cloud & DevOps', formations: 7, avatar: 'OR', color: 'from-[#FFB900] to-[#CC9400]' },
-  { name: 'Lina Kadiri', specialty: 'Cybersecurity', formations: 5, avatar: 'LK', color: 'from-[#0084D1] to-[#01579B]' },
+  { name: 'Dr. Ahmed Benali', specialty: 'Full-Stack Web Development', formations: 12, img: 'https://i.pravatar.cc/80?img=11', color: 'from-[#FFB900] to-[#0084D1]' },
+  { name: 'Sara Amrani', specialty: 'Data Science & AI', formations: 8, img: 'https://i.pravatar.cc/80?img=5', color: 'from-[#0084D1] to-[#FFB900]' },
+  { name: 'Youssef Karim', specialty: 'Mobile Development', formations: 10, img: 'https://i.pravatar.cc/80?img=12', color: 'from-[#FFB900] to-[#e6a000]' },
+  { name: 'Nadia Tazi', specialty: 'UI/UX Design', formations: 6, img: 'https://i.pravatar.cc/80?img=9', color: 'from-[#0084D1] to-[#0277BD]' },
+  { name: 'Omar Razi', specialty: 'Cloud & DevOps', formations: 7, img: 'https://i.pravatar.cc/80?img=13', color: 'from-[#FFB900] to-[#CC9400]' },
+  { name: 'Lina Kadiri', specialty: 'Cybersecurity', formations: 5, img: 'https://i.pravatar.cc/80?img=10', color: 'from-[#0084D1] to-[#01579B]' },
 ];
 
-const InstructorCard = memo(function InstructorCard({ name, specialty, formations, avatar, color, i }) {
+const InstructorCard = memo(function InstructorCard({ name, specialty, formations, img, color, i }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
 
@@ -24,8 +24,8 @@ const InstructorCard = memo(function InstructorCard({ name, specialty, formation
       className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 hover:shadow-lg transition-all group"
     >
       <div className="flex items-center gap-4 mb-4">
-        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center text-white font-bold text-sm`}>
-          {avatar}
+        <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+          <img src={img} alt={name} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div>
           <h3 className="font-semibold text-sm group-hover:text-[#0084D1] transition-colors">{name}</h3>

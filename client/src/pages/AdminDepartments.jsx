@@ -3,7 +3,7 @@ import { FaEdit, FaTrash, FaPlus, FaSave, FaTimes, FaLayerGroup } from 'react-ic
 import { toast } from 'react-toastify';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
-import Loader from '../components/common/Loader';
+import { TableSkeleton } from '../components/common/Skeleton';
 import { useTranslation } from 'react-i18next';
 
 const AdminDepartments = () => {
@@ -77,7 +77,7 @@ const AdminDepartments = () => {
     }
   };
 
-  if (loading) return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
+  if (loading) return <div className="p-6"><TableSkeleton rows={5} cols={3} /></div>;
 
   return (
     <div className="space-y-6">

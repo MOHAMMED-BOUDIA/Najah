@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
@@ -65,4 +65,4 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
   );
 };
 
-export default Modal;
+export default memo(Modal);

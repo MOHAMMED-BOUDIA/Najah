@@ -3,7 +3,7 @@ import { FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
-import Loader from '../components/common/Loader';
+import { TableSkeleton } from '../components/common/Skeleton';
 import { useTranslation } from 'react-i18next';
 
 const AdminStudents = () => {
@@ -16,7 +16,7 @@ const AdminStudents = () => {
     const fetch = async () => {
       try {
         const res = await axiosInstance.get('/users/students');
-        setStudents(res.data || []);
+        setStudents(res.data.data || []);
       } catch {
         toast.error('Failed to load students');
       } finally {
@@ -47,7 +47,7 @@ const AdminStudents = () => {
     }
   };
 
-  if (loading) return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
+  if (loading) return <div className="p-6"><TableSkeleton rows={8} cols={5} /></div>;
 
   return (
     <div className="space-y-6">

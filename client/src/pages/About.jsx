@@ -2,26 +2,23 @@ import HomeNavbar from '../components/HomeNavbar';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
 
-const team = [
-  { name: 'Dr. Ahmed Benali', role: 'Founder & CEO', avatar: 'AB', initials: 'AB', color: 'from-[#FFB900] to-[#0084D1]' },
-  { name: 'Sara Amrani', role: 'Head of Education', avatar: 'SA', initials: 'SA', color: 'from-[#FFB900] to-[#0084D1]' },
-  { name: 'Youssef Karim', role: 'CTO', avatar: 'YK', initials: 'YK', color: 'from-cyan-500 to-blue-600' },
-  { name: 'Nadia Tazi', role: 'Community Lead', avatar: 'NT', initials: 'NT', color: 'from-emerald-500 to-teal-600' },
-];
-
 export default function About() {
   const { t } = useTranslation();
+  const team = [
+  { name: 'Dr. Ahmed Benali', role: t('static.about.teamRoles.0'), img: 'https://i.pravatar.cc/120?img=11', color: 'from-[#FFB900] to-[#0084D1]' },
+  { name: 'Sara Amrani', role: t('static.about.teamRoles.1'), img: 'https://i.pravatar.cc/120?img=5', color: 'from-[#FFB900] to-[#0084D1]' },
+  { name: 'Youssef Karim', role: t('static.about.teamRoles.2'), img: 'https://i.pravatar.cc/120?img=12', color: 'from-cyan-500 to-blue-600' },
+  { name: 'Nadia Tazi', role: t('static.about.teamRoles.3'), img: 'https://i.pravatar.cc/120?img=9', color: 'from-emerald-500 to-teal-600' },
+];
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white overflow-x-hidden">
       <HomeNavbar />
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
-              {t('static.about.title')}{' '}
-              <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                {t('static.about.title')}
-              </span>
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
+              {t('static.about.title')}
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
               {t('static.about.mission')}
@@ -73,8 +70,8 @@ export default function About() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member) => (
                 <div key={member.name} className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 text-center hover:shadow-lg transition-shadow">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${member.color} flex items-center justify-center text-white font-bold text-lg mx-auto mb-4`}>
-                    {member.initials}
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden mx-auto mb-4">
+                    <img src={member.img} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <h3 className="font-semibold">{member.name}</h3>
                   <p className="text-sm text-gray-400">{member.role}</p>

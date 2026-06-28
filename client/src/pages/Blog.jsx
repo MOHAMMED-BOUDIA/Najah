@@ -42,7 +42,7 @@ export default function Blog() {
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
               {t('static.blog.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-                {t('static.blog.title')}
+                {t('static.blog.titleAccent')}
               </span>
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">

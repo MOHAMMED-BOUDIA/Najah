@@ -109,7 +109,34 @@
     "didNotReceiveEmail": "Vous n'avez pas reçu l'email ?",
     "resend": "Renvoyer",
     "goToLogin": "Aller à la connexion",
-    "backToHome": "Retour à l'accueil"
+    "backToHome": "Retour à l'accueil",
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "emailRequired": "L'email est requis",
+      "emailGmail": "L'email doit être une adresse @gmail.com valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordMinChars": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordUpper": "Le mot de passe doit contenir au moins 1 majuscule",
+      "passwordLower": "Le mot de passe doit contenir au moins 1 minuscule",
+      "passwordNumber": "Le mot de passe doit contenir au moins 1 chiffre",
+      "passwordSpecial": "Le mot de passe doit contenir au moins 1 caractère spécial (!@#$%^&*)",
+      "confirmEmailSent": "Email de confirmation envoyé à votre Gmail",
+      "registrationFailed": "Échec de l'inscription. Veuillez vérifier vos informations.",
+      "fillAllFields": "Veuillez remplir tous les champs.",
+      "loginSuccess": "Connecté avec succès !",
+      "loginFailed": "Échec de la connexion. Vérifiez vos identifiants."
+    },
+    "placeholders": {
+      "email": "john@gmail.com",
+      "password": "Créez un mot de passe sécurisé"
+    },
+    "passwordRules": {
+      "chars": "8+ caractères",
+      "upper": "1 majuscule",
+      "lower": "1 minuscule",
+      "number": "1 chiffre",
+      "special": "1 spécial (!@#$%^&*)"
+    }
   },
   "dashboard": {
     "welcome": "Bienvenue sur NAJAH, {{name}} !",
@@ -371,7 +398,9 @@
     "unknown": "Inconnu",
     "noMessages": "Aucun message pour l'instant. Lancez la conversation !",
     "typeMessage": "Tapez un message...",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "failedLoad": "Échec du chargement des messages",
+    "failedSend": "Échec de l'envoi du message"
   },
   "notifications": {
     "title": "Centre de Notifications",
@@ -544,7 +573,9 @@
       "missionText": "Offrir à chaque étudiant un accès à une formation de qualité, dirigée par des instructeurs, qui comble le fossé entre les connaissances académiques et les compétences industrielles.",
       "ourVision": "Notre Vision",
       "visionText": "Un monde où chacun, où qu'il soit, peut apprendre des meilleurs formateurs et construire la carrière dont il rêve.",
-      "meetTeam": "Rencontrez Notre Équipe"
+      "meetTeam": "Rencontrez Notre Équipe",
+      "logoAlt": "Logo NAJAH",
+      "teamRoles": ["Fondateur & PDG", "Responsable Pédagogique", "CTO", "Responsable Communauté"]
     },
     "contact": {
       "title": "Entrez en",
@@ -560,7 +591,8 @@
       "messageSent": "Message Envoyé !",
       "emailContact": "contact@najah-platform.com",
       "phone": "+212 5XX XX XX XX",
-      "address": "Casablanca, Maroc"
+      "address": "Casablanca, Maroc",
+      "mapPlaceholder": "Emplacement de la carte"
     },
     "pricing": {
       "title": "Une",
@@ -594,7 +626,31 @@
       "general": "Général",
       "students": "Étudiants",
       "instructors": "Formateurs",
-      "billing": "Facturation"
+      "billing": "Facturation",
+      "q0": "Qu'est-ce que NAJAH ?",
+      "a0": "NAJAH est une plateforme d'apprentissage en ligne moderne qui connecte les étudiants avec des formateurs experts. Les étudiants peuvent s'inscrire à des formations, rejoindre des groupes d'étude, assister à des réunions en direct et suivre leur progression.",
+      "q1": "NAJAH est-il gratuit ?",
+      "a1": "Oui ! NAJAH est complètement gratuit pour les étudiants. Il n'y a pas de frais cachés.",
+      "q2": "Comment créer un compte ?",
+      "a2": "Cliquez sur 'Commencer' sur la page d'accueil, remplissez vos informations et vérifiez votre adresse email. Cela prend moins de 2 minutes.",
+      "q3": "Comment rejoindre une formation ?",
+      "a3": "Parcourez les formateurs disponibles et leurs formations. Cliquez sur 'Demander à rejoindre' et attendez l'approbation du formateur.",
+      "q4": "Puis-je étudier à mon rythme ?",
+      "a4": "Oui. Les formations incluent des supports enregistrés accessibles à tout moment, ainsi que des sessions en direct.",
+      "q5": "Comment suivre ma progression ?",
+      "a5": "Votre tableau de bord affiche vos formations inscrites, les barres de progression et les réunions à venir.",
+      "q6": "Comment devenir formateur ?",
+      "a6": "Contactez-nous via le formulaire de contact avec vos qualifications et votre domaine d'expertise.",
+      "q7": "Puis-je créer ma propre formation ?",
+      "a7": "Oui, les formateurs approuvés peuvent créer et gérer leurs propres formations.",
+      "q8": "Comment communiquer avec les étudiants ?",
+      "a8": "Vous pouvez utiliser les discussions de groupe, les réunions en direct et la messagerie directe.",
+      "q9": "Y a-t-il des frais cachés ?",
+      "a9": "Non. La plateforme est gratuite pour les étudiants. Les formateurs sont rémunérés selon notre modèle de partenariat.",
+      "q10": "Comment payer pour les fonctionnalités premium ?",
+      "a10": "Les fonctionnalités premium ne sont pas encore disponibles. Si elles sont introduites, nous les annoncerons clairement.",
+      "q11": "Puis-je obtenir un remboursement ?",
+      "a11": "La plateforme étant gratuite, il n'y a rien à rembourser."
     },
     "blog": {
       "title": "Notre",
@@ -609,7 +665,9 @@
       "noArticles": "Aucun article trouvé dans cette catégorie.",
       "readMore": "Lire la Suite",
       "by": "par",
-      "minRead": "min de lecture"
+      "minRead": "min de lecture",
+      "notFound": "Article non trouvé",
+      "backToBlog": "Retour au blog"
     },
     "careers": {
       "title": "Rejoignez",
@@ -623,7 +681,25 @@
       "fullTime": "Temps plein",
       "partTime": "Temps partiel",
       "internship": "Stage",
-      "remote": "Distanciel"
+      "remote": "Distant",
+      "position0Title": "Développeur Full-Stack Senior",
+      "position0Dept": "Ingénierie",
+      "position0Desc": "Construisez et faites évoluer la plateforme NAJAH avec React, Node.js et MongoDB.",
+      "position1Title": "Designer UX",
+      "position1Dept": "Design",
+      "position1Desc": "Concevez des expériences d'apprentissage intuitives pour les étudiants et les formateurs.",
+      "position2Title": "Créateur de Contenu",
+      "position2Dept": "Éducation",
+      "position2Desc": "Créez des supports de cours attrayants et du contenu vidéo pour nos formations.",
+      "position3Title": "Community Manager",
+      "position3Dept": "Communauté",
+      "position3Desc": "Développez et engagez la communauté NAJAH.",
+      "position4Title": "Analyste de Données",
+      "position4Dept": "Données",
+      "position4Desc": "Analysez les données de la plateforme pour améliorer les résultats d'apprentissage.",
+      "position5Title": "Stagiaire Marketing",
+      "position5Dept": "Marketing",
+      "position5Desc": "Soutenez les campagnes marketing et la croissance des réseaux sociaux."
     },
     "help": {
       "title": "Centre",
@@ -653,17 +729,150 @@
       "relatedArticles": "Articles Connexes",
       "stillNeedHelp": "Encore besoin d'aide ?",
       "supportDesc": "Notre équipe de support est là pour vous aider.",
-      "contactSupport": "Contacter le Support"
+      "contactSupport": "Contacter le Support",
+      "articles": [
+        {
+          "title": "Comment créer un compte",
+          "desc": "Guide étape par étape pour s'inscrire sur NAJAH",
+          "content": "Créer un compte sur NAJAH est rapide et gratuit. Cliquez sur 'Commencer' sur la page d'accueil, entrez votre nom, email et mot de passe, puis vérifiez votre adresse email.",
+          "category": "Getting Started",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Naviguer dans le tableau de bord",
+          "desc": "Apprenez à utiliser votre tableau de bord étudiant",
+          "content": "Votre tableau de bord est le hub central de toutes vos activités d'apprentissage. Vous pouvez y voir vos formations, suivre votre progression et consulter vos messages.",
+          "category": "Getting Started",
+          "readTime": "4 min"
+        },
+        {
+          "title": "Trouver des formations",
+          "desc": "Comment parcourir et découvrir des formations",
+          "content": "Rendez-vous sur la page des formateurs pour voir tous les formateurs disponibles et leurs formations.",
+          "category": "Getting Started",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Mettre à jour votre profil",
+          "desc": "Modifier votre nom, photo et préférences",
+          "content": "Allez dans votre page Profil depuis le menu du tableau de bord pour mettre à jour vos informations.",
+          "category": "Account",
+          "readTime": "2 min"
+        },
+        {
+          "title": "Changer votre mot de passe",
+          "desc": "Comment réinitialiser ou changer votre mot de passe",
+          "content": "Dans vos paramètres de profil, cliquez sur 'Changer le mot de passe' et suivez les instructions.",
+          "category": "Account",
+          "readTime": "2 min"
+        },
+        {
+          "title": "Supprimer votre compte",
+          "desc": "Fermer définitivement votre compte NAJAH",
+          "content": "Pour supprimer votre compte, allez dans les paramètres du profil et cliquez sur 'Supprimer le compte'.",
+          "category": "Account",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Comment rejoindre une formation",
+          "desc": "Inscrivez-vous à votre première formation",
+          "content": "Une fois que vous avez trouvé un formateur, cliquez sur 'Demander à rejoindre'. Le formateur examinera votre demande.",
+          "category": "Formations",
+          "readTime": "4 min"
+        },
+        {
+          "title": "Suivre votre progression",
+          "desc": "Surveillez votre parcours d'apprentissage",
+          "content": "Chaque formation a une barre de progression montrant combien du programme vous avez complété.",
+          "category": "Formations",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Compléter des devoirs",
+          "desc": "Comment soumettre et suivre les devoirs",
+          "content": "Les devoirs sont listés dans chaque formation. Cliquez sur un devoir pour voir les instructions et la date limite.",
+          "category": "Formations",
+          "readTime": "4 min"
+        },
+        {
+          "title": "Contacter votre formateur",
+          "desc": "Comment joindre votre formateur",
+          "content": "Vous pouvez envoyer un message à votre formateur via la discussion de groupe ou un message privé.",
+          "category": "Instructors",
+          "readTime": "2 min"
+        },
+        {
+          "title": "Comment fonctionnent les réunions en direct",
+          "desc": "Participez aux sessions en direct",
+          "content": "Les réunions en direct sont planifiées par votre formateur et apparaissent sur votre calendrier.",
+          "category": "Instructors",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Comprendre le chat de groupe",
+          "desc": "Collaborez avec vos pairs en temps réel",
+          "content": "Chaque formation a un chat de groupe dédié pour discuter des sujets et partager des ressources.",
+          "category": "Formations",
+          "readTime": "2 min"
+        },
+        {
+          "title": "FAQ sur les paiements",
+          "desc": "Questions courantes sur la facturation",
+          "content": "NAJAH est actuellement gratuit pour tous les étudiants. Il n'y a pas de frais cachés.",
+          "category": "Billing",
+          "readTime": "3 min"
+        },
+        {
+          "title": "Paramètres de confidentialité",
+          "desc": "Contrôlez vos données et votre visibilité",
+          "content": "Dans les paramètres de votre profil, vous pouvez contrôler qui voit votre profil et votre progression.",
+          "category": "Security",
+          "readTime": "4 min"
+        },
+        {
+          "title": "Authentification à deux facteurs",
+          "desc": "Ajoutez une sécurité supplémentaire à votre compte",
+          "content": "Activez l'authentification à deux facteurs dans les paramètres de sécurité.",
+          "category": "Security",
+          "readTime": "5 min"
+        },
+        {
+          "title": "Comment réinitialiser votre mot de passe",
+          "desc": "Étapes rapides pour retrouver l'accès",
+          "content": "Sur la page de connexion, cliquez sur 'Mot de passe oublié' et suivez les instructions.",
+          "category": "Account",
+          "readTime": "2 min"
+        }
+      ]
     },
     "terms": {
       "title": "Conditions",
       "titleAccent": "d'Utilisation",
-      "lastUpdated": "Dernière mise à jour : juin 2026"
+      "lastUpdated": "Dernière mise à jour : juin 2026",
+      "sections": [
+        {"title": "1. Acceptation des Conditions", "content": "En accédant ou en utilisant NAJAH, vous acceptez d'être lié par ces Conditions d'Utilisation."},
+        {"title": "2. Inscription au Compte", "content": "Vous devez fournir des informations exactes et complètes lors de la création d'un compte."},
+        {"title": "3. Conduite de l'Utilisateur", "content": "Vous acceptez d'utiliser NAJAH uniquement à des fins légales. Le harcèlement et les comportements disruptifs sont interdits."},
+        {"title": "4. Propriété Intellectuelle", "content": "Tout le contenu sur NAJAH est protégé par les lois sur la propriété intellectuelle."},
+        {"title": "5. Responsabilités des Formateurs", "content": "Les formateurs sont responsables de l'exactitude et de la qualité de leur contenu."},
+        {"title": "6. Limitation de Responsabilité", "content": "NAJAH est fourni 'tel quel' sans garanties d'aucune sorte."},
+        {"title": "7. Résiliation", "content": "Nous nous réservons le droit de suspendre les comptes qui violent ces conditions."},
+        {"title": "8. Contact", "content": "Pour toute question, contactez-nous à support@najah-platform.com."}
+      ]
     },
     "privacy": {
       "title": "Politique de",
       "titleAccent": "Confidentialité",
-      "lastUpdated": "Dernière mise à jour : juin 2026"
+      "lastUpdated": "Dernière mise à jour : juin 2026",
+      "sections": [
+        {"title": "Informations que Nous Collectons", "content": "Nous collectons les informations personnelles que vous fournissez lors de la création d'un compte."},
+        {"title": "Comment Nous Utilisons Vos Informations", "content": "Vos informations sont utilisées pour fournir et améliorer nos services."},
+        {"title": "Partage de Données", "content": "Nous ne vendons pas vos données personnelles."},
+        {"title": "Sécurité des Données", "content": "Nous mettons en œuvre des mesures de sécurité standard pour protéger vos données."},
+        {"title": "Vos Droits", "content": "Vous avez le droit d'accéder, de mettre à jour ou de supprimer vos données personnelles."},
+        {"title": "Cookies", "content": "Nous utilisons des cookies pour améliorer votre expérience de navigation."},
+        {"title": "Contact", "content": "Pour toute question sur la confidentialité, contactez-nous à privacy@najah-platform.com."}
+      ]
     }
   }
 }

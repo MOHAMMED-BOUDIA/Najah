@@ -80,7 +80,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm font-medium">{t('static.contact.email')}</p>
-                  <p className="text-sm text-gray-400">{t('static.contact.email')}</p>
+                  <p className="text-sm text-gray-400">{t('static.contact.emailContact')}</p>
                 </div>
               </div>
 
@@ -105,7 +105,7 @@ export default function Contact() {
               </div>
 
               <div className="p-8 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 flex items-center justify-center h-40">
-                <p className="text-sm text-gray-400">Map placeholder</p>
+                <p className="text-sm text-gray-400">{t('static.contact.mapPlaceholder')}</p>
               </div>
             </div>
           </div>

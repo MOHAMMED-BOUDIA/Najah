@@ -39,7 +39,7 @@ const Instructors = () => {
           axiosInstance.get('/users/instructors'),
           axiosInstance.get('/groups'),
         ]);
-        const instrs = usersRes.data || [];
+        const instrs = usersRes.data.data || [];
         const groups = groupsRes.data || [];
         
         const groupMap = {};

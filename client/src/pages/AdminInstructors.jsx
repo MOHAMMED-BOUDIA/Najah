@@ -4,7 +4,7 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
-import Loader from '../components/common/Loader';
+import { TableSkeleton } from '../components/common/Skeleton';
 import { useTranslation } from 'react-i18next';
 
 const AdminInstructors = () => {
@@ -22,7 +22,7 @@ const AdminInstructors = () => {
   const fetchInstructors = async () => {
     try {
       const res = await axiosInstance.get('/users/instructors');
-      setInstructors(res.data || []);
+      setInstructors(res.data.data || []);
     } catch {
       toast.error('Failed to load instructors');
     } finally {
@@ -100,7 +100,7 @@ const AdminInstructors = () => {
     }
   };
 
-  if (loading) return <div className="flex h-[70vh] items-center justify-center"><Loader size="lg" /></div>;
+  if (loading) return <div className="p-6"><TableSkeleton rows={8} cols={6} /></div>;
 
   return (
     <div className="space-y-6">

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { FaCalendarAlt, FaUser, FaEdit, FaTrash } from 'react-icons/fa';
 import { formatDate } from '../../utils/helpers';
@@ -107,4 +108,4 @@ const TaskCard = ({ task, index, onEdit, onDelete, onStatusChange }) => {
   );
 };
 
-export default TaskCard;
+export default memo(TaskCard);
