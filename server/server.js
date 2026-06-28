@@ -7,7 +7,7 @@ const app = express();
 app.use(compression());
 
 // CORS — MUST be first, before everything
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173').split(',').map(s => s.trim());
+const allowedOrigins = (process.env.CLIENT_URL).split(',').map(s => s.trim());
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (origin && allowedOrigins.includes(origin)) {
