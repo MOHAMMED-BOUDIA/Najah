@@ -1,19 +1,23 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const connectDB = require('./config/db');
 require('dotenv').config();
 
 const app = express();
 app.use(compression());
 
-// CORS — MUST be first, before everything
+// CORS
+const allowedOrigin = process.env.CLIENT_URL;
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', allowedOrigin);
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
+
+connectDB().catch(err => console.error('Failed to connect to DB:', err.message));
 
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -87,7 +91,7 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
