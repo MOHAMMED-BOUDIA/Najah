@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 exports.testKey = async (req, res) => {
   try {
     const key = process.env.GEMINI_API_KEY;
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
     const result = await model.generateContent('Say "OK" if you can read this.');
     const reply = result.response.text();
     res.json({ 
@@ -37,7 +37,7 @@ exports.chat = async (req, res) => {
     console.log('🔑 GEMINI_API_KEY prefix:', process.env.GEMINI_API_KEY?.substring(0, 8));
 
     const model = genAI.getGenerativeModel({ 
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash-exp',
       systemInstruction: `You are NAJAH Assistant, a helpful AI for an online learning platform.
 NAJAH connects students with expert instructors for professional training (formations).
 Guidelines:
@@ -70,19 +70,20 @@ Guidelines:
       },
     });
 
+    console.log('🚀 Sending to Gemini — message:', message.substring(0, 50));
+    console.log('🚀 History items:', geminiHistory.length);
+
     const result = await chatSession.sendMessage(message);
     const reply = result.response.text();
 
     res.json({ reply });
   } catch (error) {
-    console.error('❌ Gemini AI error message:', error.message);
-    console.error('❌ Gemini AI error stack:', error.stack);
-    if (error.status) console.error('❌ Gemini AI status:', error.status);
-    if (error.code) console.error('❌ Gemini AI code:', error.code);
-    console.error('❌ Gemini AI cause:', error.cause);
+    console.error('❌ Gemini AI error:', error.message);
+    console.error('❌ Stack:', error.stack);
     res.status(500).json({ 
       message: 'AI service error', 
       error: error.message,
+      stack: error.stack,
       code: error.code || error.status || null
     });
   }
