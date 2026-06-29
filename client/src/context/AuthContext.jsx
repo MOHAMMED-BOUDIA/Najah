@@ -38,8 +38,14 @@ export const AuthProvider = ({ children }) => {
         const response = await axiosInstance.get('/auth/me');
         setUser(normalizeUser(response.data));
       } catch (error) {
-        console.error('Error fetching current user:', error);
-        logout();
+        const status = error.response?.status;
+        console.error('Error fetching current user:', status || error.message);
+        if (status === 401) {
+          localStorage.removeItem('token');
+          setToken(null);
+          setUser(null);
+        }
+        // 503 or other server errors: keep token, user stays null
       } finally {
         setLoading(false);
       }
