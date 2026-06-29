@@ -19,10 +19,10 @@ const dbRequired = (req, res, next) => {
 };
 
 const cors = require('cors');
-const allowedOrigins = (process.env.CLIENT_URL ).split(',').map(s => s.trim());
+const allowedOrigins = (process.env.CLIENT_URL || '').split(',').map(s => s.trim()).filter(Boolean);
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) return callback(null, true);
     callback(null, origin);
   },
   credentials: true,
@@ -111,7 +111,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Server error', error: err.message });
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
