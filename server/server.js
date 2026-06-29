@@ -1,24 +1,14 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
-<<<<<<< HEAD
 const mongoose = require('mongoose');
-const dns = require('dns');
-dns.setServers(['192.168.1.1', '192.168.31.1']);
-=======
 const connectDB = require('./config/db');
->>>>>>> 3b8fd4d2801fb52ce7895f3e7f37f5433fa02e32
 require('dotenv').config();
 
 const app = express();
-app.use(compression());
 
-<<<<<<< HEAD
-// MongoDB — attempt connection, don't block startup
-mongoose.set('bufferCommands', false);
-mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 3000 })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB not connected:', err.message));
+app.set('trust proxy', true);
+app.use(compression({ level: 6, threshold: 1024 }));
 
 // Middleware: reject DB-dependent routes fast when DB is down
 const dbRequired = (req, res, next) => {
@@ -28,7 +18,7 @@ const dbRequired = (req, res, next) => {
   next();
 };
 
-// CORS — MUST be first, before everything
+// CORS
 const allowedOrigins = (process.env.CLIENT_URL).split(',').map(s => s.trim());
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -37,12 +27,6 @@ app.use((req, res, next) => {
   } else if (!origin) {
     res.header('Access-Control-Allow-Origin', '*');
   }
-=======
-// CORS
-const allowedOrigin = process.env.CLIENT_URL;
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', allowedOrigin);
->>>>>>> 3b8fd4d2801fb52ce7895f3e7f37f5433fa02e32
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(200);
@@ -51,7 +35,7 @@ app.use((req, res, next) => {
 
 connectDB().catch(err => console.error('Failed to connect to DB:', err.message));
 
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
@@ -101,21 +85,29 @@ app.get('/api/setup-admin/:secretKey', async (req, res) => {
   }
 });
 
-app.use('/api/auth', dbRequired, require('./routes/authRoutes'));
-app.use('/api/users', dbRequired, require('./routes/userRoutes'));
-app.use('/api/projects', dbRequired, require('./routes/projectRoutes'));
-app.use('/api/teams', dbRequired, require('./routes/teamRoutes'));
-app.use('/api/tasks', dbRequired, require('./routes/taskRoutes'));
-app.use('/api/documents', dbRequired, require('./routes/documentRoutes'));
-app.use('/api/meetings', dbRequired, require('./routes/meetingRoutes'));
-app.use('/api/groups', dbRequired, require('./routes/groupRoutes'));
-app.use('/api/resources', dbRequired, require('./routes/resourceRoutes'));
-app.use('/api/challenges', dbRequired, require('./routes/challengeRoutes'));
-app.use('/api/departments', dbRequired, require('./routes/departmentRoutes'));
-app.use('/api/notifications', dbRequired, require('./routes/notificationRoutes'));
-app.use('/api/messages', dbRequired, require('./routes/messageRoutes'));
-app.use('/api/analytics', dbRequired, require('./routes/analyticsRoutes'));
-app.use('/api/ai', require('./routes/aiRoutes'));
+const lazy = (mod) => {
+  let loaded;
+  return (req, res, next) => {
+    if (!loaded) loaded = require(mod);
+    return loaded(req, res, next);
+  };
+};
+
+app.use('/api/auth', dbRequired, lazy('./routes/authRoutes'));
+app.use('/api/users', dbRequired, lazy('./routes/userRoutes'));
+app.use('/api/projects', dbRequired, lazy('./routes/projectRoutes'));
+app.use('/api/teams', dbRequired, lazy('./routes/teamRoutes'));
+app.use('/api/tasks', dbRequired, lazy('./routes/taskRoutes'));
+app.use('/api/documents', dbRequired, lazy('./routes/documentRoutes'));
+app.use('/api/meetings', dbRequired, lazy('./routes/meetingRoutes'));
+app.use('/api/groups', dbRequired, lazy('./routes/groupRoutes'));
+app.use('/api/resources', dbRequired, lazy('./routes/resourceRoutes'));
+app.use('/api/challenges', dbRequired, lazy('./routes/challengeRoutes'));
+app.use('/api/departments', dbRequired, lazy('./routes/departmentRoutes'));
+app.use('/api/notifications', dbRequired, lazy('./routes/notificationRoutes'));
+app.use('/api/messages', dbRequired, lazy('./routes/messageRoutes'));
+app.use('/api/analytics', dbRequired, lazy('./routes/analyticsRoutes'));
+app.use('/api/ai', lazy('./routes/aiRoutes'));
 
 app.use((err, req, res, next) => {
   console.error('Error:', err);

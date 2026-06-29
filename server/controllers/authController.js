@@ -1,8 +1,5 @@
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { sendVerificationEmail, sendPasswordResetEmail } = require('../utils/sendEmail');
 
 const validateEmail = (email) => {
   if (!email || !email.endsWith('@gmail.com')) {
@@ -44,6 +41,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    const bcrypt = require('bcryptjs');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const verificationToken = crypto.randomBytes(32).toString('hex');
@@ -61,6 +59,7 @@ exports.register = async (req, res) => {
     await user.save();
 
     try {
+      const { sendVerificationEmail } = require('../utils/sendEmail');
       await sendVerificationEmail(email, verificationToken);
       console.log('[authController] Verification email sent successfully');
     } catch (emailError) {
@@ -116,6 +115,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
+    const bcrypt = require('bcryptjs');
     const isMatch = await bcrypt.compare(password, user.password);
     console.log('[authController] Password match:', isMatch);
 
@@ -129,6 +129,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Please verify your email first' });
     }
 
+    const jwt = require('jsonwebtoken');
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '7d'
     });
@@ -159,6 +160,7 @@ exports.oauthLogin = async (req, res) => {
     let user = await User.findOne({ email: email.toLowerCase().trim() });
 
     if (!user) {
+      const bcrypt = require('bcryptjs');
       const randomPassword = await bcrypt.hash(Math.random().toString(36), 10);
       user = await User.create({
         name: name || email.split('@')[0],
@@ -175,6 +177,7 @@ exports.oauthLogin = async (req, res) => {
       await user.save();
     }
 
+    const jwt = require('jsonwebtoken');
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '7d',
     });
@@ -223,6 +226,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     try {
+      const { sendPasswordResetEmail } = require('../utils/sendEmail');
       await sendPasswordResetEmail(email, resetToken);
       console.log('[authController] Password reset email sent successfully');
     } catch (emailError) {
@@ -254,6 +258,7 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired reset token' });
     }
 
+    const bcrypt = require('bcryptjs');
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     user.resetPasswordToken = null;

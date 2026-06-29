@@ -10,7 +10,11 @@ const connectDB = async () => {
   if (!cached.promise) {
     cached.promise = mongoose.connect(process.env.MONGO_URI, {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 3000,
+      maxPoolSize: 10,
+      minPoolSize: 1,
+      socketTimeoutMS: 45000,
+      waitQueueTimeoutMS: 3000,
     });
   }
   try {
