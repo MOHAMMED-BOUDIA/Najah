@@ -82,6 +82,7 @@ const Register = () => {
     const result = await register(formData);
     setLoading(false);
     if (result.success) {
+      localStorage.setItem('pendingVerificationEmail', formData.email);
       toast.success(t('auth.validation.confirmEmailSent'));
       navigate('/verify-email');
     } else {

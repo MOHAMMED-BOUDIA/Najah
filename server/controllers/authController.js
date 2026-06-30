@@ -18,6 +18,9 @@ const validatePassword = (password) => {
   return null;
 };
 
+const generateVerificationCode = () =>
+  String(Math.floor(100000 + Math.random() * 900000));
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role, department } = req.body;
@@ -44,7 +47,7 @@ exports.register = async (req, res) => {
     const bcrypt = require('bcryptjs');
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationCode = generateVerificationCode();
 
     user = new User({
       name,
@@ -53,27 +56,94 @@ exports.register = async (req, res) => {
       role: 'student',
       department: department || '',
       isVerified: false,
-      verificationToken,
+      verificationCode,
+      codeExpiresAt: new Date(Date.now() + 10 * 60 * 1000),
     });
 
     await user.save();
 
     process.nextTick(() => {
-      const { sendVerificationEmail } = require('../utils/sendEmail');
-      sendVerificationEmail(email, verificationToken).catch(err =>
-        console.error('[authController] Failed to send verification email:', err)
+      const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+      sendVerificationCodeEmail(email, verificationCode).catch(err =>
+        console.error('[authController] Failed to send verification code:', err)
       );
     });
 
     res.status(201).json({
-      message: 'Confirmation email sent to your Gmail',
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
+      message: 'Verification code sent to your email',
+      email: user.email,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.verifyCode = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ message: 'Email and code are required' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.json({ message: 'Email already verified. You can log in.' });
+    }
+
+    if (user.verificationCode !== code) {
+      return res.status(400).json({ message: 'Invalid verification code' });
+    }
+
+    if (user.codeExpiresAt < new Date()) {
+      return res.status(400).json({ message: 'Verification code has expired. Request a new one.' });
+    }
+
+    user.isVerified = true;
+    user.verificationCode = null;
+    user.codeExpiresAt = null;
+    await user.save();
+
+    res.json({ message: 'Email verified successfully. You can now log in.' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.resendCode = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.json({ message: 'Email already verified. You can log in.' });
+    }
+
+    const verificationCode = generateVerificationCode();
+    user.verificationCode = verificationCode;
+    user.codeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    await user.save();
+
+    process.nextTick(() => {
+      const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+      sendVerificationCodeEmail(email, verificationCode).catch(err =>
+        console.error('[authController] Failed to resend verification code:', err)
+      );
+    });
+
+    res.json({ message: 'New verification code sent to your email' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -260,7 +330,8 @@ exports.resetPassword = async (req, res) => {
     user.resetPasswordExpires = null;
     if (!user.isVerified) {
       user.isVerified = true;
-      user.verificationToken = null;
+      user.verificationCode = null;
+      user.codeExpiresAt = null;
     }
     await user.save();
 

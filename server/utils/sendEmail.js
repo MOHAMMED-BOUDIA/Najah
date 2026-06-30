@@ -57,4 +57,48 @@ const sendPasswordResetEmail = async (to, token) => {
   console.log(`[sendEmail] Password reset email sent to ${to}`);
 };
 
-module.exports = { sendVerificationEmail, sendPasswordResetEmail };
+const codeTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+const sendVerificationCodeEmail = async (to, code) => {
+  console.log(`[sendEmail] Sending verification code to ${to}...`);
+
+  await codeTransporter.sendMail({
+    from: process.env.EMAIL_FROM,
+    to,
+    subject: 'Your NAJAH verification code',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
+        <div style="text-align: center; padding: 24px 0;">
+          <h1 style="color: #0084D1; margin: 0;">NAJAH</h1>
+        </div>
+        <div style="background: #ffffff; border-radius: 12px; padding: 32px; border: 1px solid #e5e7eb;">
+          <h2 style="color: #1f2937; margin: 0 0 8px 0; font-size: 20px;">Welcome to NAJAH!</h2>
+          <p style="color: #6b7280; font-size: 14px; line-height: 1.5; margin: 0 0 20px 0;">
+            Use the code below to verify your email address.
+          </p>
+          <div style="background: #f3f4f6; border-radius: 8px; padding: 20px; text-align: center;">
+            <span style="font-size: 36px; font-weight: bold; letter-spacing: 10px; color: #0084D1; font-family: monospace;">
+              ${code}
+            </span>
+          </div>
+          <p style="color: #9ca3af; font-size: 13px; margin: 16px 0 0 0;">
+            This code expires in 10 minutes.
+          </p>
+        </div>
+        <p style="color: #9ca3af; font-size: 12px; text-align: center; margin-top: 20px;">
+          If you did not create an account, you can ignore this email.
+        </p>
+      </div>
+    `,
+  });
+
+  console.log(`[sendEmail] Verification code sent to ${to}`);
+};
+
+module.exports = { sendVerificationEmail, sendPasswordResetEmail, sendVerificationCodeEmail };
