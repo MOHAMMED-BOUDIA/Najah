@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FiGithub, FiTwitter, FiLinkedin } from 'react-icons/fi';
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 
 const footerSections = [
   {
@@ -34,9 +34,8 @@ const footerSections = [
 ];
 
 const socialLinks = [
-  { icon: FiGithub, href: 'https://github.com/najah' },
-  { icon: FiTwitter, href: 'https://twitter.com/najah' },
-  { icon: FiLinkedin, href: 'https://linkedin.com/company/najah' },
+  { icon: FiGithub, href: 'https://github.com/MOHAMMED-BOUDIA' },
+  { icon: FiLinkedin, href: 'https://www.linkedin.com/in/boudia-mohammed/' },
 ];
 
 const Footer = memo(function Footer() {

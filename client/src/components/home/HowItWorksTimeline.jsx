@@ -1,12 +1,7 @@
 import { useRef, memo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { HiMail, HiSearch, HiPlay } from 'react-icons/hi';
-
-const steps = [
-  { icon: HiMail, title: 'Create Your Account', desc: 'Sign up for free with your Gmail and verify your email to get started.' },
-  { icon: HiSearch, title: 'Choose Your Instructor', desc: 'Browse available instructors and request to join their training group.' },
-  { icon: HiPlay, title: 'Start Your Formation', desc: 'Once approved, access courses, tasks, meetings, and learn at your own pace.' },
-];
+import { useTranslation } from 'react-i18next';
 
 const StepItem = memo(function StepItem({ step, i }) {
   const ref = useRef(null);
@@ -39,8 +34,15 @@ const StepItem = memo(function StepItem({ step, i }) {
 });
 
 function HowItWorksTimeline() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+
+  const steps = [
+    { icon: HiMail, title: t('home.step1Title'), desc: t('home.step1Desc') },
+    { icon: HiSearch, title: t('home.step2Title'), desc: t('home.step2Desc') },
+    { icon: HiPlay, title: t('home.step3Title'), desc: t('home.step3Desc') },
+  ];
 
   return (
     <section id="how-it-works" className="py-24 lg:py-32">
@@ -52,13 +54,13 @@ function HowItWorksTimeline() {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Start learning in{' '}
+            {t('home.stepsTitle')}{' '}
             <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-              3 simple steps
+              {t('home.stepsTitleAccent')}
             </span>
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-lg">
-            From account creation to learning in minutes.
+            {t('home.stepsSubtitle')}
           </p>
         </motion.div>
 

@@ -65,7 +65,49 @@
     "featuresGroupChat": "Chat de Groupe",
     "featuresGroupChatDesc": "Posez des questions et discutez des sujets en temps réel",
     "featuresProgress": "Suivez Votre Progression",
-    "featuresProgressDesc": "Surveillez votre parcours d'apprentissage avec un suivi détaillé"
+    "featuresProgressDesc": "Surveillez votre parcours d'apprentissage avec un suivi détaillé",
+    "instructorsTitle": "Rencontrez Nos",
+    "instructorsTitleAccent": "Formateurs Experts",
+    "instructorsSubtitle": "Apprenez auprès de professionnels qualifiés ayant une expérience concrète dans leur domaine.",
+    "specialtyFullstack": "Développement Web Full-Stack",
+    "specialtyDataScience": "Data Science & IA",
+    "specialtyMobile": "Développement Mobile",
+    "specialtyUIUX": "Conception UI/UX",
+    "specialtyCloud": "Cloud & DevOps",
+    "specialtyCybersecurity": "Cybersécurité",
+    "formationsCount": "{{count}} formations",
+    "viewAllInstructors": "Voir Tous les Formateurs",
+    "viewProfile": "Voir le profil",
+    "statsStudentsEnrolled": "Étudiants Inscrits",
+    "statsExpertInstructors": "Formateurs Experts",
+    "statsActiveFormations": "Formations Actives",
+    "statsSuccessRate": "Taux de Réussite",
+    "stepsTitle": "Commencez en",
+    "stepsTitleAccent": "3 étapes simples",
+    "stepsSubtitle": "De la création de compte à l'apprentissage en quelques minutes.",
+    "step1Title": "Créez Votre Compte",
+    "step1Desc": "Inscrivez-vous gratuitement avec votre Gmail et vérifiez votre email pour commencer.",
+    "step2Title": "Choisissez Votre Formateur",
+    "step2Desc": "Parcourez les formateurs disponibles et demandez à rejoindre leur groupe.",
+    "step3Title": "Commencez Votre Formation",
+    "step3Desc": "Une fois approuvé, accédez aux cours, tâches, réunions et apprenez à votre rythme.",
+    "testimonialsTitle": "Ce que disent nos étudiants",
+    "testimonialsSubtitle": "Écoutez les étudiants qui ont transformé leurs compétences avec NAJAH.",
+    "testimonialQ0": "NAJAH m'a aidé à maîtriser le développement web avec une formation pratique et des instructeurs incroyables.",
+    "testimonialQ1": "La plateforme rend l'apprentissage très organisé. J'adore les discussions de groupe et les réunions en direct !",
+    "testimonialQ2": "La meilleure décision que j'aie prise. Les formateurs sont de premier ordre et toujours disponibles.",
+    "testimonialQ3": "Je suis passé de débutant complet à créer ma propre application. Merci NAJAH !",
+    "testimonialQ4": "Les formations sont bien structurées et les sessions en direct font toute la différence.",
+    "testimonialQ5": "Enfin une plateforme qui connecte les étudiants avec de vrais formateurs. Révolutionnaire.",
+    "testimonialRole0": "Développement Web",
+    "testimonialRole1": "Développement Mobile",
+    "testimonialRole2": "Data Science",
+    "testimonialRole3": "Étudiant Full Stack",
+    "testimonialRole4": "Étudiant en IA",
+    "testimonialRole5": "Cybersécurité",
+    "ctaTitle": "Prêt à commencer votre parcours d'apprentissage ?",
+    "ctaSubtitle": "Rejoignez NAJAH aujourd'hui et accédez à des formations dirigées par des experts dans votre domaine.",
+    "ctaButton": "Inscrivez-Vous \u2014 C\u2019est Gratuit"
   },
   "auth": {
     "signInTitle": "Connectez-vous à votre compte",
@@ -590,7 +632,7 @@
       "send": "Envoyer le Message",
       "messageSent": "Message Envoyé !",
       "emailContact": "contact@najah-platform.com",
-      "phone": "+212 5XX XX XX XX",
+      "phone": "+212 611294080",
       "address": "Casablanca, Maroc",
       "mapPlaceholder": "Emplacement de la carte"
     },
@@ -667,7 +709,87 @@
       "by": "par",
       "minRead": "min de lecture",
       "notFound": "Article non trouvé",
-      "backToBlog": "Retour au blog"
+      "backToBlog": "Retour au blog",
+      "futureOnlineLearning": {
+        "title": "L'avenir de l'apprentissage en ligne au Maroc",
+        "excerpt": "Comment les plateformes d'éducation numérique transforment la façon dont les étudiants marocains apprennent et développent leurs compétences professionnelles.",
+        "category": "education",
+        "readTime": "5 min de lecture",
+        "author": "Sara Amrani",
+        "content": [
+          "L'apprentissage en ligne au Maroc a connu une croissance sans précédent ces dernières années. Avec des plateformes comme NAJAH qui ouvrent la voie, les étudiants ont désormais accès à des formations de haute qualité dispensées par des instructeurs, où qu'ils se trouvent dans le pays.",
+          "Le système éducatif traditionnel peine à suivre l'évolution rapide du marché du travail. NAJAH comble cette lacune en connectant les étudiants avec des professionnels du secteur qui apportent une expérience concrète en classe.",
+          "Que vous soyez à Casablanca, Rabat ou dans une petite ville rurale, NAJAH apporte des formations d'experts directement sur votre écran. L'avenir de l'éducation est numérique, accessible et personnalisé."
+        ]
+      },
+      "tipsSucceedFormation": {
+        "title": "5 Conseils pour Réussir Votre Formation",
+        "excerpt": "Conseils pratiques pour tirer le meilleur parti de votre formation encadrée par un formateur et atteindre vos objectifs d'apprentissage.",
+        "category": "studentTips",
+        "readTime": "4 min de lecture",
+        "author": "Ahmed Benali",
+        "content": [
+          "S'inscrire à une formation n'est que la première étape. Pour vraiment réussir, vous avez besoin d'une stratégie. Voici cinq conseils pour tirer le meilleur parti de votre expérience NAJAH.",
+          "1. Établissez un programme d'étude cohérent. Traitez votre formation comme un vrai cours en consacrant des heures spécifiques chaque jour.",
+          "2. Participez activement aux discussions de groupe et aux réunions en direct. Plus vous participez, plus vous apprenez.",
+          "3. Effectuez toutes les tâches à temps. Elles sont conçues pour renforcer votre compréhension.",
+          "4. Établissez une relation avec votre formateur. Posez des questions, demandez des retours et tirez parti de son expertise.",
+          "5. Suivez régulièrement vos progrès via votre tableau de bord. Célébrez les petites victoires pour rester motivé."
+        ]
+      },
+      "chooseRightInstructor": {
+        "title": "Comment Choisir le Bon Formateur",
+        "excerpt": "Un guide pour trouver le formateur parfait adapté à votre style d'apprentissage et à vos besoins professionnels.",
+        "category": "guidance",
+        "readTime": "6 min de lecture",
+        "author": "Youssef Karim",
+        "content": [
+          "Choisir le bon formateur peut faire ou défaire votre expérience d'apprentissage. Voici comment trouver le meilleur correspondant sur NAJAH.",
+          "Tout d'abord, examinez le profil du formateur. Regardez son parcours, ses années d'expérience et ses domaines d'expertise. Un bon formateur apporte à la fois des connaissances et des compétences pédagogiques.",
+          "Ensuite, lisez les avis d'autres étudiants. Leurs commentaires peuvent vous donner des informations précieuses sur le style d'enseignement et la communication.",
+          "Troisièmement, considérez les formations qu'ils proposent. Leur programme correspond-il à vos objectifs d'apprentissage? Vérifiez les sujets abordés et la structure du programme.",
+          "Enfin, n'hésitez pas à poser des questions avant de vous inscrire. Un formateur réactif est un bon signe."
+        ]
+      },
+      "topInstructorsMonth": {
+        "title": "Rencontrez Nos Meilleurs Formateurs du Mois",
+        "excerpt": "Célébrons les éducateurs qui se dépassent pour leurs étudiants sur NAJAH.",
+        "category": "community",
+        "readTime": "3 min de lecture",
+        "author": "Nadia Tazi",
+        "content": [
+          "Chaque mois, NAJAH reconnaît les formateurs qui ont eu un impact exceptionnel sur leurs étudiants. Ces éducateurs vont au-delà des attentes pour offrir des expériences d'apprentissage engageantes et de haute qualité.",
+          "Ce mois-ci, nous sommes fiers de mettre en avant le Dr. Ahmed Benali pour sa formation exceptionnelle en Développement Web Full-Stack, Sara Amrani pour ses sessions captivantes de Data Science et Youssef Karim pour son programme complet de Développement Mobile.",
+          "Ces formateurs reçoivent systématiquement les meilleures évaluations des étudiants pour leur clarté, leur réactivité et leur dévouement. Si vous cherchez une formation, commencer avec l'un de nos formateurs les mieux notés est un choix sûr.",
+          "Félicitations à tous nos formateurs vedettes. Votre travail acharné façonne l'avenir de l'éducation au Maroc."
+        ]
+      },
+      "groupLearningVsSelfStudy": {
+        "title": "Apprentissage en Groupe vs Auto-Apprentissage : Quel est le Meilleur ?",
+        "excerpt": "Comparaison des avantages de l'apprentissage collaboratif en groupe avec les méthodes traditionnelles d'étude autonome.",
+        "category": "education",
+        "readTime": "5 min de lecture",
+        "author": "Sara Amrani",
+        "content": [
+          "L'apprentissage en groupe et l'auto-apprentissage ont tous deux leurs avantages, et le meilleur choix dépend de votre style d'apprentissage et de vos objectifs.",
+          "L'apprentissage en groupe sur NAJAH offre des réunions en direct, des discussions de groupe et des projets collaboratifs. Cette approche est idéale si vous vous épanouissez grâce à l'interaction, la responsabilité et les perspectives diverses.",
+          "L'auto-apprentissage offre de la flexibilité. Vous apprenez à votre rythme, selon votre propre emploi du temps, en vous concentrant exactement sur ce dont vous avez besoin.",
+          "La meilleure approche? Combinez les deux. Utilisez les formations NAJAH pour un apprentissage structuré en groupe, puis complétez par de l'auto-apprentissage pour une exploration plus approfondie."
+        ]
+      },
+      "careerTechWithoutDegree": {
+        "title": "Construire une Carrière dans la Tech Sans Diplôme",
+        "excerpt": "Comment les plateformes d'éducation alternatives comme NAJAH ouvrent les portes des carrières technologiques pour tous.",
+        "category": "career",
+        "readTime": "7 min de lecture",
+        "author": "Ahmed Benali",
+        "content": [
+          "Un diplôme universitaire a longtemps été considéré comme le seul chemin vers une carrière réussie. Mais l'industrie technologique prouve que les compétences comptent plus que les diplômes.",
+          "Des plateformes comme NAJAH démocratisent l'accès à l'éducation technologique. Les étudiants peuvent apprendre le développement web, la data science, le développement mobile et bien plus encore auprès de professionnels expérimentés.",
+          "Les employeurs valorisent de plus en plus les compétences pratiques par rapport aux diplômes formels. Un portfolio solide de projets, combiné à des certifications, peut ouvrir des portes vers des emplois tech bien rémunérés.",
+          "Les diplômés de NAJAH ont travaillé dans des entreprises de premier plan, lancé leurs propres startups et sont même devenus formateurs. L'avenir du recrutement est basé sur les compétences, et NAJAH est là pour vous aider à les développer."
+        ]
+      }
     },
     "careers": {
       "title": "Rejoignez",
@@ -707,7 +829,7 @@
       "subtitle": "Comment pouvons-nous vous aider aujourd'hui ?",
       "searchPlaceholder": "Rechercher des réponses...",
       "allArticles": "Tous les Articles",
-      "articles": "articles",
+      "articlesLabel": "articles",
       "gettingStarted": "Démarrage",
       "gettingStartedDesc": "Nouveau sur NAJAH ? Commencez ici.",
       "account": "Compte",

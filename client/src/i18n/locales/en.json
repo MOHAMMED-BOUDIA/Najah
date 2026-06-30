@@ -65,7 +65,49 @@
     "featuresGroupChat": "Group Chat",
     "featuresGroupChatDesc": "Ask questions and discuss topics in real-time",
     "featuresProgress": "Track Your Progress",
-    "featuresProgressDesc": "Monitor your learning journey with detailed progress tracking"
+    "featuresProgressDesc": "Monitor your learning journey with detailed progress tracking",
+    "instructorsTitle": "Meet Our",
+    "instructorsTitleAccent": "Expert Instructors",
+    "instructorsSubtitle": "Learn from qualified professionals with real-world experience in their fields.",
+    "specialtyFullstack": "Full-Stack Web Development",
+    "specialtyDataScience": "Data Science & AI",
+    "specialtyMobile": "Mobile Development",
+    "specialtyUIUX": "UI/UX Design",
+    "specialtyCloud": "Cloud & DevOps",
+    "specialtyCybersecurity": "Cybersecurity",
+    "formationsCount": "{{count}} formations",
+    "viewAllInstructors": "View All Instructors",
+    "viewProfile": "View profile",
+    "statsStudentsEnrolled": "Students Enrolled",
+    "statsExpertInstructors": "Expert Instructors",
+    "statsActiveFormations": "Active Formations",
+    "statsSuccessRate": "Success Rate",
+    "stepsTitle": "Start learning in",
+    "stepsTitleAccent": "3 simple steps",
+    "stepsSubtitle": "From account creation to learning in minutes.",
+    "step1Title": "Create Your Account",
+    "step1Desc": "Sign up for free with your Gmail and verify your email to get started.",
+    "step2Title": "Choose Your Instructor",
+    "step2Desc": "Browse available instructors and request to join their training group.",
+    "step3Title": "Start Your Formation",
+    "step3Desc": "Once approved, access courses, tasks, meetings, and learn at your own pace.",
+    "testimonialsTitle": "What our students say",
+    "testimonialsSubtitle": "Hear from students who transformed their skills with NAJAH.",
+    "testimonialQ0": "NAJAH helped me master web development with hands-on training and amazing instructors.",
+    "testimonialQ1": "The platform makes learning so organized. I love the group chats and live meetings!",
+    "testimonialQ2": "Best decision I made. The instructors are top-notch and always available to help.",
+    "testimonialQ3": "I went from complete beginner to building my own app. Thank you NAJAH!",
+    "testimonialQ4": "The formations are well-structured and the live sessions make all the difference.",
+    "testimonialQ5": "Finally a platform that connects students with real instructors. Game changer.",
+    "testimonialRole0": "Web Development",
+    "testimonialRole1": "Mobile Development",
+    "testimonialRole2": "Data Science",
+    "testimonialRole3": "Full Stack Student",
+    "testimonialRole4": "AI Student",
+    "testimonialRole5": "Cyber Security",
+    "ctaTitle": "Ready to start your learning journey?",
+    "ctaSubtitle": "Join NAJAH today and unlock access to expert-led formations in your field.",
+    "ctaButton": "Enroll Now \u2014 It\u2019s Free"
   },
   "auth": {
     "signInTitle": "Sign in to your account",
@@ -590,7 +632,7 @@
       "send": "Send Message",
       "messageSent": "Message Sent!",
       "emailContact": "contact@najah-platform.com",
-      "phone": "+212 5XX XX XX XX",
+      "phone": "+212 611294080",
       "address": "Casablanca, Morocco",
       "mapPlaceholder": "Map placeholder"
     },
@@ -667,7 +709,87 @@
       "by": "by",
       "minRead": "min read",
       "notFound": "Article not found",
-      "backToBlog": "Back to Blog"
+      "backToBlog": "Back to Blog",
+      "futureOnlineLearning": {
+        "title": "The Future of Online Learning in Morocco",
+        "excerpt": "How digital education platforms are transforming the way Moroccan students learn and develop professional skills.",
+        "category": "education",
+        "readTime": "5 min read",
+        "author": "Sara Amrani",
+        "content": [
+          "Online learning in Morocco has seen unprecedented growth over the past few years. With platforms like NAJAH leading the way, students now have access to high-quality instructor-led training from anywhere in the country.",
+          "The traditional education system faces challenges in keeping up with the rapidly evolving job market. NAJAH bridges this gap by connecting students with industry professionals who bring real-world experience to the classroom.",
+          "Whether you are in Casablanca, Rabat, or a small rural town, NAJAH brings expert-led formations directly to your screen. The future of education is digital, accessible, and personalized."
+        ]
+      },
+      "tipsSucceedFormation": {
+        "title": "5 Tips to Succeed in Your Formation",
+        "excerpt": "Practical advice to make the most of your instructor-led training and achieve your learning goals.",
+        "category": "studentTips",
+        "readTime": "4 min read",
+        "author": "Ahmed Benali",
+        "content": [
+          "Enrolling in a formation is just the first step. To truly succeed, you need a strategy. Here are five tips to make the most of your NAJAH experience.",
+          "1. Set a consistent study schedule. Treat your formation like a real class by dedicating specific hours each day.",
+          "2. Engage actively in group discussions and live meetings. The more you participate, the more you learn.",
+          "3. Complete all assignments on time. They are designed to reinforce your understanding.",
+          "4. Build a relationship with your instructor. Ask questions, seek feedback, and leverage their expertise.",
+          "5. Track your progress regularly using your dashboard. Celebrate small wins to stay motivated."
+        ]
+      },
+      "chooseRightInstructor": {
+        "title": "How to Choose the Right Instructor",
+        "excerpt": "A guide to finding the perfect instructor for your learning style and professional needs.",
+        "category": "guidance",
+        "readTime": "6 min read",
+        "author": "Youssef Karim",
+        "content": [
+          "Choosing the right instructor can make or break your learning experience. Here is how to find the best match on NAJAH.",
+          "First, review the instructor profile. Look at their background, years of experience, and areas of expertise. A good instructor brings both knowledge and teaching ability.",
+          "Second, read reviews from other students. Their feedback can give you valuable insights into teaching style and communication.",
+          "Third, consider the formations they offer. Does their curriculum align with your learning goals? Check the topics covered and the structure of the program.",
+          "Finally, do not hesitate to reach out with questions before enrolling. A responsive instructor is a good sign."
+        ]
+      },
+      "topInstructorsMonth": {
+        "title": "Meet Our Top Instructors of the Month",
+        "excerpt": "Celebrating the educators who go above and beyond for their students on NAJAH.",
+        "category": "community",
+        "readTime": "3 min read",
+        "author": "Nadia Tazi",
+        "content": [
+          "Every month, NAJAH recognizes instructors who have made an exceptional impact on their students. These educators go above and beyond to provide engaging, high-quality learning experiences.",
+          "This month, we are proud to highlight Dr. Ahmed Benali for his outstanding Full-Stack Web Development formation, Sara Amrani for her engaging Data Science sessions, and Youssef Karim for his comprehensive Mobile Development curriculum.",
+          "These instructors consistently receive top ratings from students for their clarity, responsiveness, and dedication. If you are looking for a formation, starting with one of our top-rated instructors is a safe bet.",
+          "Congratulations to all our featured instructors. Your hard work is shaping the future of education in Morocco."
+        ]
+      },
+      "groupLearningVsSelfStudy": {
+        "title": "Group Learning vs Self-Study: Which is Better?",
+        "excerpt": "Comparing the benefits of collaborative group learning with traditional self-paced study methods.",
+        "category": "education",
+        "readTime": "5 min read",
+        "author": "Sara Amrani",
+        "content": [
+          "Both group learning and self-study have their advantages, and the best choice depends on your learning style and goals.",
+          "Group learning on NAJAH offers live meetings, group chats, and collaborative projects. This approach is ideal if you thrive on interaction, accountability, and diverse perspectives. Studying with peers can keep you motivated and help you understand concepts through discussion.",
+          "Self-study offers flexibility. You learn at your own pace, on your own schedule, focusing on exactly what you need. This works well for disciplined learners who prefer independence.",
+          "The best approach? Combine both. Use NAJAH formations for structured group learning, then supplement with self-study for deeper exploration."
+        ]
+      },
+      "careerTechWithoutDegree": {
+        "title": "Building a Career in Tech Without a Degree",
+        "excerpt": "How alternative education platforms like NAJAH are opening doors to tech careers for everyone.",
+        "category": "career",
+        "readTime": "7 min read",
+        "author": "Ahmed Benali",
+        "content": [
+          "A university degree has long been seen as the only path to a successful career. But the tech industry is proving that skills matter more than diplomas.",
+          "Platforms like NAJAH are democratizing access to tech education. Students can learn web development, data science, mobile development, and more from experienced professionals without enrolling in a traditional university program.",
+          "Employers are increasingly valuing practical skills over formal credentials. A strong portfolio of projects, combined with certifications from recognized platforms, can open doors to high-paying tech jobs.",
+          "NAJAH graduates have gone on to work at leading companies, launch their own startups, and even become instructors themselves. The future of hiring is skills-based, and NAJAH is here to help you build those skills."
+        ]
+      }
     },
     "careers": {
       "title": "Join the",
@@ -707,7 +829,7 @@
       "subtitle": "How can we help you today?",
       "searchPlaceholder": "Search for answers...",
       "allArticles": "All Articles",
-      "articles": "articles",
+      "articlesLabel": "articles",
       "gettingStarted": "Getting Started",
       "gettingStartedDesc": "New to NAJAH? Start here.",
       "account": "Account",

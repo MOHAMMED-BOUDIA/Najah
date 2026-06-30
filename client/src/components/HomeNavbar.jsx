@@ -53,6 +53,7 @@ export default function HomeNavbar() {
 
   return (
     <motion.nav
+      dir="ltr"
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -140,7 +141,7 @@ export default function HomeNavbar() {
                 <button
                   key={link.labelKey}
                   onClick={() => handleScroll(link.id)}
-                  className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
+                  className="block w-full text-start px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
                 >
                   {t(link.labelKey)}
                 </button>
@@ -148,7 +149,7 @@ export default function HomeNavbar() {
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
+                className="block text-start px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#0084D1] dark:hover:text-[#0084D1] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all"
               >
                 {t('nav.contact')}
               </Link>

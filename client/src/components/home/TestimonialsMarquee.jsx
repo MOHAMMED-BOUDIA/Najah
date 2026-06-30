@@ -1,17 +1,8 @@
 import { memo } from 'react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const testimonials = [
-  { quote: 'NAJAH helped me master web development with hands-on training and amazing instructors.', name: 'Sara M.', role: 'Web Development', avatar: 'SM' },
-  { quote: 'The platform makes learning so organized. I love the group chats and live meetings!', name: 'Ahmed K.', role: 'Mobile Development', avatar: 'AK' },
-  { quote: 'Best decision I made. The instructors are top-notch and always available to help.', name: 'Yasmine B.', role: 'Data Science', avatar: 'YB' },
-  { quote: 'I went from complete beginner to building my own app. Thank you NAJAH!', name: 'Omar R.', role: 'Full Stack Student', avatar: 'OR' },
-  { quote: 'The formations are well-structured and the live sessions make all the difference.', name: 'Lina K.', role: 'AI Student', avatar: 'LK' },
-  { quote: 'Finally a platform that connects students with real instructors. Game changer.', name: 'Rayan M.', role: 'Cyber Security', avatar: 'RM' },
-];
 
-const doubled = [...testimonials, ...testimonials];
-const doubledRev = [...testimonials, ...testimonials].reverse();
 
 function Stars() {
   return (
@@ -79,17 +70,31 @@ function MarqueeRow({ items, reverse }) {
 }
 
 const TestimonialsMarquee = memo(function TestimonialsMarquee() {
+  const { t } = useTranslation();
+
+  const testimonials = [
+    { quote: t('home.testimonialQ0'), name: 'Sara M.', role: t('home.testimonialRole0'), avatar: 'SM' },
+    { quote: t('home.testimonialQ1'), name: 'Ahmed K.', role: t('home.testimonialRole1'), avatar: 'AK' },
+    { quote: t('home.testimonialQ2'), name: 'Yasmine B.', role: t('home.testimonialRole2'), avatar: 'YB' },
+    { quote: t('home.testimonialQ3'), name: 'Omar R.', role: t('home.testimonialRole3'), avatar: 'OR' },
+    { quote: t('home.testimonialQ4'), name: 'Lina K.', role: t('home.testimonialRole4'), avatar: 'LK' },
+    { quote: t('home.testimonialQ5'), name: 'Rayan M.', role: t('home.testimonialRole5'), avatar: 'RM' },
+  ];
+
+  const doubled = [...testimonials, ...testimonials];
+  const doubledRev = [...testimonials, ...testimonials].reverse();
+
   return (
     <section className="py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-[#FFB900]/5 via-[#0084D1]/5 to-[#FFB900]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-              What our students say
+              {t('home.testimonialsTitle')}
             </span>
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-lg">
-            Hear from students who transformed their skills with NAJAH.
+            {t('home.testimonialsSubtitle')}
           </p>
         </div>
       </div>

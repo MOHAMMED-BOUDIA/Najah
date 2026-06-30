@@ -12,12 +12,7 @@ export default function Pricing() {
       name: t('static.pricing.free'),
       price: '0',
       desc: t('static.pricing.freeDesc'),
-      features: [
-        t('static.pricing.freeFeatures[0]'),
-        t('static.pricing.freeFeatures[1]'),
-        t('static.pricing.freeFeatures[2]'),
-        t('static.pricing.freeFeatures[3]'),
-      ],
+      features: t('static.pricing.freeFeatures', { returnObjects: true }),
       cta: t('static.pricing.freeCta'),
       to: '/register',
       highlight: false,
@@ -26,14 +21,7 @@ export default function Pricing() {
       name: t('static.pricing.pro'),
       price: '199',
       desc: t('static.pricing.proDesc'),
-      features: [
-        t('static.pricing.proFeatures[0]'),
-        t('static.pricing.proFeatures[1]'),
-        t('static.pricing.proFeatures[2]'),
-        t('static.pricing.proFeatures[3]'),
-        t('static.pricing.proFeatures[4]'),
-        t('static.pricing.proFeatures[5]'),
-      ],
+      features: t('static.pricing.proFeatures', { returnObjects: true }),
       cta: t('static.pricing.proCta'),
       to: '/register',
       highlight: true,
@@ -42,15 +30,7 @@ export default function Pricing() {
       name: t('static.pricing.enterprise'),
       price: '999',
       desc: t('static.pricing.enterpriseDesc'),
-      features: [
-        t('static.pricing.enterpriseFeatures[0]'),
-        t('static.pricing.enterpriseFeatures[1]'),
-        t('static.pricing.enterpriseFeatures[2]'),
-        t('static.pricing.enterpriseFeatures[3]'),
-        t('static.pricing.enterpriseFeatures[4]'),
-        t('static.pricing.enterpriseFeatures[5]'),
-        t('static.pricing.enterpriseFeatures[6]'),
-      ],
+      features: t('static.pricing.enterpriseFeatures', { returnObjects: true }),
       cta: t('static.pricing.enterpriseCta'),
       to: '/contact',
       highlight: false,
@@ -63,7 +43,7 @@ export default function Pricing() {
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-6">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight leading-[1.6] py-4 mb-4">
               {t('static.pricing.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 {t('static.pricing.titleAccent')}
@@ -80,11 +60,11 @@ export default function Pricing() {
             {t('static.pricing.freeForStudents')}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`relative p-8 rounded-3xl border transition-shadow hover:shadow-xl ${
+                className={`relative p-8 rounded-3xl border transition-shadow hover:shadow-xl flex flex-col h-full ${
                   plan.highlight
                     ? 'border-[#0084D1]/50 bg-gradient-to-b from-[#0084D1]/10 to-white shadow-lg shadow-[#0084D1]/10'
                     : 'border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900'
@@ -105,7 +85,7 @@ export default function Pricing() {
                   <p className="text-sm text-gray-400">{plan.desc}</p>
                 </div>
 
-                <ul className="space-y-3 mb-8">
+                <ul className="flex-1 space-y-3 mb-8">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                       <HiCheck className="w-4 h-4 text-[#0084D1] mt-0.5 flex-shrink-0" />
@@ -116,7 +96,7 @@ export default function Pricing() {
 
                 <Link
                   to={plan.to}
-                  className={`block text-center py-3 rounded-xl font-semibold text-sm transition-all ${
+                  className={`mt-auto block text-center py-3 rounded-xl font-semibold text-sm transition-all ${
                     plan.highlight
                       ? 'bg-gradient-to-r from-[#FFB900] to-[#0084D1] text-white shadow-lg shadow-[#0084D1]/25 hover:from-[#FFB900] hover:to-[#0277BD]'
                       : 'border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'

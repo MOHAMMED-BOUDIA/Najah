@@ -1,17 +1,10 @@
 import { useRef, memo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
-
-const instructors = [
-  { name: 'Dr. Ahmed Benali', specialty: 'Full-Stack Web Development', formations: 12, img: 'https://i.pravatar.cc/80?img=11', color: 'from-[#FFB900] to-[#0084D1]' },
-  { name: 'Sara Amrani', specialty: 'Data Science & AI', formations: 8, img: 'https://i.pravatar.cc/80?img=5', color: 'from-[#0084D1] to-[#FFB900]' },
-  { name: 'Youssef Karim', specialty: 'Mobile Development', formations: 10, img: 'https://i.pravatar.cc/80?img=12', color: 'from-[#FFB900] to-[#e6a000]' },
-  { name: 'Nadia Tazi', specialty: 'UI/UX Design', formations: 6, img: 'https://i.pravatar.cc/80?img=9', color: 'from-[#0084D1] to-[#0277BD]' },
-  { name: 'Omar Razi', specialty: 'Cloud & DevOps', formations: 7, img: 'https://i.pravatar.cc/80?img=13', color: 'from-[#FFB900] to-[#CC9400]' },
-  { name: 'Lina Kadiri', specialty: 'Cybersecurity', formations: 5, img: 'https://i.pravatar.cc/80?img=10', color: 'from-[#0084D1] to-[#01579B]' },
-];
+import { useTranslation } from 'react-i18next';
 
 const InstructorCard = memo(function InstructorCard({ name, specialty, formations, img, color, i }) {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
 
@@ -33,9 +26,9 @@ const InstructorCard = memo(function InstructorCard({ name, specialty, formation
         </div>
       </div>
       <div className="flex items-center justify-between text-xs text-gray-400">
-        <span>{formations} formations</span>
+        <span>{t('home.formationsCount', { count: formations })}</span>
         <span className="flex items-center gap-1 text-[#0084D1] opacity-0 group-hover:opacity-100 transition-opacity">
-          View profile <FiArrowRight className="w-3 h-3" />
+          {t('home.viewProfile')} <FiArrowRight className="w-3 h-3" />
         </span>
       </div>
     </motion.div>
@@ -43,8 +36,18 @@ const InstructorCard = memo(function InstructorCard({ name, specialty, formation
 });
 
 function InstructorsSection() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
+
+  const instructors = [
+    { name: 'Dr. Ahmed Benali', specialty: t('home.specialtyFullstack'), formations: 12, img: 'https://i.pravatar.cc/80?img=11', color: 'from-[#FFB900] to-[#0084D1]' },
+    { name: 'Sara Amrani', specialty: t('home.specialtyDataScience'), formations: 8, img: 'https://i.pravatar.cc/80?img=5', color: 'from-[#0084D1] to-[#FFB900]' },
+    { name: 'Youssef Karim', specialty: t('home.specialtyMobile'), formations: 10, img: 'https://i.pravatar.cc/80?img=12', color: 'from-[#FFB900] to-[#e6a000]' },
+    { name: 'Nadia Tazi', specialty: t('home.specialtyUIUX'), formations: 6, img: 'https://i.pravatar.cc/80?img=9', color: 'from-[#0084D1] to-[#0277BD]' },
+    { name: 'Omar Razi', specialty: t('home.specialtyCloud'), formations: 7, img: 'https://i.pravatar.cc/80?img=13', color: 'from-[#FFB900] to-[#CC9400]' },
+    { name: 'Lina Kadiri', specialty: t('home.specialtyCybersecurity'), formations: 5, img: 'https://i.pravatar.cc/80?img=10', color: 'from-[#0084D1] to-[#01579B]' },
+  ];
 
   return (
     <section id="instructors" className="py-24 lg:py-32">
@@ -57,13 +60,13 @@ function InstructorsSection() {
           className="text-center max-w-2xl mx-auto mb-14"
         >
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            Meet Our{' '}
+            {t('home.instructorsTitle')}{' '}
             <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
-              Expert Instructors
+              {t('home.instructorsTitleAccent')}
             </span>
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-lg">
-            Learn from qualified professionals with real-world experience in their fields.
+            {t('home.instructorsSubtitle')}
           </p>
         </motion.div>
 
@@ -83,7 +86,7 @@ function InstructorsSection() {
             href="/register"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
           >
-            View All Instructors
+            {t('home.viewAllInstructors')}
             <FiArrowRight className="w-4 h-4" />
           </a>
         </motion.div>

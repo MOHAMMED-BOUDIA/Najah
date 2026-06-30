@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, memo } from 'react';
 import { useInView } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const AnimatedNumber = memo(function AnimatedNumber({ target, suffix }) {
   const [count, setCount] = useState(0);
@@ -29,16 +30,17 @@ const AnimatedNumber = memo(function AnimatedNumber({ target, suffix }) {
   );
 });
 
-const stats = [
-  { value: 500, suffix: '+', label: 'Students Enrolled' },
-  { value: 25, suffix: '+', label: 'Expert Instructors' },
-  { value: 100, suffix: '+', label: 'Active Formations' },
-  { value: 95, suffix: '%', label: 'Success Rate' },
-];
-
 function StatsCounter() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
+
+  const stats = [
+    { value: 500, suffix: '+', label: t('home.statsStudentsEnrolled') },
+    { value: 25, suffix: '+', label: t('home.statsExpertInstructors') },
+    { value: 100, suffix: '+', label: t('home.statsActiveFormations') },
+    { value: 95, suffix: '%', label: t('home.statsSuccessRate') },
+  ];
 
   return (
     <section ref={ref} className="relative py-20 overflow-hidden">

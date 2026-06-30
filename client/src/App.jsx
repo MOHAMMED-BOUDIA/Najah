@@ -57,9 +57,10 @@ const Careers = lazy(() => import('./pages/Careers'));
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { i18n } = useTranslation();
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div dir="ltr" className="flex h-screen w-screen overflow-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -71,7 +72,7 @@ const DashboardLayout = () => {
           onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
           onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
         />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <main dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex-1 overflow-y-auto p-4 md:p-6">
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>

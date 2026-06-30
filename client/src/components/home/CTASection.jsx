@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function CTASection() {
+  const { t } = useTranslation();
   return (
     <section className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,18 +19,18 @@ export default function CTASection() {
 
           <div className="relative z-10">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Ready to start your learning journey?
+              {t('home.ctaTitle')}
             </h2>
 
             <p className="text-white/80 max-w-xl mx-auto mb-10 text-lg">
-              Join NAJAH today and unlock access to expert-led formations in your field.
+              {t('home.ctaSubtitle')}
             </p>
 
             <Link
               to="/register"
               className="relative inline-flex items-center gap-2 px-10 py-4 bg-white text-[#0084D1] font-bold rounded-xl shadow-xl hover:shadow-2xl hover:bg-gray-100 transition-all text-lg group"
             >
-              <span>Enroll Now &mdash; It&apos;s Free</span>
+              <span>{t('home.ctaButton')}</span>
               <span className="text-xl group-hover:translate-x-1 transition-transform">&rarr;</span>
             </Link>
           </div>

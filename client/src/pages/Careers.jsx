@@ -24,7 +24,7 @@ export default function Careers() {
         <div className="max-w-7xl mx-auto px-6">
           {/* Hero */}
           <div className="text-center max-w-3xl mx-auto mb-6">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight leading-[1.6] py-4 mb-4">
               {t('static.careers.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 {t('static.careers.titleAccent')}

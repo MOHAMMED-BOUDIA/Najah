@@ -17,6 +17,7 @@ const LanguageSwitcher = () => {
   const changeLanguage = (code) => {
     i18n.changeLanguage(code);
     setOpen(false);
+    document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = code;
   };
 
@@ -35,7 +36,7 @@ const LanguageSwitcher = () => {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+        <div className="absolute inset-inline-end-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
           {languages.map((lang) => (
             <button
               key={lang.code}

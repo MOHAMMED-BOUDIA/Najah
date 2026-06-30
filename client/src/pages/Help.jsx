@@ -85,7 +85,7 @@ export default function Help() {
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4">
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight leading-[1.6] py-4 mb-4">
               {t('static.help.title')}{' '}
               <span className="bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
                 {t('static.help.titleAccent')}
@@ -119,7 +119,7 @@ export default function Help() {
               }`}
             >
               <h3 className="font-semibold">{t('static.help.allArticles')}</h3>
-              <p className="text-sm text-gray-400 mt-1">{articles.length} {t('static.help.articles')}</p>
+              <p className="text-sm text-gray-400 mt-1">{articles.length} {t('static.help.articlesLabel')}</p>
             </button>
             {categoryOptions.map((cat) => (
               <button
@@ -145,7 +145,7 @@ export default function Help() {
             <h2 className="text-lg font-semibold">
               {search || category !== 'All' ? t('static.help.searchResults') : t('static.help.popularArticles')}
             </h2>
-            <span className="text-xs text-gray-400">{filtered.length} {t('static.help.articles')}</span>
+            <span className="text-xs text-gray-400">{filtered.length} {t('static.help.articlesLabel')}</span>
           </div>
 
           {/* Articles List */}

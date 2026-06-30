@@ -17,7 +17,7 @@ export default function About() {
       <section className="pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight leading-[1.6] py-4 mb-6 bg-gradient-to-r from-[#FFB900] to-[#0084D1] bg-clip-text text-transparent">
               {t('static.about.title')}
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">
