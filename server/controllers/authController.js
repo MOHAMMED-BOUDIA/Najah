@@ -62,12 +62,10 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    process.nextTick(() => {
-      const { sendVerificationCodeEmail } = require('../utils/sendEmail');
-      sendVerificationCodeEmail(email, verificationCode).catch(err =>
-        console.error('[authController] Failed to send verification code:', err)
-      );
-    });
+    const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+    sendVerificationCodeEmail(email, verificationCode).catch(err =>
+      console.error('[authController] Failed to send verification code:', err)
+    );
 
     res.status(201).json({
       message: 'Verification code sent to your email',
@@ -136,12 +134,10 @@ exports.resendCode = async (req, res) => {
     user.codeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await user.save();
 
-    process.nextTick(() => {
-      const { sendVerificationCodeEmail } = require('../utils/sendEmail');
-      sendVerificationCodeEmail(email, verificationCode).catch(err =>
-        console.error('[authController] Failed to resend verification code:', err)
-      );
-    });
+    const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+    sendVerificationCodeEmail(email, verificationCode).catch(err =>
+      console.error('[authController] Failed to resend verification code:', err)
+    );
 
     res.json({ message: 'New verification code sent to your email' });
   } catch (error) {

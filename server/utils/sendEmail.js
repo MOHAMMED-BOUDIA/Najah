@@ -59,24 +59,16 @@ const sendPasswordResetEmail = async (to, token) => {
   console.log(`[sendEmail] Password reset email sent to ${to}`);
 };
 
-const codeTransporter = nodemailer.createTransport({
-  service: 'gmail',
-  pool: true,
-  maxConnections: 5,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const https = require('https');
 
 const sendVerificationCodeEmail = async (to, code) => {
   console.log(`[sendEmail] Sending verification code to ${to}...`);
 
-  codeTransporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to,
+  const data = JSON.stringify({
+    sender: { name: 'NAJAH', email: 'noreply@najah.com' },
+    to: [{ email: to }],
     subject: 'Your NAJAH verification code',
-    html: `
+    htmlContent: `
       <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
         <div style="text-align: center; padding: 24px 0;">
           <h1 style="color: #0084D1; margin: 0;">NAJAH</h1>
@@ -98,11 +90,42 @@ const sendVerificationCodeEmail = async (to, code) => {
         <p style="color: #9ca3af; font-size: 12px; text-align: center; margin-top: 20px;">
           If you did not create an account, you can ignore this email.
         </p>
-      </div>
-    `,
+      </div>`,
   });
 
-  console.log(`[sendEmail] Verification code sent to ${to}`);
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      {
+        hostname: 'api.brevo.com',
+        path: '/v3/smtp/email',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': process.env.BREVO_API_KEY,
+          'Content-Length': Buffer.byteLength(data),
+        },
+      },
+      (res) => {
+        let body = '';
+        res.on('data', (chunk) => { body += chunk; });
+        res.on('end', () => {
+          if (res.statusCode === 201 || res.statusCode === 200) {
+            console.log(`[sendEmail] Verification code sent to ${to}`);
+            resolve();
+          } else {
+            console.error(`[sendEmail] Brevo API error ${res.statusCode}: ${body}`);
+            reject(new Error(`Brevo API error ${res.statusCode}`));
+          }
+        });
+      }
+    );
+    req.on('error', (err) => {
+      console.error('[sendEmail] Brevo request failed:', err);
+      reject(err);
+    });
+    req.write(data);
+    req.end();
+  });
 };
 
 module.exports = { sendVerificationEmail, sendPasswordResetEmail, sendVerificationCodeEmail };
