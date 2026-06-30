@@ -22,6 +22,7 @@ import VerifyEmail from './pages/VerifyEmail';
 import VerifyToken from './pages/VerifyToken';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import NotFound from './pages/NotFound';
 
 // Heavy pages — lazy load
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -145,7 +146,7 @@ function App() {
             <Route path="/admin/settings" element={<RoleProtectedRoute allowedRoles={['admin']}><AdminPanel /></RoleProtectedRoute>} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         </Suspense>
       <AIChatbot />

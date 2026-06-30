@@ -4,6 +4,8 @@ const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
   secure: false,
+  pool: true,
+  maxConnections: 5,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -59,6 +61,8 @@ const sendPasswordResetEmail = async (to, token) => {
 
 const codeTransporter = nodemailer.createTransport({
   service: 'gmail',
+  pool: true,
+  maxConnections: 5,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -68,7 +72,7 @@ const codeTransporter = nodemailer.createTransport({
 const sendVerificationCodeEmail = async (to, code) => {
   console.log(`[sendEmail] Sending verification code to ${to}...`);
 
-  await codeTransporter.sendMail({
+  codeTransporter.sendMail({
     from: process.env.EMAIL_FROM,
     to,
     subject: 'Your NAJAH verification code',

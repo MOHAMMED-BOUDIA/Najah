@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FiArrowLeft } from 'react-icons/fi';
 
 const features = [
-  { text: 'Learn from industry experts' },
-  { text: 'Join interactive study groups' },
-  { text: 'Track your progress in real-time' },
+  { key: 'featureExpert' },
+  { key: 'featureGroups' },
+  { key: 'featureProgress' },
 ];
 
-const quotes = [
-  { text: '"NAJAH transformed the way I learn — the structured guidance and community support are unmatched."', author: '— Sara A., CS Student' },
-  { text: '"The hands-on projects and expert mentorship helped me land my dream internship."', author: '— Ahmed K., Engineering' },
-  { text: '"I love how NAJAH makes complex topics easy to understand. Highly recommended!"', author: '— Mariam B., Data Science' },
+const quoteKeys = [
+  { textKey: 'testimonial1', authorKey: 'testimonial1Author' },
+  { textKey: 'testimonial2', authorKey: 'testimonial2Author' },
+  { textKey: 'testimonial3', authorKey: 'testimonial3Author' },
 ];
 
 const shapes = [
@@ -31,12 +32,13 @@ const NajahLogo = ({ className = '', white = false }) => (
 );
 
 const AuthLayout = ({ children, title, subtitle }) => {
+  const { t } = useTranslation();
   const [quoteIndex, setQuoteIndex] = useState(0);
   const visible = true;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setQuoteIndex((prev) => (prev + 1) % quotes.length);
+      setQuoteIndex((prev) => (prev + 1) % quoteKeys.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -91,10 +93,10 @@ const AuthLayout = ({ children, title, subtitle }) => {
           <div className="space-y-8">
             <div className="space-y-3">
               <h1 className="text-4xl font-black leading-tight">
-                Welcome to NAJAH 🎓
+                {t('auth.welcomeTitle')}
               </h1>
               <p className="text-lg text-white/80 font-medium">
-                Your gateway to expert-led online learning
+                {t('auth.welcomeSubtitle')}
               </p>
             </div>
 
@@ -109,7 +111,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-xs">
                     ✓
                   </span>
-                  {f.text}
+                  {t(`auth.${f.key}`)}
                 </li>
               ))}
             </ul>
@@ -119,10 +121,10 @@ const AuthLayout = ({ children, title, subtitle }) => {
           <div className="relative">
             <div className="rounded-2xl bg-white/10 backdrop-blur-sm p-5 border border-white/10">
               <p className="text-sm leading-relaxed text-white/90 transition-opacity duration-500">
-                {quotes[quoteIndex].text}
+                {t(`auth.${quoteKeys[quoteIndex].textKey}`)}
               </p>
               <p className="mt-2 text-xs font-semibold text-white/70">
-                {quotes[quoteIndex].author}
+                {t(`auth.${quoteKeys[quoteIndex].authorKey}`)}
               </p>
             </div>
           </div>
@@ -145,14 +147,14 @@ const AuthLayout = ({ children, title, subtitle }) => {
             className="fixed top-5 left-5 z-20 flex items-center gap-1.5 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm border border-white/20 hover:bg-white dark:hover:bg-gray-800 transition-all hover:scale-[1.02]"
           >
             <FiArrowLeft className="h-3.5 w-3.5" />
-            Back to Home
+            {t('auth.backToHome')}
           </Link>
 
           <div className="w-full max-w-[420px]">
             {/* Mobile tagline */}
             <div className="md:hidden text-center pt-14 pb-6">
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Your gateway to expert-led online learning
+                {t('auth.mobileTagline')}
               </p>
             </div>
 
