@@ -62,7 +62,7 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+    const { sendVerificationCodeEmail } = require('../services/emailService');
     sendVerificationCodeEmail(email, verificationCode).catch(err =>
       console.error('[authController] Failed to send verification code:', err)
     );
@@ -134,7 +134,7 @@ exports.resendCode = async (req, res) => {
     user.codeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await user.save();
 
-    const { sendVerificationCodeEmail } = require('../utils/sendEmail');
+    const { sendVerificationCodeEmail } = require('../services/emailService');
     sendVerificationCodeEmail(email, verificationCode).catch(err =>
       console.error('[authController] Failed to resend verification code:', err)
     );
@@ -288,7 +288,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     process.nextTick(() => {
-      const { sendPasswordResetEmail } = require('../utils/sendEmail');
+      const { sendPasswordResetEmail } = require('../services/emailService');
       sendPasswordResetEmail(email, resetToken).catch(err =>
         console.error('[authController] Failed to send password reset email:', err)
       );
