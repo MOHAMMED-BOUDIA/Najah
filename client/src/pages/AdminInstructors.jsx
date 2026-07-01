@@ -161,51 +161,100 @@ const AdminInstructors = () => {
       )}
 
       <div className="rounded-3xl border border-gray-150 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
-              <th className="py-4 px-6">{t('admin.instructorName')}</th>
-              <th className="py-4 px-6">{t('admin.instructorEmail')}</th>
-              <th className="py-4 px-6">{t('admin.instructorDepartment')}</th>
-              <th className="py-4 px-6">{t('admin.instructorPhone')}</th>
-              <th className="py-4 px-6">{t('admin.status')}</th>
-              <th className="py-4 px-6 text-right">{t('admin.actions')}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
-            {instructors.map((inst) => (
-              <tr key={inst._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
-                <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
+        {/* Desktop: Table view */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
+                <th className="py-4 px-6">{t('admin.instructorName')}</th>
+                <th className="py-4 px-6">{t('admin.instructorEmail')}</th>
+                <th className="py-4 px-6">{t('admin.instructorDepartment')}</th>
+                <th className="py-4 px-6">{t('admin.instructorPhone')}</th>
+                <th className="py-4 px-6">{t('admin.status')}</th>
+                <th className="py-4 px-6 text-right">{t('admin.actions')}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
+              {instructors.map((inst) => (
+                <tr key={inst._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
+                  <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
+                      {inst.name?.charAt(0).toUpperCase() || 'I'}
+                    </div>
+                    {inst.name}
+                  </td>
+                  <td className="py-4 px-6 text-gray-600 dark:text-gray-300">{inst.email}</td>
+                  <td className="py-4 px-6 text-gray-500 dark:text-gray-400">{inst.department || '-'}</td>
+                  <td className="py-4 px-6 text-gray-500 dark:text-gray-400">{inst.phone || '-'}</td>
+                  <td className="py-4 px-6">
+                    <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ${inst.isVerified ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400' : 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400'}`}>
+                      {inst.isVerified ? t('admin.active') : t('admin.inactive')}
+                    </span>
+                  </td>
+                  <td className="py-4 px-6 text-right">
+                    <div className="flex justify-end gap-1">
+                      <button onClick={() => handleToggleStatus(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title={t('admin.toggleStatus')}>
+                        {inst.isVerified ? <FaToggleOn className="h-4 w-4 text-emerald-500" /> : <FaToggleOff className="h-4 w-4" />}
+                      </button>
+                      <button onClick={() => openEdit(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title={t('common.edit')}>
+                        <FaEdit className="h-4 w-4" />
+                      </button>
+                      <button onClick={() => handleDelete(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20" title={t('common.delete')}>
+                        <FaTrash className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile: Card view */}
+        <div className="divide-y divide-gray-100 dark:divide-gray-850 md:hidden">
+          {instructors.map((inst) => (
+            <div key={inst._id} className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-sm">
                     {inst.name?.charAt(0).toUpperCase() || 'I'}
                   </div>
-                  {inst.name}
-                </td>
-                <td className="py-4 px-6 text-gray-600 dark:text-gray-300">{inst.email}</td>
-                <td className="py-4 px-6 text-gray-500 dark:text-gray-400">{inst.department || '-'}</td>
-                <td className="py-4 px-6 text-gray-500 dark:text-gray-400">{inst.phone || '-'}</td>
-                <td className="py-4 px-6">
-                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ${inst.isVerified ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400' : 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400'}`}>
-                    {inst.isVerified ? t('admin.active') : t('admin.inactive')}
-                  </span>
-                </td>
-                <td className="py-4 px-6 text-right">
-                  <div className="flex justify-end gap-1">
-                    <button onClick={() => handleToggleStatus(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title={t('admin.toggleStatus')}>
-                      {inst.isVerified ? <FaToggleOn className="h-4 w-4 text-emerald-500" /> : <FaToggleOff className="h-4 w-4" />}
-                    </button>
-                    <button onClick={() => openEdit(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[#0084D1] dark:hover:bg-gray-800" title={t('common.edit')}>
-                      <FaEdit className="h-4 w-4" />
-                    </button>
-                    <button onClick={() => handleDelete(inst)} className="flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20" title={t('common.delete')}>
-                      <FaTrash className="h-4 w-4" />
-                    </button>
+                  <div>
+                    <p className="font-bold text-gray-950 dark:text-white">{inst.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{inst.email}</p>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+                <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold shrink-0 ${inst.isVerified ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400' : 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400'}`}>
+                  {inst.isVerified ? t('admin.active') : t('admin.inactive')}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <span className="text-xs text-gray-400">{t('admin.instructorDepartment')}</span>
+                  <p className="text-gray-700 dark:text-gray-300">{inst.department || '-'}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-gray-400">{t('admin.instructorPhone')}</span>
+                  <p className="text-gray-700 dark:text-gray-300">{inst.phone || '-'}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 pt-1">
+                <button onClick={() => handleToggleStatus(inst)} className="flex h-9 min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-3 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400">
+                  {inst.isVerified ? <FaToggleOn className="h-4 w-4 text-emerald-500" /> : <FaToggleOff className="h-4 w-4" />}
+                  {inst.isVerified ? t('admin.active') : t('admin.inactive')}
+                </button>
+                <button onClick={() => openEdit(inst)} className="flex h-9 min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-3 text-xs font-semibold text-[#0084D1] hover:bg-[#0084D1]/10 dark:border-gray-700">
+                  <FaEdit className="h-4 w-4" />
+                  {t('common.edit')}
+                </button>
+                <button onClick={() => handleDelete(inst)} className="flex h-9 min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-gray-700">
+                  <FaTrash className="h-4 w-4" />
+                  {t('common.delete')}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

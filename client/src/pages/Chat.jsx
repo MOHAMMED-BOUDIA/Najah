@@ -18,11 +18,13 @@ const Chat = () => {
   const [loadingGroups, setLoadingGroups] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
+  const [mobileChatOpen, setMobileChatOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const pollRef = useRef(null);
 
   const getAvatarUrl = (p) => {
     if (!p) return '';
+    if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
     return `${(import.meta.env.VITE_API_URL ).replace('/api', '')}/${p.replace(/\\/g, '/')}`;
   };
 
@@ -110,8 +112,6 @@ const Chat = () => {
       </div>
     );
   }
-
-  const [mobileChatOpen, setMobileChatOpen] = useState(false);
 
   const openMobileChat = (group) => {
     setActiveGroup(group);

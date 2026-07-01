@@ -173,9 +173,17 @@ const Navbar = ({ onMenuToggle }) => {
               )}
             </button>
 
+            {/* Dropdown backdrop — mobile only */}
+            {showDropdown && (
+              <div
+                className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+                onClick={() => setShowDropdown(false)}
+              />
+            )}
+
             {/* Dropdown */}
             {showDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-80 origin-top-right animate-fadeIn rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900 overflow-hidden" style={{ animation: 'fadeIn 0.2s ease-out' }}>
+              <div className="fixed inset-x-4 top-16 z-50 md:z-auto md:absolute md:inset-x-auto md:right-0 md:top-full md:mt-2 md:w-80 origin-top-right animate-fadeIn rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900 overflow-hidden" style={{ animation: 'fadeIn 0.2s ease-out' }}>
                 <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-800">
                   <p className="text-sm font-bold text-gray-900 dark:text-white">
                     {t('nav.pendingRequests')}
@@ -184,7 +192,7 @@ const Navbar = ({ onMenuToggle }) => {
                     {count} {count === 1 ? t('nav.studentWaiting') : t('nav.studentsWaiting')}
                   </p>
                 </div>
-                <div className="max-h-72 overflow-y-auto">
+                <div className="max-h-[60vh] md:max-h-72 overflow-y-auto">
                   {count === 0 ? (
                     <div className="px-4 py-8 text-center text-sm text-gray-400">
                       {t('nav.noPendingRequests')}

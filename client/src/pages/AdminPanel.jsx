@@ -164,128 +164,229 @@ const AdminPanel = () => {
         
         {/* USERS TAB */}
         {activeTab === 'users' && (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
-                  <th className="py-4 px-6">Name</th>
-                  <th className="py-4 px-6">Email</th>
-                  <th className="py-4 px-6">Role</th>
-                  <th className="py-4 px-6">Department</th>
-                  <th className="py-4 px-6">Phone</th>
-                  <th className="py-4 px-6 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
-                {usersList.map((usr) => (
-                  <tr key={usr._id || usr.id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
-                    <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
+          <>
+            {/* Desktop: Table view */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
+                    <th className="py-4 px-6">Name</th>
+                    <th className="py-4 px-6">Email</th>
+                    <th className="py-4 px-6">Role</th>
+                    <th className="py-4 px-6">Department</th>
+                    <th className="py-4 px-6">Phone</th>
+                    <th className="py-4 px-6 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
+                  {usersList.map((usr) => (
+                    <tr key={usr._id || usr.id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
+                      <td className="py-4 px-6 font-bold text-gray-950 dark:text-white flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-xs">
+                          {usr.name ? usr.name.charAt(0).toUpperCase() : 'U'}
+                        </div>
+                        {usr.name}
+                      </td>
+                      <td className="py-4 px-6 text-gray-600 dark:text-gray-300">
+                        {usr.email}
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                          getRoleBadgeClass(usr.role)
+                        }`}>
+                          {usr.role}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6 text-gray-500 dark:text-gray-400">
+                        {usr.department || '-'}
+                      </td>
+                      <td className="py-4 px-6 text-gray-500 dark:text-gray-400">
+                        {usr.phone || '-'}
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <button
+                          onClick={() => handleDeleteUser(usr._id || usr.id)}
+                          disabled={usr._id === user.id || usr.id === user.id}
+                          type="button"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 disabled:opacity-40"
+                          title="Delete User"
+                        >
+                          <FaTrash className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile: Card view */}
+            <div className="divide-y divide-gray-100 dark:divide-gray-850 md:hidden">
+              {usersList.map((usr) => (
+                <div key={usr._id || usr.id} className="p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0084D1]/10 text-[#0084D1] font-bold text-sm">
                         {usr.name ? usr.name.charAt(0).toUpperCase() : 'U'}
                       </div>
-                      {usr.name}
-                    </td>
-                    <td className="py-4 px-6 text-gray-600 dark:text-gray-300">
-                      {usr.email}
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
-                        getRoleBadgeClass(usr.role)
-                      }`}>
-                        {usr.role}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6 text-gray-500 dark:text-gray-400">
-                      {usr.department || '-'}
-                    </td>
-                    <td className="py-4 px-6 text-gray-500 dark:text-gray-400">
-                      {usr.phone || '-'}
-                    </td>
-                    <td className="py-4 px-6 text-right">
-                      <button
-                        onClick={() => handleDeleteUser(usr._id || usr.id)}
-                        disabled={usr._id === user.id || usr.id === user.id}
-                        type="button"
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 disabled:opacity-40"
-                        title="Delete User"
-                      >
-                        <FaTrash className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      <div>
+                        <p className="font-bold text-gray-950 dark:text-white">{usr.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{usr.email}</p>
+                      </div>
+                    </div>
+                    <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider shrink-0 ${
+                      getRoleBadgeClass(usr.role)
+                    }`}>
+                      {usr.role}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <span className="text-xs text-gray-400">Department</span>
+                      <p className="text-gray-700 dark:text-gray-300">{usr.department || '-'}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-400">Phone</span>
+                      <p className="text-gray-700 dark:text-gray-300">{usr.phone || '-'}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <button
+                      onClick={() => handleDeleteUser(usr._id || usr.id)}
+                      disabled={usr._id === user.id || usr.id === user.id}
+                      type="button"
+                      className="flex h-9 min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-gray-700 disabled:opacity-40"
+                    >
+                      <FaTrash className="h-4 w-4" />
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
         {/* PROJECTS TAB */}
         {activeTab === 'projects' && (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
-                  <th className="py-4 px-6">Project Title</th>
-                  <th className="py-4 px-6">Supervisor</th>
-                  <th className="py-4 px-6">Status</th>
-                  <th className="py-4 px-6">Progress</th>
-                  <th className="py-4 px-6 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
-                {projectsList.map((proj) => (
-                  <tr key={proj._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
-                    <td className="py-4 px-6 font-bold text-gray-950 dark:text-white max-w-[200px] truncate">
-                      {proj.title}
-                    </td>
-                    <td className="py-4 px-6 text-gray-600 dark:text-gray-300">
-                      {proj.supervisor?.name || '-'}
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center gap-2">
-                        <StatusBadge status={proj.status} />
-                        <select
-                          value={proj.status}
-                          onChange={(e) => handleStatusChange(proj._id, e.target.value)}
-                          disabled={statusUpdating}
-                          className="rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
-                        >
-                          <option value="pending">Pending</option>
-                          <option value="approved">Approved</option>
-                          <option value="in-progress">In Progress</option>
-                          <option value="completed">Completed</option>
-                          <option value="rejected">Rejected</option>
-                        </select>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div className="flex items-center gap-2 w-[120px]">
-                        <div className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-800">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1]"
-                            style={{ width: `${proj.progress || 0}%` }}
-                          />
-                        </div>
-                        <span className="text-xs font-bold text-gray-600 dark:text-gray-400">
-                          {proj.progress || 0}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6 text-right">
-                      <button
-                        onClick={() => handleDeleteProject(proj._id)}
-                        type="button"
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                        title="Delete Project"
-                      >
-                        <FaTrash className="h-4 w-4" />
-                      </button>
-                    </td>
+          <>
+            {/* Desktop: Table view */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
+                    <th className="py-4 px-6">Project Title</th>
+                    <th className="py-4 px-6">Supervisor</th>
+                    <th className="py-4 px-6">Status</th>
+                    <th className="py-4 px-6">Progress</th>
+                    <th className="py-4 px-6 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-850 text-sm">
+                  {projectsList.map((proj) => (
+                    <tr key={proj._id} className="hover:bg-gray-50/40 dark:hover:bg-gray-850/20">
+                      <td className="py-4 px-6 font-bold text-gray-950 dark:text-white max-w-[200px] truncate">
+                        {proj.title}
+                      </td>
+                      <td className="py-4 px-6 text-gray-600 dark:text-gray-300">
+                        {proj.supervisor?.name || '-'}
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-2">
+                          <StatusBadge status={proj.status} />
+                          <select
+                            value={proj.status}
+                            onChange={(e) => handleStatusChange(proj._id, e.target.value)}
+                            disabled={statusUpdating}
+                            className="rounded-lg border border-gray-250 bg-gray-50 px-2 py-1 text-xs outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="rejected">Rejected</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-2 w-[120px]">
+                          <div className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1]"
+                              style={{ width: `${proj.progress || 0}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-gray-600 dark:text-gray-400">
+                            {proj.progress || 0}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <button
+                          onClick={() => handleDeleteProject(proj._id)}
+                          type="button"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+                          title="Delete Project"
+                        >
+                          <FaTrash className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile: Card view */}
+            <div className="divide-y divide-gray-100 dark:divide-gray-850 md:hidden">
+              {projectsList.map((proj) => (
+                <div key={proj._id} className="p-4 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-gray-950 dark:text-white truncate">{proj.title}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Supervisor: {proj.supervisor?.name || '-'}
+                      </p>
+                    </div>
+                    <StatusBadge status={proj.status} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 flex-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-[#FFB900] to-[#0084D1]"
+                        style={{ width: `${proj.progress || 0}%` }}
+                      />
+                    </div>
+                    <span className="text-xs font-bold text-gray-600 dark:text-gray-400 shrink-0">
+                      {proj.progress || 0}%
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={proj.status}
+                      onChange={(e) => handleStatusChange(proj._id, e.target.value)}
+                      disabled={statusUpdating}
+                      className="flex-1 rounded-xl border border-gray-250 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-[#0084D1] dark:border-gray-750 dark:bg-gray-800 dark:text-gray-300"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="completed">Completed</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                    <button
+                      onClick={() => handleDeleteProject(proj._id)}
+                      type="button"
+                      className="flex h-9 min-w-[44px] items-center justify-center gap-1.5 rounded-xl border border-gray-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-gray-700"
+                    >
+                      <FaTrash className="h-4 w-4" />
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
       </div>

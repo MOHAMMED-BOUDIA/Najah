@@ -215,7 +215,8 @@ const Documents = () => {
         />
       ) : (
         <div className="rounded-3xl border border-gray-150 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
-          <div className="overflow-x-auto">
+          {/* Desktop: Table view */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50 text-xs font-bold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900/50 dark:text-gray-400">
@@ -269,6 +270,56 @@ const Documents = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile: Card view */}
+          <div className="divide-y divide-gray-100 dark:divide-gray-850 md:hidden">
+            {documents.map((doc) => (
+              <div key={doc._id} className="p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <FaFileAlt className="h-6 w-6 text-[#0084D1] shrink-0" />
+                    <div className="min-w-0">
+                      <p className="font-semibold text-gray-950 dark:text-white truncate">{doc.name}</p>
+                      <span className="inline-block rounded-lg bg-[#0084D1]/10 px-2 py-0.5 text-xs font-bold text-[#0084D1] capitalize mt-0.5">
+                        {doc.type}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-1 shrink-0">
+                    {doc.file && (
+                      <a
+                        href={`http://localhost:5000/uploads/${doc.file}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-[#0084D1] hover:bg-[#0084D1]/10"
+                        title={t('documents.downloadFile')}
+                      >
+                        <FaDownload className="h-4 w-4" />
+                      </a>
+                    )}
+                    <button
+                      onClick={() => handleDeleteDoc(doc._id)}
+                      type="button"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+                      title={t('documents.deleteDocument')}
+                    >
+                      <FaTrash className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-xs text-gray-400">{t('documents.comments')}</span>
+                    <p className="text-gray-700 dark:text-gray-300 truncate">{doc.comment || '-'}</p>
+                  </div>
+                  <div>
+                    <span className="text-xs text-gray-400">{t('documents.dateUploaded')}</span>
+                    <p className="text-gray-700 dark:text-gray-300">{new Date(doc.createdAt).toLocaleDateString()}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
