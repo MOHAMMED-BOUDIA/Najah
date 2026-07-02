@@ -2,7 +2,6 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const compression = require('compression');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const { getAllowedOrigins } = require('./utils/cors');
@@ -15,16 +14,28 @@ initSocket(server);
 
 app.set('trust proxy', true);
 
-const corsOptions = {
-  origin: true,
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  maxAge: 86400,
-};
+const allowedMethods = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+const allowedHeaders = 'Content-Type, Authorization';
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', allowedMethods);
+  res.setHeader('Access-Control-Allow-Headers', allowedHeaders);
+  res.setHeader('Access-Control-Max-Age', '86400');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
+  next();
+});
 
 app.use(compression({ level: 6, threshold: 1024 }));
 
