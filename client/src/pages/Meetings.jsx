@@ -10,6 +10,7 @@ import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
 import { formatDate } from '../utils/helpers';
 import { useConfirm } from '../context/ModalContext';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 const Meetings = () => {
   const { t } = useTranslation();
@@ -32,6 +33,13 @@ const Meetings = () => {
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
+
+  const getInitials = (name) => {
+    if (!name) return 'I';
+    return name.split(' ').map((part) => part[0]).join('').toUpperCase().slice(0, 2);
+  };
+
+  const getAvatarUrl = (avatarPath) => getPublicFileUrl(avatarPath);
 
   // Fetch projects list
   useEffect(() => {
@@ -237,9 +245,53 @@ const Meetings = () => {
                     )}
                   </div>
                 </div>
+                                      {meeting.organizer && (
+                                        <div className="flex items-center gap-2">
+                                          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-[10px] font-bold text-white">
+                                            {meeting.organizer.avatar && (
+                                              <img
+                                                src={getAvatarUrl(meeting.organizer.avatar)}
+                                                alt={meeting.organizer.name}
+                                                className="h-full w-full object-cover object-top"
+                                                onError={(e) => {
+                                                  e.currentTarget.classList.add('hidden');
+                                                  const fallback = e.currentTarget.parentElement?.querySelector('[data-avatar-fallback]');
+                                                  if (fallback) fallback.classList.remove('hidden');
+                                                }}
+                                              />
+                                            )}
+                                            <div
+                                              data-avatar-fallback
+                                              className={`flex h-full w-full items-center justify-center ${meeting.organizer.avatar ? 'hidden' : ''}`}
+                                            >
+                                              {getInitials(meeting.organizer.name)}
+                                            </div>
+                                          </div>
+                                          <span className="font-medium text-gray-700 dark:text-gray-300">{meeting.organizer.name}</span>
+                                        </div>
+                                      )}
 
                 {/* Details */}
                 <div className="mt-4 space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
+                  {meeting.organizer && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-7 w-7 overflow-hidden rounded-full bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-[10px] font-bold text-white flex items-center justify-center shrink-0">
+                        {meeting.organizer.avatar ? (
+                          <img
+                            src={getAvatarUrl(meeting.organizer.avatar)}
+                            alt={meeting.organizer.name}
+                            className="h-full w-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          getInitials(meeting.organizer.name)
+                        )}
+                      </div>
+                      <span className="font-medium text-gray-700 dark:text-gray-300">{meeting.organizer.name}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <FaCalendarAlt className="h-4 w-4 text-[#0084D1] flex-shrink-0" />
                     <span>{formatDate(meeting.date)}</span>

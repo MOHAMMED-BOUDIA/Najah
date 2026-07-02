@@ -16,6 +16,18 @@ const Instructors = () => {
   const [groupsMap, setGroupsMap] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const getInitials = (name) => {
+    if (!name) return 'I';
+    return name
+      .split(' ')
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const getAvatarUrl = (avatarPath) => getPublicFileUrl(avatarPath);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -93,19 +105,26 @@ const Instructors = () => {
                 className="group relative rounded-3xl border border-gray-150 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
               >
                 <div className="flex items-center gap-4">
-                  {inst.avatar ? (
-                    <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-md">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-xl font-bold text-white shadow-md">
+                    {inst.avatar && (
                       <img
-                        src={getPublicFileUrl(inst.avatar)}
+                        src={getAvatarUrl(inst.avatar)}
                         alt={inst.name}
                         className="h-full w-full object-cover object-top"
+                        onError={(e) => {
+                          e.currentTarget.classList.add('hidden');
+                          const fallback = e.currentTarget.parentElement?.querySelector('[data-avatar-fallback]');
+                          if (fallback) fallback.classList.remove('hidden');
+                        }}
                       />
+                    )}
+                    <div
+                      data-avatar-fallback
+                      className={`flex h-full w-full items-center justify-center ${inst.avatar ? 'hidden' : ''}`}
+                    >
+                      {getInitials(inst.name)}
                     </div>
-                  ) : (
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-xl font-bold text-white shadow-md">
-                      {inst.name ? inst.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'I'}
-                    </div>
-                  )}
+                  </div>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
                       {inst.name}

@@ -113,7 +113,7 @@ exports.getInstructors = async (req, res) => {
     const skip = (page - 1) * limit;
     const filter = { role: 'instructor' };
     const [instructors, total] = await Promise.all([
-      User.find(filter).skip(skip).limit(limit).select('-password -avatar').lean(),
+      User.find(filter).skip(skip).limit(limit).select('-password').lean(),
       User.countDocuments(filter),
     ]);
     res.json({ data: instructors, total, page, totalPages: Math.ceil(total / limit) });
@@ -125,7 +125,7 @@ exports.getInstructors = async (req, res) => {
 exports.getMyInstructor = async (req, res) => {
   try {
     const Group = require('../models/Group');
-    const group = await Group.findOne({ members: req.user._id }).populate('instructor', '-password -avatar');
+    const group = await Group.findOne({ members: req.user._id }).populate('instructor', 'name avatar department');
     if (!group || !group.instructor) {
       return res.status(404).json({ message: 'No instructor assigned yet' });
     }

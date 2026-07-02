@@ -7,6 +7,13 @@ const connectDB = require('./config/db');
 const { getAllowedOrigins } = require('./utils/cors');
 require('dotenv').config();
 
+console.log('[server] email env check', {
+  hasEmailUser: !!process.env.EMAIL_USER,
+  emailUserLength: process.env.EMAIL_USER ? process.env.EMAIL_USER.length : 0,
+  hasEmailPass: !!process.env.EMAIL_PASS,
+  emailPassLength: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 0,
+});
+
 const app = express();
 const server = http.createServer(app);
 const { initSocket } = require('./socket');

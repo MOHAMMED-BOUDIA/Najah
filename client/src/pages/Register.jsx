@@ -86,7 +86,10 @@ const Register = () => {
       toast.success(t('auth.validation.confirmEmailSent'));
       navigate('/verify-email');
     } else {
-      toast.error(result.message || t('auth.validation.registrationFailed'));
+      const debugEmailError = result.emailError
+        ? ` SMTP: ${result.emailError.message}${result.emailError.code ? ` (${result.emailError.code})` : ''}`
+        : '';
+      toast.error(`${result.message || t('auth.validation.registrationFailed')}${debugEmailError}`);
     }
   };
 

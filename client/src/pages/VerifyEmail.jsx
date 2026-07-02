@@ -14,6 +14,7 @@ const VerifyEmail = () => {
   const [loading, setLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [resending, setResending] = useState(false);
+  const [lastError, setLastError] = useState('');
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -77,6 +78,7 @@ const VerifyEmail = () => {
       navigate('/login');
     } catch (error) {
       const msg = error.response?.data?.message || 'Verification failed';
+      setLastError(msg);
       toast.error(msg);
       setDigits(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
@@ -86,14 +88,15 @@ const VerifyEmail = () => {
   };
 
   const handleResend = async () => {
-    if (resendCooldown > 0 || !email) return;
+    if (!email) return;
     setResending(true);
     try {
       await axiosInstance.post('/auth/resend-code', { email });
       toast.success(t('auth.codeResent'));
-      setResendCooldown(60);
+      setLastError('');
     } catch (error) {
       const msg = error.response?.data?.message || 'Failed to resend code';
+      setLastError(msg);
       toast.error(msg);
     } finally {
       setResending(false);
@@ -106,6 +109,12 @@ const VerifyEmail = () => {
         <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
           {t('auth.enterCodeSent')} <strong className="text-gray-700 dark:text-gray-200">{email}</strong>
         </p>
+
+        {lastError && (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/20 dark:text-red-300">
+            {lastError}
+          </div>
+        )}
 
         <div className="flex items-center justify-center gap-2 sm:gap-3">
           {digits.map((digit, i) => (
@@ -137,14 +146,12 @@ const VerifyEmail = () => {
           <button
             type="button"
             onClick={handleResend}
-            disabled={resendCooldown > 0 || resending}
+            disabled={resending}
             className="text-sm text-[#0084D1] hover:underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed"
           >
             {resending
               ? t('auth.sending')
-              : resendCooldown > 0
-                ? `${t('auth.resendIn')} ${resendCooldown}s`
-                : t('auth.resendCode')}
+              : t('auth.resendCode')}
           </button>
         </div>
       </form>

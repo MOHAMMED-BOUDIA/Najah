@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 const InstructorGroups = () => {
   const { t } = useTranslation();
@@ -19,6 +20,11 @@ const InstructorGroups = () => {
 
   const imgSrc = (p) => {
     return getPublicFileUrl(p);
+  };
+
+  const getInitials = (name) => {
+    if (!name) return 'I';
+    return name.split(' ').map((part) => part[0]).join('').toUpperCase().slice(0, 2);
   };
 
   useEffect(() => {
@@ -45,6 +51,8 @@ const InstructorGroups = () => {
     try {
       const res = await axiosInstance.post(`/groups/${groupId}/request-join`);
       setGroups(prev => prev.map(g => g._id === groupId ? res.data : g));
+      const refreshed = await axiosInstance.get(`/groups/instructor/${id}`);
+      setGroups(refreshed.data || []);
       toast.success('Join request sent!');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to request join');
@@ -55,6 +63,8 @@ const InstructorGroups = () => {
 
   const isMember = (group) => group.members?.some(m => (m._id || m) === user.id);
   const isPending = (group) => group.pendingRequests?.some(m => (m._id || m) === user.id);
+  const getMemberCount = (group) => group.members?.length || 0;
+  const isGroupFull = (group) => getMemberCount(group) >= (group.maxMembers || 0);
 
   if (loading) {
     return (
@@ -73,6 +83,30 @@ const InstructorGroups = () => {
         >
           <FaArrowLeft className="h-4 w-4" />
         </Link>
+        <div className="h-14 w-14 overflow-hidden rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] shadow-sm shrink-0 text-white">
+          {instructor?.avatar ? (
+            <img
+              src={imgSrc(instructor.avatar)}
+              alt={instructor?.name || 'Instructor'}
+              className="h-full w-full object-cover object-top"
+              onError={(e) => {
+                e.currentTarget.classList.add('hidden');
+                const fallback = e.currentTarget.parentElement?.querySelector('[data-avatar-fallback]');
+                if (fallback) fallback.classList.remove('hidden');
+              }}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-bold">
+              {getInitials(instructor?.name)}
+            </div>
+          )}
+          <div
+            data-avatar-fallback
+            className={`hidden h-full w-full items-center justify-center font-bold ${instructor?.avatar ? '' : 'hidden'}`}
+          >
+            {getInitials(instructor?.name)}
+          </div>
+        </div>
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
             {instructor?.name || 'Instructor'}{t('groups.instructorGroupsSuffix')}
@@ -93,29 +127,29 @@ const InstructorGroups = () => {
           {groups.map((group) => {
             const joined = isMember(group);
             const pending = isPending(group);
-            const memberCount = group.members?.length || 0;
-            const isFull = memberCount >= group.maxMembers;
+            const memberCount = getMemberCount(group);
+            const isFull = isGroupFull(group);
 
             let btnContent;
             if (joined) {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400 cursor-default">
                   <FaCheck className="h-4 w-4" />
-                  {t('groups.joined')} ✓
+                  Already Member
                 </span>
               );
             } else if (pending) {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-600 dark:bg-amber-950/20 dark:text-amber-400 cursor-default">
                   <FaHourglassHalf className="h-4 w-4" />
-                  {t('groups.pendingApproval')}
+                  Request Pending
                 </span>
               );
             } else if (isFull) {
               btnContent = (
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-400 dark:bg-gray-800 cursor-default">
                   <FaBan className="h-4 w-4" />
-                  {t('groups.full')}
+                  Group Full
                 </span>
               );
             } else {
@@ -126,7 +160,7 @@ const InstructorGroups = () => {
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0084D1] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#0277BD] disabled:opacity-50"
                 >
                   <FaUserPlus className="h-4 w-4" />
-                  {joining === group._id ? t('groups.sending') : t('groups.requestToJoin')}
+                  {joining === group._id ? 'Joining...' : 'Join Group'}
                 </button>
               );
             }

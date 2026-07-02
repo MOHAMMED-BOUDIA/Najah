@@ -1,32 +1,111 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  connectionTimeout: 10000,
-  socketTimeout: 15000,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+console.log('[emailService] startup env check', {
+  hasEmailUser: !!process.env.EMAIL_USER,
+  emailUserLength: process.env.EMAIL_USER ? process.env.EMAIL_USER.length : 0,
+  hasEmailPass: !!process.env.EMAIL_PASS,
+  emailPassLength: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 0,
+  hasClientUrl: !!process.env.CLIENT_URL,
+  nodeEnv: process.env.NODE_ENV || 'development',
 });
 
 const SENDER_NAME = process.env.EMAIL_SENDER_NAME || 'NAJAH';
 const SENDER_EMAIL = process.env.EMAIL_USER || process.env.EMAIL_SENDER_EMAIL || 'noreply@najah.com';
 
-const sendMail = async ({ to, subject, html }) => {
-  await transporter.sendMail({
-    from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
-    to,
-    subject,
-    html,
+const buildTransporter = () => {
+  console.log('[emailService] creating transporter', {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    senderEmailLength: SENDER_EMAIL.length,
+    emailUserConfigured: !!process.env.EMAIL_USER,
+    emailPassLength: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 0,
+  });
+
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    debug: true,
+    logger: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+    connectionTimeout: 20000,
+    greetingTimeout: 20000,
+    socketTimeout: 30000,
+    tls: {
+      rejectUnauthorized: process.env.EMAIL_REJECT_UNAUTHORIZED === 'false' ? false : true,
+    },
   });
 };
 
+const createDetailedError = (error) => ({
+  message: error?.message || 'Unknown email error',
+  code: error?.code || null,
+  command: error?.command || null,
+  response: error?.response || null,
+  stack: error?.stack || null,
+});
+
+const sendMail = async ({ to, subject, html }) => {
+  console.log('[emailService] sendMail invoked', {
+    to,
+    subject,
+    from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
+  });
+
+  const transporter = buildTransporter();
+
+  try {
+    console.log('[emailService] before sendMail promise', { to, subject });
+
+    const info = await new Promise((resolve, reject) => {
+      console.log('[emailService] inside sendMail promise', { to, subject });
+      transporter.sendMail(
+        {
+          from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
+          to,
+          subject,
+          html,
+        },
+        (error, result) => {
+          if (error) {
+            const detailedError = createDetailedError(error);
+            console.error('[emailService] sendMail callback error', detailedError);
+            reject(detailedError);
+            return;
+          }
+
+          console.log('[emailService] sendMail callback success', {
+            messageId: result?.messageId,
+            response: result?.response,
+            accepted: result?.accepted,
+            rejected: result?.rejected,
+          });
+          resolve(result);
+        }
+      );
+    });
+
+    console.log('[emailService] after sendMail completes', {
+      to,
+      subject,
+      messageId: info?.messageId,
+      response: info?.response,
+    });
+
+    return info;
+  } catch (error) {
+    const detailedError = createDetailedError(error);
+    console.error('[emailService] after sendMail fails', detailedError);
+    throw detailedError;
+  }
+};
+
 const sendVerificationCodeEmail = async (to, code) => {
-  await sendMail({
+  return sendMail({
     to,
     subject: 'Your NAJAH verification code',
     html: `
@@ -57,7 +136,7 @@ const sendVerificationCodeEmail = async (to, code) => {
 
 const sendPasswordResetEmail = async (to, token) => {
   const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
-  await sendMail({
+  return sendMail({
     to,
     subject: 'Reset your NAJAH password',
     html: `
@@ -75,7 +154,7 @@ const sendPasswordResetEmail = async (to, token) => {
 
 const sendVerificationEmail = async (to, token) => {
   const verifyLink = `${process.env.CLIENT_URL}/verify/${token}`;
-  await sendMail({
+  return sendMail({
     to,
     subject: 'Confirm your NAJAH account',
     html: `
@@ -90,4 +169,16 @@ const sendVerificationEmail = async (to, token) => {
   });
 };
 
-module.exports = { sendVerificationCodeEmail, sendPasswordResetEmail, sendVerificationEmail };
+const sendTestEmail = async (to) => {
+  return sendMail({
+    to,
+    subject: 'NAJAH email transport test',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
+        <h2 style="color: #0084D1;">NAJAH Email Test</h2>
+        <p>If you received this, SMTP delivery is working.</p>
+      </div>`,
+  });
+};
+
+module.exports = { sendVerificationCodeEmail, sendPasswordResetEmail, sendVerificationEmail, sendTestEmail };

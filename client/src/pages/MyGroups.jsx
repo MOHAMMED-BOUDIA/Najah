@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaUsers, FaSave, FaTimes, FaUserCheck, FaCamera, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
@@ -11,6 +12,7 @@ import { getPublicFileUrl } from '../utils/apiOrigin';
 const MyGroups = () => {
   const { t } = useTranslation();
   const confirm = useConfirm();
+  const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -21,6 +23,7 @@ const MyGroups = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [processing, setProcessing] = useState(null);
 
   const fetchGroups = async () => {
     try {
@@ -104,8 +107,6 @@ const MyGroups = () => {
     }
   };
 
-  const [processing, setProcessing] = useState(null);
-
   const handleDelete = async (group) => {
     if (!await confirm({ title: t('common.delete'), message: `Delete "${group.name}"? This cannot be undone.`, confirmLabel: t('common.delete'), destructive: true })) return;
     try {
@@ -122,6 +123,7 @@ const MyGroups = () => {
     try {
       const res = await axiosInstance.post(`/groups/${groupId}/approve/${userId}`);
       setGroups(prev => prev.map(g => g._id === groupId ? res.data : g));
+      await fetchGroups();
       toast.success('Student approved!');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to approve');
@@ -141,6 +143,41 @@ const MyGroups = () => {
     } finally {
       setProcessing(null);
     }
+  };
+
+  const handleRemoveMember = async (group, member) => {
+    const memberName = member.name || 'this student';
+    const confirmed = await confirm({
+      title: 'Remove Student',
+      message: `Are you sure you want to remove ${memberName} from this group?`,
+      confirmLabel: 'Remove',
+      cancelLabel: t('common.cancel'),
+      destructive: true,
+    });
+
+    if (!confirmed) return;
+
+    setProcessing(`remove-${group._id}-${member._id}`);
+    try {
+      const res = await axiosInstance.delete(`/groups/${group._id}/members/${member._id}`);
+      setGroups(prev => prev.map(g => g._id === group._id ? res.data.group : g));
+      toast.success('Student removed successfully');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to remove student');
+    } finally {
+      setProcessing(null);
+    }
+  };
+
+  const isGroupOwner = (group) => {
+    const instructorId = group.instructor?._id || group.instructor;
+    return Boolean(user?.id && instructorId && instructorId.toString() === user.id.toString());
+  };
+
+  const getGroupCapacityState = (group) => {
+    const memberCount = group.members?.length || 0;
+    const maxMembers = group.maxMembers || 0;
+    return memberCount >= maxMembers ? 'full' : 'open';
   };
 
   if (loading) {
@@ -287,9 +324,9 @@ const MyGroups = () => {
                   <div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">{group.name}</h3>
                     <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold mt-1 ${
-                      group.status === 'open' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+                      getGroupCapacityState(group) === 'full' ? 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400' : 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400'
                     }`}>
-                      {group.status === 'open' ? t('groups.open') : t('groups.closed')}
+                      {getGroupCapacityState(group) === 'full' ? 'Full' : 'Open'}
                     </span>
                     {group.pendingRequests?.length > 0 && (
                       <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:bg-amber-950/30 dark:text-amber-400">
@@ -331,9 +368,23 @@ const MyGroups = () => {
                     <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">{t('groups.enrolledStudents')}</p>
                     <div className="flex flex-wrap gap-2">
                       {group.members.map((member) => (
-                        <span key={member._id} className="inline-flex items-center gap-1.5 rounded-full bg-gray-50 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                        <span
+                          key={member._id}
+                          className="group inline-flex items-center gap-1.5 rounded-full bg-gray-50 py-1 pl-3 pr-2 text-xs font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                        >
                           <FaUserCheck className="h-3 w-3 text-emerald-500" />
-                          {member.name || 'Student'}
+                          <span className="whitespace-nowrap">{member.name || 'Student'}</span>
+                          {isGroupOwner(group) && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveMember(group, member)}
+                              disabled={processing === `remove-${group._id}-${member._id}`}
+                              className="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full text-gray-400 opacity-0 transition-all duration-200 hover:bg-red-50 hover:text-red-600 group-hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-red-950/20 dark:hover:text-red-400"
+                              title={`Remove ${member.name || 'student'}`}
+                            >
+                              <FaTimes className="h-2.5 w-2.5" />
+                            </button>
+                          )}
                         </span>
                       ))}
                     </div>

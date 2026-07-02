@@ -78,12 +78,16 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setLoading(true);
     try {
-      await axiosInstance.post('/auth/register', userData);
-      return { success: true };
+      const response = await axiosInstance.post('/auth/register', userData);
+      return { success: true, data: response.data };
     } catch (error) {
       console.error('Registration error:', error);
       const message = error.response?.data?.message || 'Registration failed. Please try again.';
-      return { success: false, message };
+      return {
+        success: false,
+        message,
+        emailError: error.response?.data?.emailError || null,
+      };
     } finally {
       setLoading(false);
     }

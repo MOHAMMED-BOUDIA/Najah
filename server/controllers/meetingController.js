@@ -64,7 +64,7 @@ exports.createMeeting = async (req, res) => {
 exports.getMeetingsByProject = async (req, res) => {
   try {
     const meetings = await Meeting.find({ project: req.params.projectId })
-      .populate('organizer', 'name')
+      .populate('organizer', 'name avatar')
       .populate('participants', 'name email');
     res.json(meetings);
   } catch (error) {

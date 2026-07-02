@@ -37,7 +37,7 @@ const groupSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['open', 'closed'],
+    enum: ['open', 'full', 'closed'],
     default: 'open'
   }
 }, { timestamps: true });

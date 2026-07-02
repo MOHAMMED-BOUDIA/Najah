@@ -23,6 +23,12 @@ const generateVerificationCode = () =>
 
 exports.register = async (req, res) => {
   try {
+    console.log('[authController] register endpoint hit', {
+      bodyKeys: Object.keys(req.body || {}),
+      hasEmail: !!req.body?.email,
+      email: req.body?.email,
+    });
+
     const { name, email, password, role, department } = req.body;
 
     if (role && role !== 'student') {
@@ -61,9 +67,46 @@ exports.register = async (req, res) => {
     });
 
     await user.save();
+    console.log('[authController] user created', {
+      userId: user._id,
+      email: user.email,
+      role: user.role,
+      isVerified: user.isVerified,
+      verificationCodeLength: user.verificationCode ? String(user.verificationCode).length : 0,
+    });
 
     const { sendVerificationCodeEmail: sendVerificationEmail } = require('../services/emailService');
-    await sendVerificationEmail(email, verificationCode);
+    console.log('[authController] before email delay');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log('[authController] before calling sendVerificationEmail');
+
+    try {
+      const emailInfo = await sendVerificationEmail(email, verificationCode);
+      console.log('[authController] after sendVerificationEmail success', {
+        messageId: emailInfo?.messageId,
+        response: emailInfo?.response,
+        accepted: emailInfo?.accepted,
+        rejected: emailInfo?.rejected,
+      });
+    } catch (emailError) {
+      console.error('[authController] after sendVerificationEmail failure', {
+        message: emailError?.message,
+        code: emailError?.code,
+        command: emailError?.command,
+        response: emailError?.response,
+        stack: emailError?.stack,
+      });
+
+      return res.status(500).json({
+        message: 'User created, but verification email failed',
+        emailError: {
+          message: emailError?.message || 'Unknown email error',
+          code: emailError?.code || null,
+          command: emailError?.command || null,
+          response: emailError?.response || null,
+        },
+      });
+    }
 
     res.status(201).json({
       message: 'Verification code sent to your email',
@@ -328,6 +371,56 @@ exports.resetPassword = async (req, res) => {
     await user.save();
 
     res.json({ message: 'Password reset successful. You can now log in.' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.testEmail = async (req, res) => {
+  try {
+    const testTo = req.query.to || process.env.EMAIL_USER;
+
+    if (!testTo) {
+      return res.status(400).json({ message: 'No destination email available for test' });
+    }
+
+    console.log('[authController] testEmail endpoint hit', { testTo });
+    const { sendTestEmail } = require('../services/emailService');
+
+    try {
+      const info = await sendTestEmail(testTo);
+      console.log('[authController] testEmail success', {
+        messageId: info?.messageId,
+        response: info?.response,
+        accepted: info?.accepted,
+        rejected: info?.rejected,
+      });
+
+      return res.json({
+        message: 'Test email sent',
+        to: testTo,
+        messageId: info?.messageId,
+        response: info?.response,
+      });
+    } catch (emailError) {
+      console.error('[authController] testEmail failure', {
+        message: emailError?.message,
+        code: emailError?.code,
+        command: emailError?.command,
+        response: emailError?.response,
+        stack: emailError?.stack,
+      });
+
+      return res.status(500).json({
+        message: 'Test email failed',
+        emailError: {
+          message: emailError?.message || 'Unknown email error',
+          code: emailError?.code || null,
+          command: emailError?.command || null,
+          response: emailError?.response || null,
+        },
+      });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

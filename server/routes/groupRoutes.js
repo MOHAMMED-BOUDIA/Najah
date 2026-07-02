@@ -8,6 +8,7 @@ const {
   createGroup,
   updateGroup,
   deleteGroup,
+  removeStudentFromGroup,
   joinGroup,
   leaveGroup,
   requestJoinGroup,
@@ -27,6 +28,7 @@ router.get('/instructor/:instructorId', auth, getGroupsByInstructor);
 router.post('/', auth, authorize('instructor'), upload.single('image'), createGroup);
 router.put('/:id', auth, upload.single('image'), updateGroup);
 router.delete('/:id', auth, deleteGroup);
+router.delete('/:groupId/members/:studentId', auth, removeStudentFromGroup);
 router.get('/pending-requests', auth, authorize('instructor'), getPendingRequests);
 router.get('/my-membership', auth, authorize('student'), getMyMembership);
 router.post('/:id/request-join', auth, authorize('student'), requestJoinGroup);
