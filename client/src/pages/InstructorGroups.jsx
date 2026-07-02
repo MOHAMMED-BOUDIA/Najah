@@ -18,10 +18,7 @@ const InstructorGroups = () => {
   const [joining, setJoining] = useState(null);
 
   const imgSrc = (p) => {
-    if (!p) return '';
-    if (p.startsWith('http') || p.startsWith('data:')) return p;
-    const origin = (import.meta.env.VITE_API_URL ).replace('/api', '');
-    return `${origin}${p.startsWith('/') ? '' : '/'}${p.replace(/\\/g, '/')}`;
+    return getPublicFileUrl(p);
   };
 
   useEffect(() => {

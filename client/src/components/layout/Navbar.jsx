@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 import axiosInstance from '../../api/axios';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { getPublicFileUrl } from '../../utils/apiOrigin';
 
 const Navbar = ({ onMenuToggle }) => {
   const { t } = useTranslation();
@@ -101,8 +102,7 @@ const Navbar = ({ onMenuToggle }) => {
   const totalCount = unreadCount + pendingRequests.length;
 
   const getAvatarUrl = (avatarPath) => {
-    if (!avatarPath) return '';
-    return `${(import.meta.env.VITE_API_URL).replace('/api', '')}/${avatarPath.replace(/\\/g, '/')}`;
+    return getPublicFileUrl(avatarPath);
   };
 
   const handleLogout = () => {

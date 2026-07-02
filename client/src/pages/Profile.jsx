@@ -21,6 +21,7 @@ import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import Tabs from '../components/common/Tabs';
 import PasswordInput from '../components/common/PasswordInput';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 // ─── Password strength helper ───────────────────────────────────────────────
 const getPasswordStrength = (pwd) => {
@@ -77,13 +78,10 @@ const Profile = () => {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const fileInputRef = useRef(null);
 
-  const SERVER_ORIGIN = (import.meta.env.VITE_API_URL).replace('/api', '');
-
   const getAvatarUrl = (avatarPath) => {
     if (!avatarPath) return null;
-    if (avatarPath.startsWith('http') || avatarPath.startsWith('data:')) return avatarPath;
     if (avatarPath.startsWith('uploads/')) return null;
-    return `${SERVER_ORIGIN}/${avatarPath.replace(/\\/g, '/')}`;
+    return getPublicFileUrl(avatarPath);
   };
 
   const handleAvatarClick = () => {

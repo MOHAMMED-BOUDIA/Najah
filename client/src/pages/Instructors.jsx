@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 const Instructors = () => {
   const { t } = useTranslation();
@@ -95,7 +96,7 @@ const Instructors = () => {
                   {inst.avatar ? (
                     <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-md">
                       <img
-                        src={`${(import.meta.env.VITE_API_URL ).replace('/api', '')}/${inst.avatar.replace(/\\/g, '/')}`}
+                        src={getPublicFileUrl(inst.avatar)}
                         alt={inst.name}
                         className="h-full w-full object-cover object-top"
                       />

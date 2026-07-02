@@ -1,15 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const rawApiBaseUrl = import.meta.env.VITE_API_URL || '';
-
-const normalizeApiBaseUrl = (value) => {
-  const trimmed = value.trim().replace(/\/+$/, '');
-  if (!trimmed) return '';
-  return trimmed.replace(/\/api$/, '');
-};
-
-const API_BASE_URL = normalizeApiBaseUrl(rawApiBaseUrl);
+const API_BASE_URL = '/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -21,9 +13,6 @@ axiosInstance.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    }
-    if (config.url && !config.url.startsWith('http') && !config.url.startsWith('/api')) {
-      config.url = `/api${config.url.startsWith('/') ? config.url : `/${config.url}`}`;
     }
     return config;
   },

@@ -2,10 +2,11 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef } f
 import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext';
 import axiosInstance from '../api/axios';
+import { getApiOrigin } from '../utils/apiOrigin';
 
 const NotificationContext = createContext(null);
 
-const SOCKET_URL = (import.meta.env.VITE_API_URL || '').replace('/api', '');
+const SOCKET_URL = getApiOrigin();
 
 export const NotificationProvider = ({ children }) => {
   const { user, token } = useAuth();

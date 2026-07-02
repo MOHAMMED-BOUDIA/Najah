@@ -7,6 +7,7 @@ import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import { CardSkeleton } from '../components/common/Skeleton';
 import EmptyState from '../components/common/EmptyState';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 const Chat = () => {
   const { t } = useTranslation();
@@ -23,9 +24,7 @@ const Chat = () => {
   const pollRef = useRef(null);
 
   const getAvatarUrl = (p) => {
-    if (!p) return '';
-    if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('data:')) return p;
-    return `${(import.meta.env.VITE_API_URL ).replace('/api', '')}/${p.replace(/\\/g, '/')}`;
+    return getPublicFileUrl(p);
   };
 
   useEffect(() => {

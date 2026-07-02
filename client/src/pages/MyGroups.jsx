@@ -6,6 +6,7 @@ import { useConfirm } from '../context/ModalContext';
 import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import EmptyState from '../components/common/EmptyState';
+import { getPublicFileUrl } from '../utils/apiOrigin';
 
 const MyGroups = () => {
   const { t } = useTranslation();
@@ -275,11 +276,7 @@ const MyGroups = () => {
                 <div className="flex items-center gap-3">
                   {group.image ? (
                     <div className="h-14 w-14 overflow-hidden rounded-xl flex-shrink-0">
-                      <img src={(() => {
-                        if (group.image.startsWith('http') || group.image.startsWith('data:')) return group.image;
-                        const origin = (import.meta.env.VITE_API_URL).replace('/api', '');
-                        return `${origin}${group.image.startsWith('/') ? '' : '/'}${group.image.replace(/\\/g, '/')}`;
-                      })()} alt={group.name} className="h-full w-full object-cover"
+                      <img src={getPublicFileUrl(group.image)} alt={group.name} className="h-full w-full object-cover"
                         onError={(e) => { e.target.style.display = 'none'; }} />
                     </div>
                   ) : (
