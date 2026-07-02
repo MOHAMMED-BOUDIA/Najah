@@ -1,16 +1,21 @@
 const jwt = require('jsonwebtoken');
 const User = require('./models/User');
+const { isAllowedOrigin } = require('./utils/cors');
 
 let io;
 
 function initSocket(server) {
   const { Server } = require('socket.io');
 
-  const allowedOrigins = (process.env.CLIENT_URL || '').split(',').map(s => s.trim()).filter(Boolean);
-
   io = new Server(server, {
     cors: {
-      origin: allowedOrigins.length > 0 ? allowedOrigins : true,
+      origin(origin, callback) {
+        if (!origin || isAllowedOrigin(origin)) {
+          return callback(null, true);
+        }
+
+        return callback(new Error(`CORS blocked for origin: ${origin}`));
+      },
       credentials: true
     },
     pingTimeout: 60000,

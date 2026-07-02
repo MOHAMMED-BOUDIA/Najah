@@ -2,8 +2,10 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const compression = require('compression');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
+const { getAllowedOrigins, isAllowedOrigin, normalizeOrigin } = require('./utils/cors');
 require('dotenv').config();
 
 const app = express();
@@ -13,20 +15,22 @@ initSocket(server);
 
 app.set('trust proxy', true);
 
-const allowedOrigins = (process.env.CLIENT_URL || '').split(',').map(s => s.trim()).filter(Boolean);
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Max-Age', '86400');
-  if (origin && (allowedOrigins.length === 0 || allowedOrigins.includes(origin))) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  if (req.method === 'OPTIONS') return res.status(204).end();
-  next();
-});
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || isAllowedOrigin(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS blocked for origin: ${normalizeOrigin(origin)}`));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 86400,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(compression({ level: 6, threshold: 1024 }));
 
@@ -57,6 +61,7 @@ app.get('/api/debug', (req, res) => {
     mongoUriPrefix: process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 25) + '...' : null,
     dbState: ['disconnected', 'connected', 'connecting', 'disconnecting'][mongoose.connection.readyState],
     clientUrl: process.env.CLIENT_URL || 'not set',
+    allowedOrigins: getAllowedOrigins(),
     nodeEnv: process.env.NODE_ENV || 'not set',
     vercel: !!process.env.VERCEL,
   });
