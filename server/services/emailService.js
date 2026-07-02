@@ -1,19 +1,20 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 587),
-  secure: String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true',
-  auth: process.env.SMTP_USER
-    ? {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      }
-    : undefined,
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  connectionTimeout: 10000,
+  socketTimeout: 15000,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 const SENDER_NAME = process.env.EMAIL_SENDER_NAME || 'NAJAH';
-const SENDER_EMAIL = process.env.EMAIL_SENDER_EMAIL || process.env.SMTP_USER || 'noreply@najah.com';
+const SENDER_EMAIL = process.env.EMAIL_USER || process.env.EMAIL_SENDER_EMAIL || 'noreply@najah.com';
 
 const sendMail = async ({ to, subject, html }) => {
   await transporter.sendMail({
