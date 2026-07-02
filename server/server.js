@@ -5,7 +5,7 @@ const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
-const { getAllowedOrigins, isAllowedOrigin, normalizeOrigin } = require('./utils/cors');
+const { getAllowedOrigins } = require('./utils/cors');
 require('dotenv').config();
 
 const app = express();
@@ -16,13 +16,7 @@ initSocket(server);
 app.set('trust proxy', true);
 
 const corsOptions = {
-  origin(origin, callback) {
-    if (!origin || isAllowedOrigin(origin)) {
-      return callback(null, true);
-    }
-
-    return callback(new Error(`CORS blocked for origin: ${normalizeOrigin(origin)}`));
-  },
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
