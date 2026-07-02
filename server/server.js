@@ -18,14 +18,7 @@ const allowedMethods = 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
 const allowedHeaders = 'Content-Type, Authorization';
 
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-
-  if (origin) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', allowedMethods);
   res.setHeader('Access-Control-Allow-Headers', allowedHeaders);
   res.setHeader('Access-Control-Max-Age', '86400');

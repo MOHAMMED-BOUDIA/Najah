@@ -9,7 +9,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://najah-kappa.vercel.app"
+          "value": "*"
         },
         {
           "key": "Access-Control-Allow-Methods",
