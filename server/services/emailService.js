@@ -1,18 +1,34 @@
-const { BrevoClient } = require('@getbrevo/brevo');
+const nodemailer = require('nodemailer');
 
-const client = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 587),
+  secure: String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true',
+  auth: process.env.SMTP_USER
+    ? {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      }
+    : undefined,
+});
 
-const SENDER = {
-  name: process.env.BREVO_SENDER_NAME || 'NAJAH',
-  email: process.env.BREVO_SENDER_EMAIL || 'noreply@najah.com',
+const SENDER_NAME = process.env.EMAIL_SENDER_NAME || 'NAJAH';
+const SENDER_EMAIL = process.env.EMAIL_SENDER_EMAIL || process.env.SMTP_USER || 'noreply@najah.com';
+
+const sendMail = async ({ to, subject, html }) => {
+  await transporter.sendMail({
+    from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
+    to,
+    subject,
+    html,
+  });
 };
 
 const sendVerificationCodeEmail = async (to, code) => {
-  await client.transactionalEmails.sendTransacEmail({
-    sender: SENDER,
-    to: [{ email: to }],
+  await sendMail({
+    to,
     subject: 'Your NAJAH verification code',
-    htmlContent: `
+    html: `
       <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
         <div style="text-align: center; padding: 24px 0;">
           <h1 style="color: #0084D1; margin: 0;">NAJAH</h1>
@@ -40,11 +56,10 @@ const sendVerificationCodeEmail = async (to, code) => {
 
 const sendPasswordResetEmail = async (to, token) => {
   const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
-  await client.transactionalEmails.sendTransacEmail({
-    sender: SENDER,
-    to: [{ email: to }],
+  await sendMail({
+    to,
     subject: 'Reset your NAJAH password',
-    htmlContent: `
+    html: `
       <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
         <h2 style="color: #0084D1;">Password Reset Request</h2>
         <p>Click the button below to reset your password. This link expires in 1 hour.</p>
@@ -59,11 +74,10 @@ const sendPasswordResetEmail = async (to, token) => {
 
 const sendVerificationEmail = async (to, token) => {
   const verifyLink = `${process.env.CLIENT_URL}/verify/${token}`;
-  await client.transactionalEmails.sendTransacEmail({
-    sender: SENDER,
-    to: [{ email: to }],
+  await sendMail({
+    to,
     subject: 'Confirm your NAJAH account',
-    htmlContent: `
+    html: `
       <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
         <h2 style="color: #0084D1;">Welcome to NAJAH!</h2>
         <p>Please confirm your account by clicking the button below:</p>
