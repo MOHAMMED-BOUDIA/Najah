@@ -46,55 +46,68 @@ const Dashboard = () => {
   }, [user, location.pathname, navigate]);
 
   useEffect(() => {
+    if (!user || !user.id) return;
     const fetchData = async () => {
       setLoading(true);
-      try {
-        const [projectsRes, teamsRes] = await Promise.all([
-          axiosInstance.get('/projects'),
-          axiosInstance.get('/teams'),
-        ]);
-        const projects = projectsRes.data.data || [];
-        const teams = teamsRes.data || [];
+      let projects = [];
+      let teams = [];
 
-        let totalTasks = 0;
-        let totalMeetings = 0;
-        await Promise.all(projects.map(async (p) => {
-          try { const r = await axiosInstance.get(`/tasks/project/${p._id}`); totalTasks += (r.data || []).length; } catch { /* ignore */ }
-          try { const r = await axiosInstance.get(`/meetings/project/${p._id}`); totalMeetings += (r.data || []).length; } catch { /* ignore */ }
-        }));
+      // Step 1: Fetch projects (filtered for instructor) and teams
+      const projectUrl = user.role === 'instructor'
+        ? `/projects?supervisor=${user.id}&limit=100`
+        : '/projects?limit=100';
 
-        setStats({ projectsCount: projects.length, teamsCount: teams.length, tasksCount: totalTasks, meetingsCount: totalMeetings });
+      const [pRes, tRes] = await Promise.allSettled([
+        axiosInstance.get(projectUrl),
+        axiosInstance.get('/teams'),
+      ]);
+      if (pRes.status === 'fulfilled') projects = pRes.value.data.data || [];
+      if (tRes.status === 'fulfilled') teams = tRes.value.data || [];
 
-        const sorted = [...projects].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
-        setRecentProjects(sorted);
-
-        const statusCounts = projects.reduce((acc, curr) => { const s = curr.status || 'pending'; acc[s] = (acc[s] || 0) + 1; return acc; }, {});
-        const statusMap = { 'pending': t('common.statusPending'), 'approved': t('common.statusApproved'), 'in-progress': t('common.statusInProgress'), 'completed': t('common.statusCompleted'), 'rejected': t('common.statusRejected') };
-        setStatusChartData(Object.keys(statusCounts).map(k => ({ name: statusMap[k] || k, value: statusCounts[k] })));
-        setProgressChartData(projects.slice(0, 8).map(p => ({ name: p.title.length > 15 ? p.title.slice(0, 15) + '...' : p.title, progress: p.progress || 0 })));
-
-        if (user?.role === 'student') {
-          try {
-            const groupsRes = await axiosInstance.get('/groups');
-            const allGroups = groupsRes.data || [];
-            setJoinedGroups(allGroups.filter(g => g.members?.some(m => (m._id || m) === user.id)));
-          } catch { /* ignore */ }
+      // Step 2: Count tasks/meetings — only for the 10 most recent projects (avoid N+1 timeout)
+      let totalTasks = 0;
+      let totalMeetings = 0;
+      const recentForCount = [...projects].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+      const countResults = await Promise.allSettled(
+        recentForCount.map(p => Promise.allSettled([
+          axiosInstance.get(`/tasks/project/${p._id}`),
+          axiosInstance.get(`/meetings/project/${p._id}`),
+        ]))
+      );
+      countResults.forEach((result) => {
+        if (result.status === 'fulfilled') {
+          const [tr, mr] = result.value;
+          if (tr.status === 'fulfilled') totalTasks += (tr.value.data || []).length;
+          if (mr.status === 'fulfilled') totalMeetings += (mr.value.data || []).length;
         }
-        if (user?.role === 'instructor') {
-          try {
-            const groupsRes = await axiosInstance.get('/groups/my');
-            setMyGroups(groupsRes.data || []);
-          } catch { /* ignore */ }
-          try {
-            const pendingRes = await axiosInstance.get('/groups/pending-requests');
-            setPendingRequests(pendingRes.data.requests || []);
-          } catch { /* ignore */ }
+      });
+
+      setStats({ projectsCount: projects.length, teamsCount: teams.length, tasksCount: totalTasks, meetingsCount: totalMeetings });
+
+      const sorted = [...projects].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
+      setRecentProjects(sorted);
+
+      const statusCounts = projects.reduce((acc, curr) => { const s = curr.status || 'pending'; acc[s] = (acc[s] || 0) + 1; return acc; }, {});
+      const statusMap = { 'pending': t('common.statusPending'), 'approved': t('common.statusApproved'), 'in-progress': t('common.statusInProgress'), 'completed': t('common.statusCompleted'), 'rejected': t('common.statusRejected') };
+      setStatusChartData(Object.keys(statusCounts).map(k => ({ name: statusMap[k] || k, value: statusCounts[k] })));
+      setProgressChartData(projects.slice(0, 8).map(p => ({ name: p.title.length > 15 ? p.title.slice(0, 15) + '...' : p.title, progress: p.progress || 0 })));
+
+      if (user?.role === 'student') {
+        const groupsRes = await axiosInstance.get('/groups').catch(() => null);
+        if (groupsRes) {
+          const allGroups = groupsRes.data || [];
+          setJoinedGroups(allGroups.filter(g => g.members?.some(m => (m._id || m) === user.id)));
         }
-      } catch {
-        toast.error(t('common.loadError'));
-      } finally {
-        setLoading(false);
       }
+      if (user?.role === 'instructor') {
+        const [groupsRes, pendingRes] = await Promise.allSettled([
+          axiosInstance.get('/groups/my'),
+          axiosInstance.get('/groups/pending-requests'),
+        ]);
+        if (groupsRes.status === 'fulfilled') setMyGroups(groupsRes.value.data || []);
+        if (pendingRes.status === 'fulfilled') setPendingRequests(pendingRes.value.data.requests || []);
+      }
+      setLoading(false);
     };
     fetchData();
   }, [user, t]);

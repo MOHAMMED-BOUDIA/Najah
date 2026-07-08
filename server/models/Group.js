@@ -42,4 +42,5 @@ const groupSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+groupSchema.index({ instructor: 1 });
 module.exports = mongoose.models.Group || mongoose.model('Group', groupSchema);

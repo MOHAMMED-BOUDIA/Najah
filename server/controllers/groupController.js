@@ -1,5 +1,6 @@
 const Group = require('../models/Group');
 const User = require('../models/User');
+const Message = require('../models/Message');
 const Notification = require('../models/Notification');
 const { getIO } = require('../socket');
 
@@ -32,7 +33,7 @@ exports.getGroupsByInstructor = async (req, res) => {
   try {
     const groups = await Group.find({ instructor: req.params.instructorId })
       .populate('instructor', 'name email avatar department')
-      .populate('members', 'name email avatar');
+      .lean();
     res.json(groups);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -101,7 +102,13 @@ exports.deleteGroup = async (req, res) => {
     if (group.instructor.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Not authorized' });
     }
+
+    await Message.deleteMany({ group: req.params.id });
     await Group.findByIdAndDelete(req.params.id);
+
+    const io = getIO();
+    io.to(req.params.id).emit('groupDeleted', { groupId: req.params.id });
+
     res.json({ message: 'Group deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });

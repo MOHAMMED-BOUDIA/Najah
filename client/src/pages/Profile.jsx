@@ -4,7 +4,6 @@ import {
   FaUser,
   FaEnvelope,
   FaBuilding,
-  FaPhone,
   FaSpinner,
   FaCamera,
 } from 'react-icons/fa';
@@ -55,7 +54,6 @@ const Profile = () => {
     name: '',
     email: '',
     department: '',
-    phone: '',
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -125,7 +123,6 @@ const Profile = () => {
         name: user.name || '',
         email: user.email || '',
         department: user.department || '',
-        phone: user.phone || '',
       });
     }
   }, [user]);
@@ -198,11 +195,7 @@ const Profile = () => {
       toast.error('All profile fields are required.');
       return;
     }
-    if (user.role === 'instructor' && (!formData.department.trim() || !formData.phone.trim())) {
-      toast.error('All profile fields are required.');
-      return;
-    }
-    if (user.role === 'student' && !formData.phone.trim()) {
+    if (user.role === 'instructor' && !formData.department.trim()) {
       toast.error('All profile fields are required.');
       return;
     }
@@ -441,73 +434,27 @@ const Profile = () => {
                 </div>
 
                 {user.role === 'instructor' && (
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {/* Department */}
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        {t('profile.department')}
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                          <FaBuilding className="h-3.5 w-3.5" />
-                        </span>
-                        <select
-                          name="department"
-                          disabled
-                          value={formData.department}
-                          className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs opacity-60 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                        >
-                          <option value="">{t('profile.selectDepartment')}</option>
-                          {departments.map(d => (
-                            <option key={d._id} value={d.name}>{d.name}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <p className="mt-1 text-[10px] text-gray-400 italic">{t('profile.deptChangeHint')}</p>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                      {t('profile.department')}
+                    </label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                        <FaBuilding className="h-3.5 w-3.5" />
+                      </span>
+                      <select
+                        name="department"
+                        disabled
+                        value={formData.department}
+                        className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50/50 py-3 pl-11 pr-4 text-xs opacity-60 outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      >
+                        <option value="">{t('profile.selectDepartment')}</option>
+                        {departments.map(d => (
+                          <option key={d._id} value={d.name}>{d.name}</option>
+                        ))}
+                      </select>
                     </div>
-
-                    {/* Phone */}
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        {t('profile.phone')}
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                          <FaPhone className="h-3.5 w-3.5" />
-                        </span>
-                        <input
-                          type="text"
-                          name="phone"
-                          required
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className={inputClass}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {user.role === 'student' && (
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                        {t('profile.phone')}
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                          <FaPhone className="h-3.5 w-3.5" />
-                        </span>
-                        <input
-                          type="text"
-                          name="phone"
-                          required
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className={inputClass}
-                        />
-                    </div>
-                  </div>
+                    <p className="mt-1 text-[10px] text-gray-400 italic">{t('profile.deptChangeHint')}</p>
                   </div>
                 )}
 

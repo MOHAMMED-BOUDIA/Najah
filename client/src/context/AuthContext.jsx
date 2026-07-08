@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
       email: userData.email,
       role: userData.role,
       department: userData.department || '',
-      phone: userData.phone || '',
       avatar: userData.avatar || '',
     };
   };
@@ -29,30 +28,45 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!token) {
+      setLoading(false);
+      setUser(null);
+      return;
+    }
+    // Login already set the user — skip redundant /auth/me fetch
+    if (user) {
+      setLoading(false);
+      return;
+    }
+
+    // Load cached user instantly so dashboard doesn't skeleton-spin
+    const cached = localStorage.getItem('cachedUser');
+    if (cached) {
+      try { setUser(JSON.parse(cached)); } catch { /* ignore corrupt cache */ }
+    }
+
     const fetchCurrentUser = async () => {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
       try {
-        const response = await axiosInstance.get('/auth/me');
-        setUser(normalizeUser(response.data));
+        const response = await axiosInstance.get('/auth/me', { timeout: 15000 });
+        const normalized = normalizeUser(response.data);
+        setUser(normalized);
+        localStorage.setItem('cachedUser', JSON.stringify(normalized));
       } catch (error) {
         const status = error.response?.status;
         console.error('Error fetching current user:', status || error.message);
         if (status === 401) {
           localStorage.removeItem('token');
+          localStorage.removeItem('cachedUser');
           setToken(null);
           setUser(null);
         }
-        // 503 or other server errors: keep token, user stays null
       } finally {
         setLoading(false);
       }
     };
 
     fetchCurrentUser();
-  }, [token]);
+  }, [token, user]);
 
   const login = async (email, password) => {
     setLoading(true);

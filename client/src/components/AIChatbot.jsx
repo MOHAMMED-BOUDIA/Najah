@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FiMessageCircle, FiX, FiSend, FiZap } from 'react-icons/fi';
 import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
 const AIChatbot = () => {
   const { user } = useAuth();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -22,7 +24,7 @@ const AIChatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  if (!user) return null;
+  if (!user || location.pathname.startsWith('/chat')) return null;
 
   const sendMessage = async () => {
     if (!input.trim() || loading) return;

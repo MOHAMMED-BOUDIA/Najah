@@ -245,51 +245,32 @@ const Meetings = () => {
                     )}
                   </div>
                 </div>
-                                      {meeting.organizer && (
-                                        <div className="flex items-center gap-2">
-                                          <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-[10px] font-bold text-white">
-                                            {meeting.organizer.avatar && (
-                                              <img
-                                                src={getAvatarUrl(meeting.organizer.avatar)}
-                                                alt={meeting.organizer.name}
-                                                className="h-full w-full object-cover object-top"
-                                                onError={(e) => {
-                                                  e.currentTarget.classList.add('hidden');
-                                                  const fallback = e.currentTarget.parentElement?.querySelector('[data-avatar-fallback]');
-                                                  if (fallback) fallback.classList.remove('hidden');
-                                                }}
-                                              />
-                                            )}
-                                            <div
-                                              data-avatar-fallback
-                                              className={`flex h-full w-full items-center justify-center ${meeting.organizer.avatar ? 'hidden' : ''}`}
-                                            >
-                                              {getInitials(meeting.organizer.name)}
-                                            </div>
-                                          </div>
-                                          <span className="font-medium text-gray-700 dark:text-gray-300">{meeting.organizer.name}</span>
-                                        </div>
-                                      )}
 
                 {/* Details */}
                 <div className="mt-4 space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                   {meeting.organizer && (
-                    <div className="flex items-center gap-2">
-                      <div className="h-7 w-7 overflow-hidden rounded-full bg-gradient-to-br from-[#FFB900] to-[#0084D1] text-[10px] font-bold text-white flex items-center justify-center shrink-0">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-[#FFB900] to-[#0084D1]">
                         {meeting.organizer.avatar ? (
                           <img
                             src={getAvatarUrl(meeting.organizer.avatar)}
                             alt={meeting.organizer.name}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover object-top"
                             onError={(e) => {
                               e.currentTarget.style.display = 'none';
+                              const fb = e.currentTarget.parentElement?.querySelector('[data-avatar-fb]');
+                              if (fb) fb.classList.remove('hidden');
                             }}
                           />
-                        ) : (
-                          getInitials(meeting.organizer.name)
-                        )}
+                        ) : null}
+                        <div
+                          data-avatar-fb
+                          className={`absolute inset-0 flex items-center justify-center text-[11px] font-bold text-white ${meeting.organizer.avatar ? 'hidden' : ''}`}
+                        >
+                          {getInitials(meeting.organizer.name)}
+                        </div>
                       </div>
-                      <span className="font-medium text-gray-700 dark:text-gray-300">{meeting.organizer.name}</span>
+                      <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{meeting.organizer.name}</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2">

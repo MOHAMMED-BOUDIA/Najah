@@ -23,7 +23,7 @@ const upload = multer({
 });
 
 router.get('/', auth, getAllGroups);
-router.get('/my', auth, authorize('instructor'), getMyGroups);
+router.get('/my', auth, authorize('instructor', 'admin'), getMyGroups);
 router.get('/instructor/:instructorId', auth, getGroupsByInstructor);
 router.post('/', auth, authorize('instructor'), upload.single('image'), createGroup);
 router.put('/:id', auth, upload.single('image'), updateGroup);

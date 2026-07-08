@@ -35,6 +35,14 @@ function initSocket(server) {
       console.log(`[socket] User ${socket.user._id} connected`);
     }
 
+    socket.on('join-group', (groupId) => {
+      socket.join(groupId);
+    });
+
+    socket.on('leave-group', (groupId) => {
+      socket.leave(groupId);
+    });
+
     socket.on('disconnect', () => {
       if (socket.user) {
         console.log(`[socket] User ${socket.user._id} disconnected`);

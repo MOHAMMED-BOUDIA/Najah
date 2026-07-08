@@ -12,6 +12,7 @@ import Sidebar from './components/layout/Sidebar';
 import Navbar from './components/layout/Navbar';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
+import { useAuth } from './context/AuthContext';
 import Loader from './components/common/Loader';
 const AIChatbot = lazy(() => import('./components/AIChatbot'));
 
@@ -85,6 +86,11 @@ const DashboardLayout = () => {
   );
 };
 
+const ChatbotGate = () => {
+  const { user } = useAuth();
+  return user?.role !== 'admin' ? <AIChatbot /> : null;
+};
+
 function App() {
   const { i18n } = useTranslation();
 
@@ -153,7 +159,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-        <AIChatbot />
+        <ChatbotGate />
         </Router>
         </NotificationProvider>
       <ToastContainer

@@ -28,22 +28,27 @@ const InstructorGroups = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       try {
         const [userRes, groupsRes] = await Promise.all([
-          axiosInstance.get(`/users/${id}`),
-          axiosInstance.get(`/groups/instructor/${id}`),
+          axiosInstance.get(`/users/${id}`, { signal: controller.signal }),
+          axiosInstance.get(`/groups/instructor/${id}`, { signal: controller.signal }),
         ]);
         setInstructor(userRes.data);
         setGroups(groupsRes.data || []);
       } catch (err) {
-        console.error(err);
-        toast.error('Failed to load groups');
+        if (err.name === 'CanceledError' || err.name === 'AbortError') return;
+        console.error('fetchData error:', err.response?.status, err.response?.data || err.message);
+        toast.error(err.response?.data?.message || 'Failed to load groups');
       } finally {
         setLoading(false);
       }
     };
     fetchData();
+
+    return () => controller.abort();
   }, [id]);
 
   const handleRequestJoin = async (groupId) => {

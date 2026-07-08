@@ -6,7 +6,7 @@ exports.getDepartments = async (req, res) => {
     const departments = await Department.find().sort({ name: 1 }).lean();
     const withCounts = await Promise.all(
       departments.map(async (dept) => {
-        const instructorCount = await User.countDocuments({ department: dept.name, role: 'instructor' });
+        const instructorCount = await User.countDocuments({ department: dept._id, role: 'instructor' });
         return { ...dept, instructorCount };
       })
     );
@@ -42,7 +42,7 @@ exports.updateDepartment = async (req, res) => {
     if (!name || !name.trim()) {
       return res.status(400).json({ message: 'Department name is required' });
     }
-    const existing = await Department.findOne({ name: name.trim(), _id: { $ne: req.params.id } });
+    const existing = await Department.findOne({ name: name.trim(), _id: { $ne: req.params.id } }).collation({ locale: 'en', strength: 2 });
     if (existing) {
       return res.status(400).json({ message: 'Department name already taken' });
     }
@@ -66,7 +66,7 @@ exports.deleteDepartment = async (req, res) => {
     if (!department) {
       return res.status(404).json({ message: 'Department not found' });
     }
-    const userCount = await User.countDocuments({ department: department.name });
+    const userCount = await User.countDocuments({ department: department._id });
     if (userCount > 0) {
       return res.status(400).json({ message: `Cannot delete: ${userCount} user(s) are assigned to this department` });
     }

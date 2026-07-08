@@ -5,7 +5,7 @@ const API_BASE_URL = '/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 60000,
+  timeout: 15000,
 });
 
 axiosInstance.interceptors.request.use(
@@ -23,7 +23,10 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.code === 'ECONNABORTED') {
-      toast.error('Server is slow. Try again.');
+      const publicRoutes = ['/login', '/register', '/', '/forgot-password'];
+      if (!publicRoutes.includes(window.location.pathname) && !toast.isActive('server-slow')) {
+        toast.error('Server is slow. Try again.', { toastId: 'server-slow' });
+      }
     }
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');

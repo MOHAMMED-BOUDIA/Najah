@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   password: {
     type: String,
@@ -29,8 +30,9 @@ const userSchema = new mongoose.Schema({
     default: ''
   },
   department: {
-    type: String,
-    default: ''
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department',
+    index: true
   },
   phone: {
     type: String,
@@ -58,4 +60,6 @@ const userSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+userSchema.index({ email: 1 });
+userSchema.index({ role: 1, department: 1 });
 module.exports = mongoose.models.User || mongoose.model('User', userSchema);

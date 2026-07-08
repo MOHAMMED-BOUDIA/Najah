@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaPaperPlane, FaSpinner, FaCommentDots, FaArrowLeft, FaUsers } from 'react-icons/fa';
+import { FaPaperPlane, FaSpinner, FaCommentDots, FaArrowLeft, FaUsers, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,9 @@ import axiosInstance from '../api/axios';
 import Loader from '../components/common/Loader';
 import { CardSkeleton } from '../components/common/Skeleton';
 import EmptyState from '../components/common/EmptyState';
-import { getPublicFileUrl } from '../utils/apiOrigin';
+import ConfirmModal from '../components/common/ConfirmModal';
+import { getPublicFileUrl, getApiOrigin } from '../utils/apiOrigin';
+import { io } from 'socket.io-client';
 
 const Chat = () => {
   const { t } = useTranslation();
@@ -22,10 +24,13 @@ const Chat = () => {
   const [mobileChatOpen, setMobileChatOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const pollRef = useRef(null);
+  const socketRef = useRef(null);
 
-  const getAvatarUrl = (p) => {
-    return getPublicFileUrl(p);
-  };
+  // Confirm modals
+  const [confirmDeleteMsg, setConfirmDeleteMsg] = useState(null);
+  const [confirmDeleteGroup, setConfirmDeleteGroup] = useState(null);
+
+  const getAvatarUrl = (p) => getPublicFileUrl(p);
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -61,9 +66,47 @@ const Chat = () => {
     }
   };
 
+  // Socket connection for real-time
+  useEffect(() => {
+    if (!user || !activeGroup?._id) return;
+    const socket = io(getApiOrigin(), {
+      auth: { token: localStorage.getItem('token') },
+      transports: ['websocket', 'polling'],
+    });
+    socketRef.current = socket;
+
+    socket.on('connect', () => {
+      socket.emit('join-group', activeGroup._id);
+    });
+
+    socket.on('newMessage', (msg) => {
+      if (msg.group === activeGroup._id) {
+        setMessages(prev => [...prev, msg]);
+      }
+    });
+
+    socket.on('messageDeleted', ({ messageId, groupId }) => {
+      if (groupId === activeGroup._id) {
+        setMessages(prev => prev.filter(m => m._id !== messageId));
+      }
+    });
+
+    socket.on('groupDeleted', ({ groupId }) => {
+      setGroups(prev => prev.filter(g => g._id !== groupId));
+      if (activeGroup?._id === groupId) {
+        setActiveGroup(null);
+        setMessages([]);
+      }
+    });
+
+    return () => {
+      if (activeGroup?._id) socket.emit('leave-group', activeGroup._id);
+      socket.disconnect();
+    };
+  }, [user, activeGroup?._id]);
+
   useEffect(() => {
     if (activeGroup?._id) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchMessages(activeGroup._id);
       pollRef.current = setInterval(() => fetchMessages(activeGroup._id, true), 5000);
       return () => clearInterval(pollRef.current);
@@ -73,6 +116,7 @@ const Chat = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim() || sending) return;
@@ -89,6 +133,43 @@ const Chat = () => {
     } finally {
       setSending(false);
     }
+  };
+
+  const handleDeleteMessage = async () => {
+    if (!confirmDeleteMsg) return;
+    try {
+      await axiosInstance.delete(`/messages/${confirmDeleteMsg._id}`);
+      setMessages(prev => prev.filter(m => m._id !== confirmDeleteMsg._id));
+      toast.success('Message deleted');
+    } catch {
+      toast.error('Failed to delete message');
+    } finally {
+      setConfirmDeleteMsg(null);
+    }
+  };
+
+  const handleDeleteGroup = async () => {
+    if (!confirmDeleteGroup) return;
+    try {
+      await axiosInstance.delete(`/groups/${confirmDeleteGroup._id}`);
+      setGroups(prev => prev.filter(g => g._id !== confirmDeleteGroup._id));
+      if (activeGroup?._id === confirmDeleteGroup._id) {
+        setActiveGroup(null);
+        setMessages([]);
+      }
+      toast.success('Group deleted');
+    } catch {
+      toast.error('Failed to delete group');
+    } finally {
+      setConfirmDeleteGroup(null);
+    }
+  };
+
+  const canDeleteMessage = (msg) => {
+    if (!user) return false;
+    const isOwn = (msg.sender?._id || msg.sender) === user.id;
+    const isInstructor = user.role === 'instructor';
+    return isOwn || isInstructor;
   };
 
   const formatTime = (dateStr) => {
@@ -123,29 +204,39 @@ const Chat = () => {
 
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4 p-1">
-      {/* Group list — sidebar: always visible on desktop, togglable on mobile */}
+      {/* Group list sidebar */}
       <div className={`${mobileChatOpen ? 'hidden' : 'flex'} w-full md:w-64 shrink-0 flex-col rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 md:flex`}>
         <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-800">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white">{t('chat.groups')}</h3>
         </div>
         <div className="flex-1 overflow-y-auto">
           {groups.map(g => (
-            <button
-              key={g._id}
-              onClick={() => {
-                if (window.innerWidth < 768) {
-                  openMobileChat(g);
-                } else {
-                  setActiveGroup(g);
-                }
-              }}
-              className={`w-full border-b border-gray-50 px-4 py-3 text-left transition-colors last:border-0 dark:border-gray-800/50 ${
-                 activeGroup?._id === g._id ? 'bg-[#0084D1]/10' : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
-              }`}
-            >
-              <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{g.name}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{g.members?.length || 0} {t('chat.members')}</p>
-            </button>
+            <div key={g._id} className="group relative">
+              <button
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    openMobileChat(g);
+                  } else {
+                    setActiveGroup(g);
+                  }
+                }}
+                className={`w-full border-b border-gray-50 px-4 py-3 text-left transition-colors last:border-0 dark:border-gray-800/50 ${
+                  activeGroup?._id === g._id ? 'bg-[#0084D1]/10' : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
+                }`}
+              >
+                <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{g.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{g.members?.length || 0} {t('chat.members')}</p>
+              </button>
+              {user?.role === 'instructor' && (
+                <button
+                  onClick={() => setConfirmDeleteGroup(g)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 hidden group-hover:flex h-7 w-7 items-center justify-center rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 transition-colors"
+                  title="Delete group"
+                >
+                  <FaTrash className="h-3 w-3" />
+                </button>
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -190,7 +281,7 @@ const Chat = () => {
                 const senderName = msg.sender?.name || t('chat.unknown');
                 const senderAvatar = msg.sender?.avatar;
                 return (
-                  <div key={msg._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
+                  <div key={msg._id} className={`group/msg flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
                     <div className={`flex max-w-[75%] gap-2 ${isOwn ? 'flex-row-reverse' : ''}`}>
                       <div className="mt-1 h-7 w-7 shrink-0 overflow-hidden rounded-full">
                         {senderAvatar ? (
@@ -201,7 +292,7 @@ const Chat = () => {
                           </div>
                         )}
                       </div>
-                      <div>
+                      <div className="relative">
                         <div className={`rounded-2xl px-4 py-2 text-sm ${
                           isOwn
                             ? 'bg-[#0084D1] text-white rounded-tr-sm'
@@ -215,6 +306,15 @@ const Chat = () => {
                         <p className={`mt-0.5 text-[10px] text-gray-400 ${isOwn ? 'text-right' : ''}`}>
                           {formatTime(msg.createdAt)}
                         </p>
+                        {canDeleteMessage(msg) && (
+                          <button
+                            onClick={() => setConfirmDeleteMsg(msg)}
+                            className="absolute -top-1 right-0 hidden group-hover/msg:flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 text-red-400 hover:text-red-600 transition-colors"
+                            title="Delete message"
+                          >
+                            <FaTrash className="h-2.5 w-2.5" />
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -251,6 +351,28 @@ const Chat = () => {
         </div>
       )}
     </div>
+
+      {/* Delete message confirm */}
+      <ConfirmModal
+        isOpen={!!confirmDeleteMsg}
+        onConfirm={handleDeleteMessage}
+        onCancel={() => setConfirmDeleteMsg(null)}
+        title="Delete message"
+        message="This cannot be undone."
+        confirmLabel="Delete"
+        destructive
+      />
+
+      {/* Delete group confirm */}
+      <ConfirmModal
+        isOpen={!!confirmDeleteGroup}
+        onConfirm={handleDeleteGroup}
+        onCancel={() => setConfirmDeleteGroup(null)}
+        title={`Delete "${confirmDeleteGroup?.name || ''}"`}
+        message="All messages in this group will be permanently deleted."
+        confirmLabel="Delete Group"
+        destructive
+      />
     </div>
   );
 };

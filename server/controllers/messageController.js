@@ -1,5 +1,6 @@
 const Message = require('../models/Message');
 const Group = require('../models/Group');
+const { getIO } = require('../socket');
 
 exports.getMessages = async (req, res) => {
   try {
@@ -49,6 +50,33 @@ exports.sendMessage = async (req, res) => {
       .populate('sender', 'name email avatar');
 
     res.status(201).json(populated);
+
+    const io = getIO();
+    io.to(groupId.toString()).emit('newMessage', populated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.deleteMessage = async (req, res) => {
+  try {
+    const msg = await Message.findById(req.params.id);
+    if (!msg) return res.status(404).json({ message: 'Message not found' });
+
+    const group = await Group.findById(msg.group);
+    const isOwner = msg.sender.toString() === req.user._id.toString();
+    const isGroupInstructor = group && group.instructor.toString() === req.user._id.toString();
+    if (!isOwner && !isGroupInstructor && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    const groupId = msg.group;
+    await Message.findByIdAndDelete(req.params.id);
+
+    const io = getIO();
+    io.to(groupId.toString()).emit('messageDeleted', { messageId: req.params.id, groupId });
+
+    res.json({ message: 'Message deleted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
