@@ -16,7 +16,10 @@ export const getPublicFileUrl = (filePath) => {
   }
 
   const origin = getApiOrigin();
-  const cleanedPath = filePath.replace(/^\/+/, '').replace(/\\/g, '/');
+  let cleanedPath = filePath.replace(/\\/g, '/');
+  const idx = cleanedPath.indexOf('uploads/');
+  if (idx !== -1) cleanedPath = cleanedPath.substring(idx);
+  cleanedPath = cleanedPath.replace(/^\/+/, '');
 
   return origin ? `${origin}/${cleanedPath}` : `/${cleanedPath}`;
 };
