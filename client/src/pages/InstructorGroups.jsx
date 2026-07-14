@@ -114,7 +114,7 @@ const InstructorGroups = () => {
         </div>
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">
-            {instructor?.name || 'Instructor'}{t('groups.instructorGroupsSuffix')}
+            {t('groups.instructorGroups', { name: instructor?.name || 'Instructor' })}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {instructor?.department || ''} — {groups.length} {groups.length === 1 ? t('instructors.group') : t('instructors.groups')} available
