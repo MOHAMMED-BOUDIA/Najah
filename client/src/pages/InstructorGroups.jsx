@@ -89,7 +89,7 @@ const InstructorGroups = () => {
           <FaArrowLeft className="h-4 w-4" />
         </Link>
         <div className="h-14 w-14 overflow-hidden rounded-2xl bg-gradient-to-br from-[#FFB900] to-[#0084D1] shadow-sm shrink-0 text-white">
-          {instructor?.avatar ? (
+          {instructor?.avatar && (
             <img
               src={imgSrc(instructor.avatar)}
               alt={instructor?.name || 'Instructor'}
@@ -100,14 +100,10 @@ const InstructorGroups = () => {
                 if (fallback) fallback.classList.remove('hidden');
               }}
             />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center font-bold">
-              {getInitials(instructor?.name)}
-            </div>
           )}
           <div
             data-avatar-fallback
-            className={`hidden h-full w-full items-center justify-center font-bold ${instructor?.avatar ? '' : 'hidden'}`}
+            className={`flex h-full w-full items-center justify-center font-bold ${instructor?.avatar ? 'hidden' : ''}`}
           >
             {getInitials(instructor?.name)}
           </div>
